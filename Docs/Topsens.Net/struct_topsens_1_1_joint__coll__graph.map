@@ -1,0 +1,5 @@
+<map id="Topsens.Joint" name="Topsens.Joint">
+<area shape="rect" id="node1" title="Skeleton joint." alt="" coords="111,109,214,136"/>
+<area shape="rect" id="node2" href="$struct_topsens_1_1_vector3.html" title="The vector containing 3 float values." alt="" coords="5,5,125,32"/>
+<area shape="rect" id="node3" href="$struct_topsens_1_1_vector4.html" title="The vector containing 4 float values." alt="" coords="203,5,323,32"/>
+</map>

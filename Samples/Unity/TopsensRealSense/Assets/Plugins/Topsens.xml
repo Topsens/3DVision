@@ -1,0 +1,631 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Topsens</name>
+    </assembly>
+    <members>
+        <member name="T:Topsens.CloudFrame">
+            <summary>
+            Point cloud frame.
+            </summary>
+        </member>
+        <member name="F:Topsens.CloudFrame.Width">
+            <summary>
+            Image width in pixels.
+            </summary>
+        </member>
+        <member name="F:Topsens.CloudFrame.Height">
+            <summary>
+            Image height in pixels.
+            </summary>
+        </member>
+        <member name="F:Topsens.CloudFrame.FrameId">
+            <summary>
+            Image frame number starting from 0.
+            </summary>
+        </member>
+        <member name="F:Topsens.CloudFrame.Timestamp">
+            <summary>
+            Image acquisition timestamp in milliseconds.
+            </summary>
+        </member>
+        <member name="F:Topsens.CloudFrame.Pixels">
+            <summary>
+            The collection of image pixels. The length of the array is <see cref="F:Topsens.CloudFrame.Width"/> * <see cref="F:Topsens.CloudFrame.Height"/>.
+            </summary>
+        </member>
+        <member name="T:Topsens.ColorFrame">
+            <summary>
+            Color image frame.
+            </summary>
+            <remarks>Contains a complete frame of color images captured from sensor.</remarks>
+        </member>
+        <member name="F:Topsens.ColorFrame.Width">
+            <summary>
+            Image width in pixels.
+            </summary>
+        </member>
+        <member name="F:Topsens.ColorFrame.Height">
+            <summary>
+            Image height in pixels.
+            </summary>
+        </member>
+        <member name="F:Topsens.ColorFrame.FrameId">
+            <summary>
+            Image frame number starting from 0.
+            </summary>
+        </member>
+        <member name="F:Topsens.ColorFrame.Timestamp">
+            <summary>
+            Image acquisition timestamp in milliseconds.
+            </summary>
+        </member>
+        <member name="F:Topsens.ColorFrame.Pixels">
+            <summary>
+            The collection of image pixels. Each pixel containing four bytes of red, green, blue and alpha channels.
+            The length of the array is <see cref="F:Topsens.ColorFrame.Width"/> * <see cref="F:Topsens.ColorFrame.Height"/>.
+            </summary>
+        </member>
+        <member name="M:Topsens.ColorFrame.CopyTo(Topsens.ColorFrame)">
+            <summary>
+            Copies one image frame to the other image frame object.
+            </summary>
+            <param name="other">Target image frame object.</param>
+        </member>
+        <member name="M:Topsens.ColorFrame.Swap(Topsens.ColorFrame)">
+            <summary>
+            Swaps image frame.
+            </summary>
+            <param name="other">Target image frame object.</param>
+        </member>
+        <member name="T:Topsens.DepthFrame">
+            <summary>
+            Depth image frame.
+            </summary>
+            <remarks>Contains a complete frame of depth images captured from sensor.</remarks>
+        </member>
+        <member name="F:Topsens.DepthFrame.Width">
+            <summary>
+            Image width in pixels.
+            </summary>
+        </member>
+        <member name="F:Topsens.DepthFrame.Height">
+            <summary>
+            Image height in pixels.
+            </summary>
+        </member>
+        <member name="F:Topsens.DepthFrame.FrameId">
+            <summary>
+            Image frame number starting from 0.
+            </summary>
+        </member>
+        <member name="F:Topsens.DepthFrame.Timestamp">
+            <summary>
+            Image acquisition timestamp in milliseconds.
+            </summary>
+        </member>
+        <member name="F:Topsens.DepthFrame.Pixels">
+            <summary>
+            The collection of image pixels.
+            Each element represents the distance from the point on the photographed object to the imaging plane of the sensor, in millimeters.
+            The length of the array is <see cref="F:Topsens.DepthFrame.Width"/> * <see cref="F:Topsens.DepthFrame.Height"/>.
+            </summary>
+        </member>
+        <member name="F:Topsens.DepthFrame.Projection">
+            <summary>
+            Projection parameters.
+            Contains 4 elements: horizontal focal length, vertical focal length, horizontal center coordinate and vertical center coordinate.
+            </summary>
+        </member>
+        <member name="M:Topsens.DepthFrame.CopyTo(Topsens.DepthFrame)">
+            <summary>
+            Copies one image frame to the other image frame object.
+            </summary>
+            <param name="other">Target image frame object.</param>
+        </member>
+        <member name="M:Topsens.DepthFrame.Swap(Topsens.DepthFrame)">
+            <summary>
+            Swaps image frame.
+            </summary>
+            <param name="other">Target image frame object.</param>
+        </member>
+        <member name="T:Topsens.Error">
+            <summary>
+            The error code.
+            </summary>
+            <remarks>Method return value. Indicating the result of the method execution.</remarks>
+        </member>
+        <member name="F:Topsens.Error.Ok">
+            <summary>
+            Method executed successfully.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.Timeout">
+            <summary>
+            Data acquisition timeout.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.InvalidParameter">
+            <summary>
+            Invalid parameter.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.InvalidOperation">
+            <summary>
+            Invalid operation.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.Initialization">
+            <summary>
+            Initialization failed or not initialized before use.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.Authentication">
+            <summary>
+            Product authentication failed.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.NotSupported">
+            <summary>
+            Not supported features.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.NotFound">
+            <summary>
+            Object not found.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.Closed">
+            <summary>
+            Object closed.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.DeviceClosed">
+            <summary>
+            Device is not turned on.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.DevicePermission">
+            <summary>
+            Device is not granted with permission for access.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.StreamDisabled">
+            <summary>
+             Stream is disabled.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.StreamContent">
+            <summary>
+            Stream content error.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.StreamCodec">
+            <summary>
+            Stream codec error.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.StreamEnd">
+            <summary>
+            Stream end reached.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.StreamIO">
+            <summary>
+            Stream IO error.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.Timestamp">
+            <summary>
+            Stream frame timestamp error.
+            </summary>
+        </member>
+        <member name="F:Topsens.Error.Resource">
+            <summary>
+            Resource loading error.
+            </summary>
+        </member>
+        <member name="T:Topsens.Joint">
+            <summary>
+            Skeleton joint.
+            </summary>
+            <remarks>Contains a three-dimensional spatial information of a joint in the application scenario.</remarks>
+        </member>
+        <member name="F:Topsens.Joint.Position">
+            <summary>
+            Represents the X, Y and Z coordinates in three-dimensional space.
+            </summary>
+        </member>
+        <member name="F:Topsens.Joint.Rotation">
+            <summary>
+            The quaternion {x, y, z, w}, representing the spatial rotation of the current joint relative to T-pose in world space coordinates.
+            </summary>
+        </member>
+        <member name="F:Topsens.Joint.Orientation">
+            <summary>
+            The rotation expression of the joint relative to T-Pose in world space coordinates,
+            and the three elements representing the rotated X, Y and Z axes of the joint.
+            </summary>
+        </member>
+        <member name="T:Topsens.JointIndex">
+            <summary>
+            Skeleton joint index.
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.Head">
+            <summary>
+            Head
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.Neck">
+            <summary>
+            Neck
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.LShoulder">
+            <summary>
+            Left shoulder
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.RShoulder">
+            <summary>
+            Right shoulder
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.LElbow">
+            <summary>
+            Left elbow
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.RElbow">
+            <summary>
+            Right elbow
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.LHand">
+            <summary>
+            Left hand
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.RHand">
+            <summary>
+            Right hand
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.LChest">
+            <summary>
+            Left chest
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.RChest">
+            <summary>
+            Right chest
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.LWaist">
+            <summary>
+            Left waist
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.RWaist">
+            <summary>
+            Right waist
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.LKnee">
+            <summary>
+            Left knee
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.RKnee">
+            <summary>
+            Right knee
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.LFoot">
+            <summary>
+            Left foot
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.RFoot">
+            <summary>
+            Right foot
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.Torso">
+            <summary>
+            Torso
+            </summary>
+        </member>
+        <member name="F:Topsens.JointIndex.Count">
+            <summary>
+            The total number of joints
+            </summary>
+        </member>
+        <member name="T:Topsens.Orientation">
+            <summary>
+            Image direction.
+            </summary>
+        </member>
+        <member name="F:Topsens.Orientation.Landscape">
+            <summary>
+            Default landscape direction.
+            </summary>
+        </member>
+        <member name="F:Topsens.Orientation.PortraitClockwise">
+            <summary>
+            Portrait direction, rotate 90 degrees clockwise to get landscape image.
+            </summary>
+        </member>
+        <member name="F:Topsens.Orientation.PortraitAntiClockwise">
+            <summary>
+            Portrait direction, rotate 90 degrees anticlockwise to get landscape image.
+            </summary>
+        </member>
+        <member name="T:Topsens.Resolution">
+            <summary>
+            Image resolution.
+            </summary>
+        </member>
+        <member name="F:Topsens.Resolution.Disabled">
+            <summary>
+            Turn off the image data stream
+            </summary>
+        </member>
+        <member name="F:Topsens.Resolution.QVGA">
+            <summary>
+            320x240
+            </summary>
+        </member>
+        <member name="F:Topsens.Resolution.VGA">
+            <summary>
+            640x480
+            </summary>
+        </member>
+        <member name="T:Topsens.ResolutionExtension">
+            <summary>
+            The extension class of image resolution.
+            </summary>
+        </member>
+        <member name="M:Topsens.ResolutionExtension.Width(Topsens.Resolution)">
+            <summary>
+            The pixels width of image resolution.
+            </summary>
+            <param name="resolution">The enum value of image resolution.</param>
+            <returns>The pixels number of image width.</returns>
+        </member>
+        <member name="M:Topsens.ResolutionExtension.Height(Topsens.Resolution)">
+            <summary>
+            The pixels height of image resolution.
+            </summary>
+            <param name="resolution">The enum value of image resolution.</param>
+            <returns>The pixels number of image height.</returns>
+        </member>
+        <member name="T:Topsens.Skeleton">
+            <summary>
+            The skeleton data.
+            </summary>
+            <remarks>Contains skeleton data for an identified user.</remarks>
+        </member>
+        <member name="F:Topsens.Skeleton.UserId">
+            <summary>
+            The ID assigned to the user starting from 1 to distinguish multiple users in the scene.
+            </summary>
+        </member>
+        <member name="F:Topsens.Skeleton.Tracked">
+            <summary>
+            The user status indicating whether the user is successfully tracked in the current frame of data.
+            </summary>
+        </member>
+        <member name="F:Topsens.Skeleton.Position">
+            <summary>
+            The user position indicating the approximate location of the user's body center in the scene.
+            </summary>
+        </member>
+        <member name="F:Topsens.Skeleton.Joints">
+            <summary>
+            Joints data. Each element represents the three-dimensional position of a joint on the use's body in the scene.
+            </summary>
+        </member>
+        <member name="M:Topsens.Skeleton.CopyTo(Topsens.Skeleton)">
+            <summary>
+            Copies one skeleton data to another skeleton data object.
+            </summary>
+            <param name="other">Target skeleton object.</param>
+        </member>
+        <member name="T:Topsens.UserMask">
+            <summary>
+            User mask image.
+            </summary>
+            <remarks>Contains mask information of the identified user in the depth image or color image.</remarks>
+        </member>
+        <member name="F:Topsens.UserMask.Width">
+            <summary>
+            Mask image width in pixels. It is equal to the corresponding depth image width.
+            </summary>
+        </member>
+        <member name="F:Topsens.UserMask.Height">
+            <summary>
+            Mask image height in pixels. It is equal to the corresponding depth image height.
+            </summary>
+        </member>
+        <member name="F:Topsens.UserMask.Pixels">
+            <summary>
+            Mask image pixel collection, array length is <see cref="F:Topsens.UserMask.Width"/> * <see cref="F:Topsens.UserMask.Height"/>. 
+            Each pixel values is equal to the user ID to which the corresponding pixel in the depth image belongs.
+            For example, if the mask pixel value of x=100 and y=100 is 1,
+            the depth pixel corresponding to x=100 and y=100 in depth image belongs to the user body with ID=1.
+            </summary>
+        </member>
+        <member name="M:Topsens.UserMask.CopyTo(Topsens.UserMask)">
+            <summary>
+            Copies one mask image to the other mask image object.
+            </summary>
+            <param name="other">Target mask image object.</param>
+        </member>
+        <member name="T:Topsens.UsersFrame">
+            <summary>
+            Users frame.
+            </summary>
+            <remarks>Contains user data generated from the input depth frame calculation.</remarks>
+        </member>
+        <member name="F:Topsens.UsersFrame.UserCount">
+            <summary>
+            The count of identified users.
+            </summary>
+        </member>
+        <member name="F:Topsens.UsersFrame.Skeletons">
+            <summary>
+            The collection of user skeleton data. Each element corresponds to all identified skeleton joints of a user.
+            The effective length of this array is <see cref="F:Topsens.UsersFrame.UserCount"/>.
+            </summary>
+        </member>
+        <member name="F:Topsens.UsersFrame.UserMask">
+            <summary>
+            User mask data. Represents the relationship between each pixel in the depth image and the user.
+            </summary>
+        </member>
+        <member name="F:Topsens.UsersFrame.GroundPlane">
+            <summary>
+            The plane equation of the ground detected in the scene.
+            The four elements represent the four coefficients A, B, C and D in the plane equation Ax+By+Cz+D=0.
+            </summary>
+        </member>
+        <member name="F:Topsens.UsersFrame.Projection">
+            <summary>
+            Projection parameters.
+            Contains 4 elements: horizontal focal length, vertical focal length, horizontal center coordinate and vertical center coordinate.
+            </summary>
+        </member>
+        <member name="F:Topsens.UsersFrame.Timestamp">
+            <summary>
+            The data timestamp in milliseconds.
+            It is the same as the timestamp of the corresponding input depth image, and is used to synchronize the depth image.
+            </summary>
+        </member>
+        <member name="M:Topsens.UsersFrame.MapTo2D(Topsens.Vector3)">
+            <summary>
+            Obtains a projection of a skeleton joint in a depth camera space on the two-dimensional depth image.
+            </summary>
+            <remarks>The screen coordinate origin point (0, 0) is located at the upper-left corner of the screen.</remarks>
+            <param name="position3D">The coordinates of the skeleton joint in 3D space.</param>
+            <returns>Two-dimensional coordinates obtained after projection calculation of skeleton joint.</returns>
+        </member>
+        <member name="M:Topsens.UsersFrame.CopyTo(Topsens.UsersFrame)">
+            <summary>
+            Copies one users frame to the other users frame object.
+            </summary>
+            <param name="other">Target users frame object.</param>
+        </member>
+        <member name="M:Topsens.UsersFrame.Swap(Topsens.UsersFrame)">
+            <summary>
+            Swaps users frame.
+            </summary>
+            <param name="other">Target users frame object.</param>
+        </member>
+        <member name="T:Topsens.Vector2">
+            <summary>
+            The vector containing 2 float values.
+            </summary>
+            <remarks>Screen vector.</remarks>
+        </member>
+        <member name="F:Topsens.Vector2.X">
+            <summary>
+            X-axis vector. Rightward direction is positive.
+            </summary>
+        </member>
+        <member name="F:Topsens.Vector2.Y">
+            <summary>
+            Y-axis vector. Downward direction is positive.
+            </summary>
+        </member>
+        <member name="M:Topsens.Vector2.IsNaN">
+            <summary>
+            Checks whether the vector contains NaN.
+            </summary>
+            <returns>True if the vector contains any NaN, otherwise false.</returns>
+        </member>
+        <member name="F:Topsens.Vector2.NaN">
+            <summary>
+            The NaN vector with all components equal to NaN.
+            </summary>
+        </member>
+        <member name="T:Topsens.Vector3">
+            <summary>
+            The vector containing 3 float values.
+            </summary>
+            <remarks>Space vector.</remarks>
+        </member>
+        <member name="F:Topsens.Vector3.X">
+            <summary>
+            X-axis vector. Rightward direction is positive.
+            </summary>
+        </member>
+        <member name="F:Topsens.Vector3.Y">
+            <summary>
+            Y-axis vector. Upward direction is positive.
+            </summary>
+        </member>
+        <member name="F:Topsens.Vector3.Z">
+            <summary>
+            Z-axis vector. The camera illumination direction is positive.
+            </summary>
+        </member>
+        <member name="M:Topsens.Vector3.IsNaN">
+            <summary>
+            Checks whether the vector contains NaN.
+            </summary>
+            <returns>True if the vector contains any NaN, otherwise false.</returns>
+        </member>
+        <member name="F:Topsens.Vector3.NaN">
+            <summary>
+            The NaN vector with all components equal to NaN.
+            </summary>
+        </member>
+        <member name="T:Topsens.Vector4">
+            <summary>
+            The vector containing 4 float values.
+            </summary>
+            <remarks>Space vector.</remarks>
+        </member>
+        <member name="F:Topsens.Vector4.X">
+            <summary>
+            When representing the ground plane equation, X is the coefficient 'A' in equation Ax + By + Cz + D = 0.
+            When representing the projection to the image, X is the focal in horizontal direction.
+            When representing the space rotation, X is the coefficient 'b' in quaternion a + bi + cj + dk.
+            </summary>
+        </member>
+        <member name="F:Topsens.Vector4.Y">
+            <summary>
+            When representing the ground plane equation, Y is the coefficient 'B' in equation Ax + By + Cz + D = 0.
+            When representing the projection to the image, Y is the focal in vertical direction.
+            When representing the space rotation, Y is the coefficient 'c' in quaternion a + bi + cj + dk.
+            </summary>
+        </member>
+        <member name="F:Topsens.Vector4.Z">
+            <summary>
+            When representing the ground plane equation, Z is the coefficient 'C' in equation Ax + By + Cz + D = 0.
+            When representing the projection to the image, Z is the center in horizontal direction.
+            When representing the space rotation, Z is the coefficient 'd' in quaternion a + bi + cj + dk.
+            </summary>
+        </member>
+        <member name="F:Topsens.Vector4.W">
+            <summary>
+            When representing the ground plane equation, W is coefficient 'D' in equation Ax + By + Cz + D = 0.
+            When representing the projection to the image, W is the center in vertical direction.
+            When representing the space rotation, W is the coefficient 'a' in quaternion a + bi + cj + dk.
+            </summary>
+        </member>
+        <member name="M:Topsens.Vector4.IsNaN">
+            <summary>
+            Checks whether the vector contains NaN.
+            </summary>
+            <returns>True if the vector contains any NaN, otherwise false.</returns>
+        </member>
+        <member name="F:Topsens.Vector4.NaN">
+            <summary>
+            The NaN vector with all components equal to NaN.
+            </summary>
+        </member>
+    </members>
+</doc>

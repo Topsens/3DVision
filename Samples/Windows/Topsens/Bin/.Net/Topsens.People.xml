@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Topsens.People</name>
+    </assembly>
+    <members>
+        <member name="T:Topsens.People">
+            <summary>
+            The people detector operation interface (Dedicated for all third-party cameras).
+            </summary>
+        </member>
+        <member name="M:Topsens.People.Preload(System.Int32[])">
+            <summary>
+            Preloads resource data to minimize sensor startup delay.
+            </summary>
+            <param name="resources">Preloaded resource id array.</param>
+            <returns><see cref="F:Topsens.Error.Ok"/> if the call succeeds, otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.</returns>
+        </member>
+        <member name="M:Topsens.People.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Topsens.People.Initialize(System.Int32,System.Int32,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes people detector.
+            </summary>
+            <param name="width">Depth frame width.</param>
+            <param name="height">Depth frame hedith.</param>
+            <param name="fx">Horizontal focal length.</param>
+            <param name="fy">Vertical focal length.</param>
+            <param name="cx">Horizontal center coordinate.</param>
+            <param name="cy">Vertical center coordinate.</param>
+            <returns><see cref="F:Topsens.Error.Ok"/> if the call succeeds, otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.</returns>
+        </member>
+        <member name="M:Topsens.People.Uninitialize">
+            <summary>
+            Uninitializes people detector instance.
+            </summary>
+        </member>
+        <member name="M:Topsens.People.SetOrientation(Topsens.Orientation)">
+            <summary>
+            Sets depth image orientation.
+            </summary>
+            <remarks>
+            Default is <see cref="F:Topsens.Orientation.Landscape"/>. If the setting needs to be changed, call this method before <see cref="M:Topsens.People.Initialize(System.Int32,System.Int32,System.Single,System.Single,System.Single,System.Single)"/>.
+            </remarks>
+            <param name="orientation">Depth image orientation.</param>
+            <returns>
+            <see cref="F:Topsens.Error.Ok"/> if the call succeeds, <see cref="F:Topsens.Error.InvalidOperation"/> if the people detector has been initialized,
+            otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.
+            </returns>
+        </member>
+        <member name="M:Topsens.People.GetOrientation">
+            <summary>
+            Gets depth image orientation.
+            </summary>
+            <remarks>Default is <see cref="F:Topsens.Orientation.Landscape"/>.</remarks>
+            <returns>The depth image orientation set. Returns the default <see cref="F:Topsens.Orientation.Landscape"/> if people detector is closed.</returns>
+        </member>
+        <member name="M:Topsens.People.SetImageFlipped(System.Boolean)">
+            <summary>
+            Sets whether the depth image is flipped.
+            </summary>
+            <remarks>
+            The depth image is flipped by default. If the setting needs to be changed, call this method before <see cref="M:Topsens.People.Initialize(System.Int32,System.Int32,System.Single,System.Single,System.Single,System.Single)"/>.
+            </remarks>
+            <param name="flipped">The depth image is flipped if true, otherwise not flipped.</param>
+            <returns>
+            <see cref="F:Topsens.Error.Ok"/> if the call succeeds, <see cref="F:Topsens.Error.InvalidOperation"/> if the people detector has been initialized,
+            otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.
+            </returns>
+        </member>
+        <member name="M:Topsens.People.IsImageFlipped">
+            <summary>
+            Checks whether the depth image is flipped.
+            </summary>
+            <remarks>The depth image is flipped by default.</remarks>
+            <returns>True if the depth image is flipped, otherwise false.</returns>
+        </member>
+        <member name="M:Topsens.People.SetMaskEnabled(System.Boolean)">
+            <summary>
+            Sets whether to enable user mask.
+            </summary>
+            <remarks>Default is not enabled. If the setting needs to be changed, call this method before <see cref="M:Topsens.People.Initialize(System.Int32,System.Int32,System.Single,System.Single,System.Single,System.Single)"/>.</remarks>
+            <param name="enabled">Enabled if true, otherwise not enabled.</param>
+            <returns>
+            <see cref="F:Topsens.Error.Ok"/> if the call succeeds, <see cref="F:Topsens.Error.InvalidOperation"/> if the people detector has been initialized,
+            otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.
+            </returns>
+        </member>
+        <member name="M:Topsens.People.IsMaskEnabled">
+            <summary>
+            Checks whether user mask is enabled.
+            </summary>
+            <remarks>Default is not enabled.</remarks>
+            <returns>True if user mask is enabled, otherwise false.</returns>
+        </member>
+        <member name="M:Topsens.People.Detect(System.Int16[],System.Int32,System.Int32,System.Int64,Topsens.UsersFrame)">
+            <summary>
+            Processes depth data.
+            </summary>
+            <param name="depth">Depth frame data.</param>
+            <param name="width">Depth frame width.</param>
+            <param name="height">Depth frame height.</param>
+            <param name="timestamp">Depth frame timestamp.</param>
+            <param name="frame">The generated users frame. The frame should be a non-null value, otherwise <see cref="F:Topsens.Error.InvalidParameter"/> will be returned.</param>
+            <returns><see cref="F:Topsens.Error.Ok"/> if the call succeeds, otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.</returns>
+        </member>
+        <member name="M:Topsens.People.Dispose">
+            <summary>
+            Disposes the object.
+            </summary>
+        </member>
+        <member name="M:Topsens.People.Finalize">
+            <summary>
+            Destructor.
+            </summary>
+        </member>
+    </members>
+</doc>

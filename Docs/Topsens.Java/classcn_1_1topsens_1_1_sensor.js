@@ -1,0 +1,27 @@
+var classcn_1_1topsens_1_1_sensor =
+[
+    [ "PermissionListener", "interfacecn_1_1topsens_1_1_sensor_1_1_permission_listener.html", "interfacecn_1_1topsens_1_1_sensor_1_1_permission_listener" ],
+    [ "close", "classcn_1_1topsens_1_1_sensor.html#a5ae591df94fc66ccb85cbb6565368bca", null ],
+    [ "count", "classcn_1_1topsens_1_1_sensor.html#a09624f463911151150731cf8f9cb485d", null ],
+    [ "error", "classcn_1_1topsens_1_1_sensor.html#a166c61a6160a776a54c9f83b107ff6aa", null ],
+    [ "getOrientation", "classcn_1_1topsens_1_1_sensor.html#a95884c88fffec0adede68a797367f7f3", null ],
+    [ "hasPermission", "classcn_1_1topsens_1_1_sensor.html#abb05741844040e09c590d7feef231881", null ],
+    [ "initialize", "classcn_1_1topsens_1_1_sensor.html#a90f4456a04966cd45827cd35e4d7dae7", null ],
+    [ "isDepthAligned", "classcn_1_1topsens_1_1_sensor.html#a342253fa313edea742d6e6a466440136", null ],
+    [ "isImageFlipped", "classcn_1_1topsens_1_1_sensor.html#ad1aa59628180ee2ecbb6ac1a93f2d07c", null ],
+    [ "isMaskEnabled", "classcn_1_1topsens_1_1_sensor.html#a3f07167631764b3099e8db4f5337bfa4", null ],
+    [ "isRequestingPermission", "classcn_1_1topsens_1_1_sensor.html#aec8b684cd976e65ae0c1621c4cdc08a9", null ],
+    [ "open", "classcn_1_1topsens_1_1_sensor.html#a701629de9fee771540783276cebe1b8b", null ],
+    [ "preload", "classcn_1_1topsens_1_1_sensor.html#a622b31e3bbc741800201e408609d3d81", null ],
+    [ "requestPermission", "classcn_1_1topsens_1_1_sensor.html#a83786b4b520cb3dd66f19b93f9fb797e", null ],
+    [ "setDepthAligned", "classcn_1_1topsens_1_1_sensor.html#a194d0bb539a628fc9a1749cf016dc4d2", null ],
+    [ "setImageFlipped", "classcn_1_1topsens_1_1_sensor.html#aa9685dc178208dfed0246166e213c26c", null ],
+    [ "setMaskEnabled", "classcn_1_1topsens_1_1_sensor.html#ad9ef2b685cc1116fc04eb27b429b7ca3", null ],
+    [ "setOrientation", "classcn_1_1topsens_1_1_sensor.html#aefe3acac8e63081f9d45a48e1adc15c0", null ],
+    [ "start", "classcn_1_1topsens_1_1_sensor.html#a51874e4a5715186d205f3b6f792d883e", null ],
+    [ "stop", "classcn_1_1topsens_1_1_sensor.html#a8c528baf37154d347366083f0f816846", null ],
+    [ "uninitialize", "classcn_1_1topsens_1_1_sensor.html#afe4be28cd82c2c3d150c51ddb2cd6a43", null ],
+    [ "waitColor", "classcn_1_1topsens_1_1_sensor.html#a2983942c1f24ce32d28703e694f3c939", null ],
+    [ "waitDepth", "classcn_1_1topsens_1_1_sensor.html#a3b629f6f5ceee677e6dd841e6cf3a3b4", null ],
+    [ "waitUsers", "classcn_1_1topsens_1_1_sensor.html#a6d315ea24423af6309aaf49b8edcb465", null ]
+];

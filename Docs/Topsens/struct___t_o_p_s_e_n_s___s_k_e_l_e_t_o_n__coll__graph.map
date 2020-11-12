@@ -1,0 +1,6 @@
+<map id="_TOPSENS_SKELETON" name="_TOPSENS_SKELETON">
+<area shape="rect" id="node1" title="The skeleton data." alt="" coords="48,199,215,225"/>
+<area shape="rect" id="node2" href="$struct___t_o_p_s_e_n_s___j_o_i_n_t.html" title="Skeleton joint." alt="" coords="161,109,294,136"/>
+<area shape="rect" id="node3" href="$struct___t_o_p_s_e_n_s___v_e_c_t_o_r3.html" title="The vector containing 3 float values." alt="" coords="5,5,164,32"/>
+<area shape="rect" id="node4" href="$struct___t_o_p_s_e_n_s___v_e_c_t_o_r4.html" title="The vector containing 4 float values." alt="" coords="188,5,347,32"/>
+</map>

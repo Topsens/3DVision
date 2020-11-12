@@ -1,0 +1,4 @@
+<map id="Topsens.CloudFrame" name="Topsens.CloudFrame">
+<area shape="rect" id="node1" title="Point cloud frame." alt="" coords="5,95,151,121"/>
+<area shape="rect" id="node2" href="$struct_topsens_1_1_vector3.html" title="The vector containing 3 float values." alt="" coords="18,5,138,32"/>
+</map>

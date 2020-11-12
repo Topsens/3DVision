@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Topsens.Unity</name>
+    </assembly>
+    <members>
+        <member name="T:Topsens.Unity.Permission">
+            <summary>
+            The permission management under Unity Android platform (Dedicated for TOPSENS own cameras).
+            </summary>
+        </member>
+        <member name="M:Topsens.Unity.Permission.Initialize">
+            <summary>
+            Initializes sensor permission.
+            </summary>
+        </member>
+        <member name="M:Topsens.Unity.Permission.Uninitialize">
+            <summary>
+            Uninitializes sensor permission.
+            </summary>
+        </member>
+        <member name="M:Topsens.Unity.Permission.SensorCount(System.Int32@)">
+            <summary>
+            Gets the count of available sensors.
+            </summary>
+            <param name="count">The count of available sensors.</param>
+            <returns><see cref="F:Topsens.Error.Ok"/> if the call succeeds, otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.</returns>
+        </member>
+        <member name="M:Topsens.Unity.Permission.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Topsens.Unity.Permission.Request(System.Int32,Topsens.Unity.PermissionHandler)">
+            <summary>
+            Requests sensor permission.
+            </summary>
+            <param name="index">The index value of the sensor to use (starting from 0).</param>
+            <param name="handler">Callback handler to process permission requesting result.</param>
+            <returns>True if the call succeeds, otherwise false.</returns>
+        </member>
+        <member name="M:Topsens.Unity.Permission.IsRequesting">
+            <summary>
+            Checks whether sensor permission is being requested.
+            </summary>
+            <returns>True if sensor permission is being requested, otherwise false.</returns>
+        </member>
+        <member name="M:Topsens.Unity.Permission.GetIdentity">
+            <summary>
+            Gets the sensor's ID which has been granted with the permission.
+            </summary>
+            <returns>Sensor ID if the call succeeds. Exception is thrown if called on a sensor without permission.</returns>
+        </member>
+        <member name="M:Topsens.Unity.Permission.Dispose">
+            <summary>
+            Disposes the object.
+            </summary>
+        </member>
+        <member name="P:Topsens.Unity.Permission.IsGranted">
+            <summary>
+            Checks whether sensor permission has been granted.
+            </summary>
+            <returns>True if sensor permission has been granted, otherwise false.</returns>
+        </member>
+        <member name="T:Topsens.Unity.PermissionHandler">
+            <summary>
+            The delegate of callback handler to process permission requesting result (Dedicated for TOPSENS own cameras).
+            </summary>
+            <param name="permission">Sensor permission instance that initiates the callback.</param>
+        </member>
+        <member name="T:Topsens.Unity.Resources">
+            <summary>
+            The resources management under Unity Android platform (Dedicated for all third-party cameras).
+            </summary>
+        </member>
+        <member name="M:Topsens.Unity.Resources.Initialize">
+            <summary>
+            Initializes resources.
+            </summary>
+        </member>
+        <member name="T:Topsens.Unity.VectorExtension">
+            <summary>
+            The extension class of Vector2, Vector3 and Vector4.
+            </summary>
+        </member>
+        <member name="M:Topsens.Unity.VectorExtension.ToUnity(Topsens.Vector2)">
+            <summary>
+            Converts Topsens.Vector2 to UnityEngine.Vector2.
+            </summary>
+            <param name="v">Topsens.Vector2 type vector.</param>
+            <returns>UnityEngine.Vector2 type vector.</returns>
+        </member>
+        <member name="M:Topsens.Unity.VectorExtension.ToUnity(Topsens.Vector3)">
+            <summary>
+            Converts Topsens.Vector3 to UnityEngine.Vector3.
+            </summary>
+            <param name="v">Topsens.Vector3 type vector.</param>
+            <returns>UnityEngine.Vector3 type vector.</returns>
+        </member>
+        <member name="M:Topsens.Unity.VectorExtension.ToUnity(Topsens.Vector4)">
+            <summary>
+            Converts Topsens.Vector4 to UnityEngine.Vector4.
+            </summary>
+            <param name="v">Topsens.Vector4 type vector.</param>
+            <returns>UnityEngine.Vector4 type vector.</returns>
+        </member>
+        <member name="M:Topsens.Unity.VectorExtension.Quaternion(Topsens.Vector4)">
+            <summary>
+            Converts Topsens.Vector4 to UnityEngine.Quaternion.
+            </summary>
+            <param name="v">Topsens.Vector4 type vector.</param>
+            <returns>UnityEngine.Quaternion type quaternion.</returns>
+        </member>
+    </members>
+</doc>

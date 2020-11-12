@@ -1,0 +1,47 @@
+Version 1.5.0 (2020-10-21)
+--------------------------
+  * Add APIs to set image portrait direction;
+  * Add APIs to enable/disable user mask;
+  * Update fake sensor program and the corresponding recording sample file.
+
+Version 1.4.0 (2020-09-28)
+--------------------------
+  * Add libraries for the third-party cameras: Unity;
+  * Add RealSense sample programs: Unity;
+  * RealSense sample programs optimization.
+
+Version 1.3.0 (2020-09-16)
+--------------------------
+  * Add image formats support for the third-party cameras: any resolution depth image formats;
+  * Add libraries for the third-party cameras: Windows C#, Linux, Android;
+  * Add RealSense sample programs: Windows C#, Linux, Android.
+
+Version 1.2.0 (2020-09-08)
+--------------------------
+  * Add third-party cameras support. The current verion only supports 4:3 depth image format, and the next version will support other formats;
+  * Add Windows C++ library for third-party cameras;
+  * Add RealSense Windows C++ sample program;
+  * SDK optimization.
+
+Version 1.1.4 (2020-08-28)
+--------------------------
+  * Strip configurable resources from the link library, and add resource preload functions;
+  * Sample program optimization.
+
+Version 1.1.3 (2020-07-16)
+--------------------------
+  * Added Android support for fake sensor;
+  * Added official icon in samples;
+  * Fixed sensor index issue in TopsenseExplorer of Linux 18.
+
+Version 1.1.2 (2020-05-13)
+--------------------------
+  * Added depth image display in Unity TopsensStickman sample;
+  * Fixed skeleton image display issue in samples.
+
+Version 1.1.0 (2020-05-06)
+--------------------------
+  * Platform: Android, Linux, Windows, Unity;
+  * Interface: C, C++, C#, Java;
+  * Sample: Color image display, depth image display, skeleton image display, ground detection, point cloud image display, Unity Stickman control, fake sensor etc.;
+  * Language: Chinese, English.

@@ -1,0 +1,217 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Topsens.Sensor</name>
+    </assembly>
+    <members>
+        <member name="T:Topsens.DepthFrameExtension">
+            <summary>
+            The extension class of DepthFrame (Dedicated for TOPSENS own cameras).
+            </summary>
+        </member>
+        <member name="M:Topsens.DepthFrameExtension.ToPointCloud(Topsens.DepthFrame,Topsens.CloudFrame@)">
+            <summary>
+            Converts DepthFrame to CloudFrame.
+            </summary>
+            <param name="depth">The depth frame.</param>
+            <param name="cloud">The cloud frame.</param>
+            <returns>
+            <see cref="F:Topsens.Error.Ok"/> if the call succeeds, <see cref="F:Topsens.Error.InvalidParameter"/> if the depth frame is invalid,
+            otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.
+            </returns>
+        </member>
+        <member name="T:Topsens.ColorHandler">
+            <summary>
+            Color image frame callback interface delegate (Dedicated for TOPSENS own cameras).
+            </summary>
+            <param name="sensor">Sensor that initiates callback.</param>
+            <param name="frame">Data frame acquired by the sensor.</param>
+            <param name="error">The error code that occurred during sensor acquisition.</param>
+        </member>
+        <member name="T:Topsens.DepthHandler">
+            <summary>
+            Depth image frame callback interface delegate (Dedicated for TOPSENS own cameras).
+            </summary>
+            <param name="sensor">Sensor that initiates callback.</param>
+            <param name="frame">Data frame acquired by the sensor.</param>
+            <param name="error">The error code that occurred during sensor acquisition.</param>
+        </member>
+        <member name="T:Topsens.UsersHandler">
+            <summary>
+            Users frame callback interface delegate (Dedicated for TOPSENS own cameras).
+            </summary>
+            <param name="sensor">Sensor that initiates callback.</param>
+            <param name="frame">Users frame calculated from depth image frame.</param>
+            <param name="error">The error code that occurred during the calculation of the users frame.</param>
+        </member>
+        <member name="T:Topsens.Sensor">
+            <summary>
+            The sensor operation interface (Dedicated for TOPSENS own cameras).
+            </summary>
+        </member>
+        <member name="M:Topsens.Sensor.Count(System.Int32@)">
+            <summary>
+            Gets the count of available sensors.
+            </summary>
+            <param name="count">The count of available sensors.</param>
+            <returns><see cref="F:Topsens.Error.Ok"/> if the call succeeds, otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.</returns>
+        </member>
+        <member name="M:Topsens.Sensor.Preload(System.Int32[])">
+            <summary>
+            Preloads resource data to minimize sensor startup delay.
+            </summary>
+            <param name="resources">Preloaded resource id array.</param>
+            <returns><see cref="F:Topsens.Error.Ok"/> if the call succeeds, otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.</returns>
+        </member>
+        <member name="M:Topsens.Sensor.Open(System.Int32)">
+            <summary>
+            Opens the sensor instance.
+            </summary>
+            <param name="index">The index value of the sensor to use (starting from 0).</param>
+            <returns><see cref="F:Topsens.Error.Ok"/> if the call succeeds, otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.</returns>
+        </member>
+        <member name="M:Topsens.Sensor.Close">
+            <summary>
+            Closes the sensor instance.
+            </summary>
+        </member>
+        <member name="M:Topsens.Sensor.Start(Topsens.Resolution,Topsens.Resolution,System.Boolean)">
+            <summary>
+            Starts the sensor instance.
+            </summary>
+            <remarks>Color, depth and users streams are generated continuously when the sensor is started.</remarks>
+            <param name="colorResolution">Color image resolution.</param>
+            <param name="depthResolution">Depth image resolution.</param>
+            <param name="generateUsers">Generates users if true, otherwise doesn't generate users.</param>
+            <returns><see cref="F:Topsens.Error.Ok"/> if the call succeeds, otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.</returns>
+        </member>
+        <member name="M:Topsens.Sensor.Stop">
+            <summary>
+            Stops the sensor instance.
+            </summary>
+            <remarks>Color, depth and users streams are ended when the sensor is stopped.</remarks>
+        </member>
+        <member name="M:Topsens.Sensor.SetOrientation(Topsens.Orientation)">
+            <summary>
+            Sets image orientation.
+            </summary>
+            <remarks>
+            Default is <see cref="F:Topsens.Orientation.Landscape"/>.
+            If the setting needs to be changed, call this method before <see cref="M:Topsens.Sensor.Start(Topsens.Resolution,Topsens.Resolution,System.Boolean)"/>.
+            </remarks>
+            <param name="orientation">Image orientation</param>
+            <returns>
+            <see cref="F:Topsens.Error.Ok"/> if the call succeeds, <see cref="F:Topsens.Error.InvalidOperation"/> if the sensor has been started,
+            otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.
+            </returns>
+        </member>
+        <member name="M:Topsens.Sensor.GetOrientation">
+            <summary>
+            Gets image orientation.
+            </summary>
+            <remarks>Default is <see cref="F:Topsens.Orientation.Landscape"/>.</remarks>
+            <returns>The image orientation set. Returns the default <see cref="F:Topsens.Orientation.Landscape"/> if sensor isn't opened.</returns>
+        </member>
+        <member name="M:Topsens.Sensor.SetImageFlipped(System.Boolean)">
+            <summary>
+            Sets whether the image is flipped.
+            </summary>
+            <remarks>
+            The image is flipped by default.
+            If the setting needs to be changed, call this method before <see cref="M:Topsens.Sensor.Start(Topsens.Resolution,Topsens.Resolution,System.Boolean)"/>.
+            </remarks>
+            <param name="flipped">The image is flipped if true, otherwise not flipped.</param>
+            <returns>
+            <see cref="F:Topsens.Error.Ok"/> if the call succeeds, <see cref="F:Topsens.Error.InvalidOperation"/> if the sensor has been started,
+            otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.
+            </returns>
+        </member>
+        <member name="M:Topsens.Sensor.IsImageFlipped">
+            <summary>
+            Checks whether the image is flipped.
+            </summary>
+            <remarks>The image is flipped by default.</remarks>
+            <returns>True if the image is flipped, otherwise false.</returns>
+        </member>
+        <member name="M:Topsens.Sensor.SetDepthAligned(System.Boolean)">
+            <summary>
+            Sets whether the depth image is aligned with the color image.
+            </summary>
+            <remarks>
+            The depth image is not aligned with the color image by default.
+            If the setting needs to be changed, call this method before <see cref="M:Topsens.Sensor.Start(Topsens.Resolution,Topsens.Resolution,System.Boolean)"/>.
+            </remarks>
+            <param name="aligned">The depth image is aligned with the color image if true, otherwise not aligned.</param>
+            <returns>
+            <see cref="F:Topsens.Error.Ok"/> if the call succeeds, <see cref="F:Topsens.Error.InvalidOperation"/> if the sensor has been started,
+            otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.
+            </returns>
+        </member>
+        <member name="M:Topsens.Sensor.IsDepthAligned">
+            <summary>
+            Checks whether the depth image is aligned with the color image.
+            </summary>
+            <remarks>The depth image is not aligned with the color image by default.</remarks>
+            <returns>True if the depthe image is aligned with the color image, otherwise false.</returns>
+        </member>
+        <member name="M:Topsens.Sensor.SetMaskEnabled(System.Boolean)">
+            <summary>
+            Sets whether to enable user mask.
+            </summary>
+            <remarks>Default is not enabled. If the setting needs to be changed, call this method before <see cref="M:Topsens.Sensor.Start(Topsens.Resolution,Topsens.Resolution,System.Boolean)"/>.</remarks>
+            <param name="enabled">Enabled if true, otherwise not enabled.</param>
+            <returns>
+            <see cref="F:Topsens.Error.Ok"/> if the call succeeds, <see cref="F:Topsens.Error.InvalidOperation"/> if the sensor has been started,
+            otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.
+            </returns>
+        </member>
+        <member name="M:Topsens.Sensor.IsMaskEnabled">
+            <summary>
+            Checks whether user mask is enabled.
+            </summary>
+            <remarks>Default is not enabled.</remarks>
+            <returns>True if user mask is enabled, otherwise false.</returns>
+        </member>
+        <member name="M:Topsens.Sensor.SetRecording(System.Boolean)">
+            <summary>
+            Sets whether records stream to file.
+            </summary>
+            <remarks>
+            Doesn't record stream to file by default. If the setting needs to be changed, call this method before <see cref="M:Topsens.Sensor.Start(Topsens.Resolution,Topsens.Resolution,System.Boolean)"/>.
+            The recording file format is YYYY_MMDD_HHMMSS.tsr.
+            </remarks>
+            <param name="recording">Records stream to file if true, otherwise doesn't record.</param>
+            <returns>
+            <see cref="F:Topsens.Error.Ok"/> if the call succeeds, <see cref="F:Topsens.Error.InvalidOperation"/> if the sensor has been started,
+            otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.
+            </returns>
+        </member>
+        <member name="M:Topsens.Sensor.IsRecording">
+            <summary>
+            Checks whether records stream to file.
+            </summary>
+            <remarks>Doesn't record stream to file by defaul.</remarks>
+            <returns>True if records strem to file, otherwise false.</returns>
+        </member>
+        <member name="M:Topsens.Sensor.Finalize">
+            <summary>
+            Destructor.
+            </summary>
+        </member>
+        <member name="E:Topsens.Sensor.ColorReady">
+            <summary>
+            Notification event for color image frame ready.
+            </summary>
+        </member>
+        <member name="E:Topsens.Sensor.DepthReady">
+            <summary>
+            Notification event for depth image frame ready.
+            </summary>
+        </member>
+        <member name="E:Topsens.Sensor.UsersReady">
+            <summary>
+            Notification event for users frame ready.
+            </summary>
+        </member>
+    </members>
+</doc>

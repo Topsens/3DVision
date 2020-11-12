@@ -1,0 +1,10 @@
+var searchData=
+[
+  ['people_58',['People',['../class_topsens_1_1_people.html',1,'People'],['../class_topsens_1_1_people.html#a684d3a039bb43afffd0254040292ea04',1,'Topsens::People::People()']]],
+  ['pixels_59',['Pixels',['../struct___t_o_p_s_e_n_s___c_o_l_o_r___f_r_a_m_e.html#ab21a938d29623dc9540899cff850cd37',1,'_TOPSENS_COLOR_FRAME::Pixels()'],['../struct___t_o_p_s_e_n_s___d_e_p_t_h___f_r_a_m_e.html#a3d285621067abd44a9e794f7cf11481b',1,'_TOPSENS_DEPTH_FRAME::Pixels()'],['../struct___t_o_p_s_e_n_s___u_s_e_r___m_a_s_k.html#a031bba494878504286e53ce116a8a199',1,'_TOPSENS_USER_MASK::Pixels()']]],
+  ['portraitanticlockwise_60',['PortraitAntiClockwise',['../namespace_topsens.html#a871118a09520247c78a71ecd7b0abd58a9654adb559534c0cde796795975c10ed',1,'Topsens']]],
+  ['portraitclockwise_61',['PortraitClockwise',['../namespace_topsens.html#a871118a09520247c78a71ecd7b0abd58a77d523ea3fe90b98f2047d061d6ebf46',1,'Topsens']]],
+  ['position_62',['Position',['../struct___t_o_p_s_e_n_s___j_o_i_n_t.html#a2903185f44307386081a2311648cc313',1,'_TOPSENS_JOINT::Position()'],['../struct___t_o_p_s_e_n_s___s_k_e_l_e_t_o_n.html#a2903185f44307386081a2311648cc313',1,'_TOPSENS_SKELETON::Position()']]],
+  ['preload_63',['Preload',['../class_topsens_1_1_people.html#af587f5f728db39bee28d5fb8625029e8',1,'Topsens::People::Preload(const uint32_t *resources, uint32_t count)'],['../class_topsens_1_1_people.html#ac9c4d0ebdcd720a0cf5b177e40409f4c',1,'Topsens::People::Preload(const std::initializer_list&lt; uint32_t &gt; &amp;list)'],['../class_topsens_1_1_sensor.html#af587f5f728db39bee28d5fb8625029e8',1,'Topsens::Sensor::Preload(const uint32_t *resources, uint32_t count)'],['../class_topsens_1_1_sensor.html#ac9c4d0ebdcd720a0cf5b177e40409f4c',1,'Topsens::Sensor::Preload(const std::initializer_list&lt; uint32_t &gt; &amp;list)']]],
+  ['projection_64',['Projection',['../struct___t_o_p_s_e_n_s___d_e_p_t_h___f_r_a_m_e.html#a4ba43e368ffef7243989290a784a0dba',1,'_TOPSENS_DEPTH_FRAME::Projection()'],['../struct___t_o_p_s_e_n_s___u_s_e_r_s___f_r_a_m_e.html#a4ba43e368ffef7243989290a784a0dba',1,'_TOPSENS_USERS_FRAME::Projection()']]]
+];

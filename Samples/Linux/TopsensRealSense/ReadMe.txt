@@ -1,0 +1,1 @@
+In order to use RealSense runtime (.so) and header files, please install packages firstly according to the official doc: https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md

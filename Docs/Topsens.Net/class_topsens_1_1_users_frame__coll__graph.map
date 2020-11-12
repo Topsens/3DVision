@@ -1,0 +1,8 @@
+<map id="Topsens.UsersFrame" name="Topsens.UsersFrame">
+<area shape="rect" id="node1" title="Users frame." alt="" coords="96,303,243,329"/>
+<area shape="rect" id="node2" href="$struct_topsens_1_1_vector4.html" title="The vector containing 4 float values." alt="" coords="5,5,125,32"/>
+<area shape="rect" id="node5" href="$struct_topsens_1_1_joint.html" title="Skeleton joint." alt="" coords="118,109,221,136"/>
+<area shape="rect" id="node3" href="$class_topsens_1_1_skeleton.html" title="The skeleton data." alt="" coords="106,213,233,240"/>
+<area shape="rect" id="node4" href="$struct_topsens_1_1_vector3.html" title="The vector containing 3 float values." alt="" coords="207,5,327,32"/>
+<area shape="rect" id="node6" href="$class_topsens_1_1_user_mask.html" title="User mask image." alt="" coords="257,213,391,240"/>
+</map>

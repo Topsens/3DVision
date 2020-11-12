@@ -1,0 +1,8 @@
+<map id="UsersFrame" name="UsersFrame">
+<area shape="rect" id="node1" title="Users frame." alt="" coords="185,303,279,329"/>
+<area shape="rect" id="node2" href="$classcn_1_1topsens_1_1_skeleton.html" title="The skeleton data." alt="" coords="89,213,162,240"/>
+<area shape="rect" id="node3" href="$classcn_1_1topsens_1_1_vector3.html" title="The vector containing 3 float values." alt="" coords="5,5,72,32"/>
+<area shape="rect" id="node4" href="$classcn_1_1topsens_1_1_joint.html" title="Skeleton joint." alt="" coords="101,109,150,136"/>
+<area shape="rect" id="node5" href="$classcn_1_1topsens_1_1_vector4.html" title="The vector containing 4 float values." alt="" coords="161,5,228,32"/>
+<area shape="rect" id="node6" href="$classcn_1_1topsens_1_1_user_mask.html" title="User mask image." alt="" coords="270,213,351,240"/>
+</map>

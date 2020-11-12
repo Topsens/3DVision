@@ -1,0 +1,26 @@
+﻿<Window x:Class="TopsensRealSenseWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:l="clr-namespace:TopsensRealSenseWpf"
+        Title="Topsens on RealSense WPF" Loaded="Window_Loaded" Closing="Window_Closing" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight" Icon="Topsens.ico">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <l:DepthView Grid.Row="0" x:Name="dview" Width="640" Height="480"/>
+        <l:UsersView Grid.Row="0" x:Name="uview" Width="{Binding ActualWidth, ElementName=dview}" Height="{Binding ActualHeight, ElementName=dview}"/>
+
+        <Separator Grid.Row="1" Width="{Binding ActualWidth, ElementName=dview}"/>
+
+        <l:Panel Grid.Row="2" x:Name="panel" Width="{Binding ActualWidth, ElementName=dview}"/>
+        <StatusBar Grid.Row="3" Width="{Binding ActualWidth, ElementName=dview}">
+            <StatusBarItem>
+                <TextBlock x:Name="status"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
