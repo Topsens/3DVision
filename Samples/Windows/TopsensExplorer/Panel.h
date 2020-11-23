@@ -1,11 +1,14 @@
 #pragma once
 
 #include "Dialog.h"
+#include <cstdint>
 
 class Panel : public Dialog
 {
 public:
     Panel();
+
+    void Count(uint32_t count);
 
     void Enable();
     void Disable();

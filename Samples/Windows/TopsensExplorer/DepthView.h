@@ -12,17 +12,17 @@ class DepthView : public Window
 public:
     DepthView();
 
-    void Draw(const Topsens::DepthFrame& frame);
-    void Draw(const Topsens::DepthFrame& depth, const Topsens::UsersFrame& users, bool drawGround);
+    void Draw(const Topsens::DepthFrame& frame, Topsens::Orientation orientation);
+    void Draw(const Topsens::UsersFrame& frame, Topsens::Orientation orientation);
+    void Ground(const Topsens::Vector4* groundPlane);
     void Error(const wchar_t* error);
 
 protected:
     virtual void OnPaint() override;
 
 private:
-    void DrawDepth(const Topsens::DepthFrame& frame);
-    void DrawUsers(const Topsens::UsersFrame& frame);
-    void DrawGround(const Topsens::DepthFrame& frame, const Topsens::Vector4& groundPlane);
+    void DrawDepth(const Topsens::DepthFrame& frame, Topsens::Orientation orientation);
+    void DrawGround(const Topsens::DepthFrame& frame, Topsens::Orientation orientation);
     void PaintSkeletons(GDIRenderer& renderer);
     void PaintSkeleton(const std::vector<Topsens::Vector2>& skeleton, GDIRenderer& renderer);
     void PaintJoint(const Topsens::Vector2& joint, GDIRenderer& renderer);
@@ -39,8 +39,9 @@ private:
 
     int width;
     int height;
-    std::vector<int> pixels;
-    std::vector<int> palette;
+    std::vector<uint32_t> pixels;
+    std::vector<uint32_t> palette;
+    Topsens::Vector4 ground;
 
     UserPainter users;
 };

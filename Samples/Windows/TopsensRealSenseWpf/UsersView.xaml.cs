@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Topsens;
+using Orientation = Topsens.Orientation;
 
 namespace TopsensRealSenseWpf
 {
@@ -27,7 +28,7 @@ namespace TopsensRealSenseWpf
             InitializeComponent();
         }
 
-        public void Draw(UsersFrame frame)
+        public void Draw(UsersFrame frame, Orientation orientation)
         {
             if (null == frame)
             {
@@ -53,6 +54,19 @@ namespace TopsensRealSenseWpf
 
                 lock (this.frame)
                 {
+                    if (Orientation.Landscape == orientation)
+                    {
+                        this.LayoutTransform = new RotateTransform(0.0);
+                    }
+                    else if (Orientation.PortraitClockwise == orientation)
+                    {
+                        this.LayoutTransform = new RotateTransform(90.0);
+                    }
+                    else
+                    {
+                        this.LayoutTransform = new RotateTransform(-90.0);
+                    }
+
                     this.painter.Paint(this.frame);
                 }
             }), DispatcherPriority.Render);

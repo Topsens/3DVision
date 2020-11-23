@@ -25,8 +25,9 @@ private:
     void OnRefresh();
     void OnStart();
     void OnStop();
+    void Arrange(Topsens::Orientation);
 
-    static std::wstring GetError(Topsens::Error err);
+    static std::wstring GetError(Topsens::Error);
 
 private:
     bool stop;

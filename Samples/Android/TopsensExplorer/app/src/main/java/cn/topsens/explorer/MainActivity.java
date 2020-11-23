@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,7 +14,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Message;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -196,7 +197,13 @@ public class MainActivity extends AppCompatActivity {
         Resolution dres = (Resolution)((Spinner)this.findViewById(R.id.dres)).getSelectedItem();
         final boolean generateUsers = ((Switch)this.findViewById(R.id.users)).isChecked();
 
-        Orientation orientation = Orientation.fromInt(((Spinner)this.findViewById(R.id.orient)).getSelectedItemPosition());
+        final Orientation orientation = Orientation.fromInt(((Spinner)this.findViewById(R.id.orient)).getSelectedItemPosition());
+
+        if (Configuration.ORIENTATION_PORTRAIT == this.getResources().getConfiguration().orientation && Orientation.Landscape == orientation) {
+            ((LinearLayout)this.findViewById(R.id.layout)).setOrientation(LinearLayout.VERTICAL);
+        } else {
+            ((LinearLayout)this.findViewById(R.id.layout)).setOrientation(LinearLayout.HORIZONTAL);
+        }
 
         Error err = this.sensor.setOrientation(orientation);
         if (Error.Ok != err) {
@@ -247,8 +254,10 @@ public class MainActivity extends AppCompatActivity {
                             cbitmap = Bitmap.createBitmap(cframe.Width, cframe.Height, Bitmap.Config.ARGB_8888);
                         }
 
-                        this.paintColor(cframe, cbitmap);
-                        this.updateView(cbitmap, cview);
+                        synchronized (cbitmap) {
+                            paint(cframe, cbitmap);
+                        }
+                        update(cbitmap, cview, orientation);
 
                     } else if (Error.Timeout != err) {
                         Log.e("Thread", "Color error: " + err.toString());
@@ -261,117 +270,28 @@ public class MainActivity extends AppCompatActivity {
                             dbitmap = Bitmap.createBitmap(dframe.Width, dframe.Height, Bitmap.Config.ARGB_8888);
                         }
 
-                        this.paintDepth(dframe, dbitmap);
-
                         if (generateUsers) {
                             err = sensor.waitUsers(uframe, 0);
 
                             if (Error.Ok == err) {
-                                this.paintUsers(uframe, dbitmap);
-
+                                synchronized (dbitmap) {
+                                    paint(dframe, dbitmap);
+                                    paint(uframe, dbitmap);
+                                }
                             } else {
+                                synchronized (dbitmap) {
+                                    paint(dframe, dbitmap);
+                                }
                                 Log.e("Thread", "Users error: " + err.toString());
                             }
                         }
 
-                        this.updateView(dbitmap, dview);
+                        update(dbitmap, dview, orientation);
 
                     } else if (Error.Timeout != err) {
                         Log.e("Thread", "Depth error: " + err.toString());
                     }
                 }
-            }
-
-            private void paintColor(ColorFrame frame, Bitmap bitmap) {
-                synchronized (bitmap) {
-                    bitmap.setPixels(frame.Pixels, 0, frame.Width, 0, 0, frame.Width, frame.Height);
-                }
-            }
-
-            private void paintDepth(DepthFrame frame, Bitmap bitmap) {
-                Allocation depth = Allocation.createTyped(rs, new Type.Builder(rs, Element.I16(rs)).setX(frame.Width).setY(frame.Height).create());
-                Allocation color = Allocation.createTyped(rs, new Type.Builder(rs, Element.RGBA_8888(rs)).setX(frame.Width).setY(frame.Height).create());
-
-                depth.copy1DRangeFrom(0, frame.Width * frame.Height, frame.Pixels);
-                rd.forEach_render(depth, color);
-
-                synchronized (bitmap) {
-                    color.copyTo(bitmap);
-                }
-
-                color.destroy();
-                depth.destroy();
-            }
-
-            private void paintUsers(UsersFrame frame, Bitmap bitmap) {
-                if (0 == frame.UserCount) {
-                    return;
-                }
-
-                Canvas canvas = new Canvas(bitmap);
-                Paint  paint  = new Paint();
-                paint.setColor(Color.LTGRAY);
-                paint.setStrokeWidth(3.f);
-
-                for (int i = 0; i < frame.UserCount; i++) {
-                    Joint[] joints = frame.Skeletons[i].Joints;
-
-                    this.paintBone(frame, canvas, paint, joints[JointIndex.Head],      joints[JointIndex.Neck]);
-                    this.paintBone(frame, canvas, paint, joints[JointIndex.LShoulder], joints[JointIndex.Neck]);
-                    this.paintBone(frame, canvas, paint, joints[JointIndex.RShoulder], joints[JointIndex.Neck]);
-                    this.paintBone(frame, canvas, paint, joints[JointIndex.LShoulder], joints[JointIndex.LElbow]);
-                    this.paintBone(frame, canvas, paint, joints[JointIndex.RShoulder], joints[JointIndex.RElbow]);
-                    this.paintBone(frame, canvas, paint, joints[JointIndex.LShoulder], joints[JointIndex.RWaist]);
-                    this.paintBone(frame, canvas, paint, joints[JointIndex.RShoulder], joints[JointIndex.LWaist]);
-                    this.paintBone(frame, canvas, paint, joints[JointIndex.LElbow],    joints[JointIndex.LHand]);
-                    this.paintBone(frame, canvas, paint, joints[JointIndex.RElbow],    joints[JointIndex.RHand]);
-                    this.paintBone(frame, canvas, paint, joints[JointIndex.LWaist],    joints[JointIndex.LKnee]);
-                    this.paintBone(frame, canvas, paint, joints[JointIndex.RWaist],    joints[JointIndex.RKnee]);
-                    this.paintBone(frame, canvas, paint, joints[JointIndex.LKnee],     joints[JointIndex.LFoot]);
-                    this.paintBone(frame, canvas, paint, joints[JointIndex.RKnee],     joints[JointIndex.RFoot]);
-                    this.paintBone(frame, canvas, paint, joints[JointIndex.LWaist],    joints[JointIndex.RWaist]);
-
-                    this.paintJoint(frame, canvas, paint, joints[JointIndex.Head]);
-                    this.paintJoint(frame, canvas, paint, joints[JointIndex.Neck]);
-                    this.paintJoint(frame, canvas, paint, joints[JointIndex.LShoulder]);
-                    this.paintJoint(frame, canvas, paint, joints[JointIndex.RShoulder]);
-                    this.paintJoint(frame, canvas, paint, joints[JointIndex.LElbow]);
-                    this.paintJoint(frame, canvas, paint, joints[JointIndex.RElbow]);
-                    this.paintJoint(frame, canvas, paint, joints[JointIndex.LHand]);
-                    this.paintJoint(frame, canvas, paint, joints[JointIndex.RHand]);
-                    this.paintJoint(frame, canvas, paint, joints[JointIndex.LWaist]);
-                    this.paintJoint(frame, canvas, paint, joints[JointIndex.RWaist]);
-                    this.paintJoint(frame, canvas, paint, joints[JointIndex.LKnee]);
-                    this.paintJoint(frame, canvas, paint, joints[JointIndex.RKnee]);
-                    this.paintJoint(frame, canvas, paint, joints[JointIndex.LFoot]);
-                    this.paintJoint(frame, canvas, paint, joints[JointIndex.RFoot]);
-                }
-            }
-
-            private void paintJoint(UsersFrame frame, Canvas canvas, Paint paint, Joint joint) {
-                Vector2 pos = frame.MapTo2D(joint.Position);
-                if (pos.isNaN()) {
-                    return;
-                }
-
-                canvas.drawCircle(pos.X, pos.Y, 4, paint);
-            }
-
-            private void paintBone(UsersFrame frame, Canvas canvas, Paint paint, Joint beg, Joint end) {
-                Vector2 beg2d = frame.MapTo2D(beg.Position);
-                Vector2 end2d = frame.MapTo2D(end.Position);
-
-                if (beg2d.isNaN() || end2d.isNaN()) {
-                    return;
-                }
-
-                canvas.drawLine(beg2d.X, beg2d.Y, end2d.X, end2d.Y, paint);
-            }
-
-            private void updateView(Bitmap bitmap, ImageView view) {
-                Message message = new Message();
-                message.obj = new Object[] { bitmap, view };
-                handler.sendMessage(message);
             }
         };
         this.thread.start();
@@ -401,6 +321,126 @@ public class MainActivity extends AppCompatActivity {
 
         this.disableControls();
         this.enableOptions();
+    }
+
+    private void paint(ColorFrame frame, Bitmap bitmap) {
+        bitmap.setPixels(frame.Pixels, 0, frame.Width, 0, 0, frame.Width, frame.Height);
+    }
+
+    private void paint(DepthFrame frame, Bitmap bitmap) {
+        Allocation depth = Allocation.createTyped(this.rs, new Type.Builder(this.rs, Element.I16(this.rs)).setX(frame.Width).setY(frame.Height).create());
+        Allocation color = Allocation.createFromBitmap(this.rs, bitmap);
+
+        depth.copy1DRangeFrom(0, frame.Width * frame.Height, frame.Pixels);
+        this.rd.forEach_render(depth, color);
+
+        color.copyTo(bitmap);
+        color.destroy();
+        depth.destroy();
+    }
+
+    private void paint(UsersFrame frame, Bitmap bitmap) {
+        if (0 == frame.UserCount) {
+            return;
+        }
+
+        Canvas canvas = new Canvas(bitmap);
+        Paint  paint  = new Paint();
+        paint.setColor(Color.LTGRAY);
+        paint.setStrokeWidth(3.f);
+
+        for (int i = 0; i < frame.UserCount; i++) {
+            Joint[] joints = frame.Skeletons[i].Joints;
+
+            // Paint bones
+            this.paint(frame, canvas, paint, joints[JointIndex.Head],      joints[JointIndex.Neck]);
+            this.paint(frame, canvas, paint, joints[JointIndex.LShoulder], joints[JointIndex.Neck]);
+            this.paint(frame, canvas, paint, joints[JointIndex.RShoulder], joints[JointIndex.Neck]);
+            this.paint(frame, canvas, paint, joints[JointIndex.LShoulder], joints[JointIndex.LElbow]);
+            this.paint(frame, canvas, paint, joints[JointIndex.RShoulder], joints[JointIndex.RElbow]);
+            this.paint(frame, canvas, paint, joints[JointIndex.LShoulder], joints[JointIndex.RWaist]);
+            this.paint(frame, canvas, paint, joints[JointIndex.RShoulder], joints[JointIndex.LWaist]);
+            this.paint(frame, canvas, paint, joints[JointIndex.LElbow],    joints[JointIndex.LHand]);
+            this.paint(frame, canvas, paint, joints[JointIndex.RElbow],    joints[JointIndex.RHand]);
+            this.paint(frame, canvas, paint, joints[JointIndex.LWaist],    joints[JointIndex.LKnee]);
+            this.paint(frame, canvas, paint, joints[JointIndex.RWaist],    joints[JointIndex.RKnee]);
+            this.paint(frame, canvas, paint, joints[JointIndex.LKnee],     joints[JointIndex.LFoot]);
+            this.paint(frame, canvas, paint, joints[JointIndex.RKnee],     joints[JointIndex.RFoot]);
+            this.paint(frame, canvas, paint, joints[JointIndex.LWaist],    joints[JointIndex.RWaist]);
+
+            // Paint joints
+            this.paint(frame, canvas, paint, joints[JointIndex.Head]);
+            this.paint(frame, canvas, paint, joints[JointIndex.Neck]);
+            this.paint(frame, canvas, paint, joints[JointIndex.LShoulder]);
+            this.paint(frame, canvas, paint, joints[JointIndex.RShoulder]);
+            this.paint(frame, canvas, paint, joints[JointIndex.LElbow]);
+            this.paint(frame, canvas, paint, joints[JointIndex.RElbow]);
+            this.paint(frame, canvas, paint, joints[JointIndex.LHand]);
+            this.paint(frame, canvas, paint, joints[JointIndex.RHand]);
+            this.paint(frame, canvas, paint, joints[JointIndex.LWaist]);
+            this.paint(frame, canvas, paint, joints[JointIndex.RWaist]);
+            this.paint(frame, canvas, paint, joints[JointIndex.LKnee]);
+            this.paint(frame, canvas, paint, joints[JointIndex.RKnee]);
+            this.paint(frame, canvas, paint, joints[JointIndex.LFoot]);
+            this.paint(frame, canvas, paint, joints[JointIndex.RFoot]);
+        }
+    }
+
+    private void paint(UsersFrame frame, Canvas canvas, Paint paint, Joint joint) {
+        Vector2 pos = frame.MapTo2D(joint.Position);
+        if (pos.isNaN()) {
+            return;
+        }
+
+        canvas.drawCircle(pos.X, pos.Y, 4, paint);
+    }
+
+    private void paint(UsersFrame frame, Canvas canvas, Paint paint, Joint beg, Joint end) {
+        Vector2 beg2d = frame.MapTo2D(beg.Position);
+        Vector2 end2d = frame.MapTo2D(end.Position);
+
+        if (beg2d.isNaN() || end2d.isNaN()) {
+            return;
+        }
+
+        canvas.drawLine(beg2d.X, beg2d.Y, end2d.X, end2d.Y, paint);
+    }
+
+    private void update(Bitmap bitmap, ImageView view, Orientation orientation) {
+        final Bitmap b = bitmap;
+        final ImageView v = view;
+        final float r = (Orientation.Landscape == orientation ? 0 : (Orientation.PortraitClockwise == orientation ? 90 : -90));
+
+        this.handler.post(new Runnable() {
+            @Override
+            public void run() {
+                float scale = 1.0f;
+
+                if (0 != r) {
+                    if ((float)v.getWidth() / v.getHeight() > (float)b.getWidth() / b.getHeight()) {
+                        scale = (float)b.getHeight() / b.getWidth();
+
+                        if (v.getHeight() * scale > v.getWidth()) {
+                            scale = (float)v.getWidth() / v.getHeight();
+                        }
+                    } else {
+                        scale = (float)b.getWidth() / b.getHeight();
+
+                        if (v.getWidth() * scale > v.getHeight()) {
+                            scale = (float)v.getHeight() / v.getWidth();
+                        }
+                    }
+                }
+
+                v.setScaleX(scale);
+                v.setScaleY(scale);
+                v.setRotation(r);
+
+                synchronized (v) {
+                    v.setImageBitmap(b);
+                }
+            }
+        });
     }
 
     private void enableOptions() {
@@ -437,17 +477,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Sensor  sensor;
     private Thread  thread;
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message message) {
-            Bitmap    bitmap = (Bitmap)((Object[])message.obj)[0];
-            ImageView viewer = (ImageView)((Object[])message.obj)[1];
-
-            synchronized (bitmap) {
-                viewer.setImageBitmap(bitmap);
-            }
-        }
-    };
+    private Handler handler = new Handler();
     private RenderScript rs;
     private ScriptC_RenderDepth rd;
 

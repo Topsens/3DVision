@@ -2,18 +2,15 @@ package cn.topsens.realsense;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
@@ -28,7 +25,6 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -379,6 +375,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void enable() {
+        this.findViewById(R.id.orientation).setEnabled(true);
         this.findViewById(R.id.resolution).setEnabled(true);
         this.findViewById(R.id.device).setEnabled(true);
         this.findViewById(R.id.flip).setEnabled(true);
@@ -387,6 +384,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void disable() {
+        this.findViewById(R.id.orientation).setEnabled(false);
         this.findViewById(R.id.resolution).setEnabled(false);
         this.findViewById(R.id.device).setEnabled(false);
         this.findViewById(R.id.flip).setEnabled(false);
@@ -425,7 +423,38 @@ public class MainActivity extends AppCompatActivity {
             this.paintDepth(depth);
             this.paintUsers(users);
         }
-        this.handler.sendEmptyMessage(0);
+        this.handler.post(new Runnable() {
+            @Override
+            public void run() {
+                ImageView dview = (ImageView)findViewById(R.id.dview);
+
+                float scale = 1.0f;
+
+                if (0 != rotate) {
+                    if ((float)dview.getWidth() / dview.getHeight() > (float)bitmap.getWidth() / bitmap.getHeight()) {
+                        scale = (float)bitmap.getHeight() / bitmap.getWidth();
+
+                        if (dview.getHeight() * scale > dview.getWidth()) {
+                            scale = (float)dview.getWidth() / dview.getHeight();
+                        }
+                    } else {
+                        scale = (float)bitmap.getWidth() / bitmap.getHeight();
+
+                        if (dview.getWidth() * scale > dview.getHeight()) {
+                            scale = (float)dview.getHeight() / dview.getWidth();
+                        }
+                    }
+                }
+
+                dview.setScaleX(scale);
+                dview.setScaleY(scale);
+                dview.setRotation(rotate);
+
+                synchronized (bitmap) {
+                    dview.setImageBitmap(bitmap);
+                }
+            }
+        });
     }
 
     private void paintDepth(Allocation depth) {
@@ -553,18 +582,5 @@ public class MainActivity extends AppCompatActivity {
     private RenderScript rs;
     private ScriptC_RenderDepth rd;
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            synchronized (bitmap) {
-                if (0 == rotate) {
-                    ((ImageView)findViewById(R.id.dview)).setImageBitmap(bitmap);
-                } else {
-                    Matrix m = new Matrix();
-                    m.postRotate((float)rotate);
-                    ((ImageView)findViewById(R.id.dview)).setImageBitmap(Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m, true));
-                }
-            }
-        }
-    };
+    private Handler handler = new Handler();
 }

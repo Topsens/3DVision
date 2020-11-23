@@ -1,4 +1,4 @@
-#ifndef _TOPSENS_PEOPLE_HPP_
+﻿#ifndef _TOPSENS_PEOPLE_HPP_
 #define _TOPSENS_POEPLE_HPP_
 
 #include "TopsensPeople.h"
@@ -60,7 +60,6 @@ namespace Topsens
         {
             this->Uninitialize();
 
-
             auto err = TopsensPeopleInitialize(this->handle, width, height, fx, fy, cx, cy);
             if (err)
             {
@@ -74,7 +73,7 @@ namespace Topsens
         /** @brief Uninitializes people detector instance. */
         void Uninitialize()
         {
-                TopsensPeopleUninitialize(this->handle);
+            TopsensPeopleUninitialize(this->handle);
         }
 
         /**
@@ -154,7 +153,6 @@ namespace Topsens
          */
         Error Detect(const uint16_t* depth, uint32_t width, uint32_t height, int64_t timestamp, UsersFrame& users)
         {
-
             return (Error)TopsensPeopleDetect(this->handle, depth, width, height, timestamp, &users);
         }
 

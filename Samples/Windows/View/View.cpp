@@ -261,23 +261,29 @@ DWORD View::StyleEx() const
 
 void View::Style(DWORD style)
 {
-    this->style = style;
-
     if (this->hwnd)
     {
         SetWindowLongPtrW(this->hwnd, GWL_STYLE, style);
+        this->style = (DWORD)GetWindowLongPtrW(this->hwnd, GWL_STYLE);
         SetWindowPos(this->hwnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_DRAWFRAME);
+    }
+    else
+    {
+        this->style = style;
     }
 }
 
 void View::StyleEx(DWORD style)
 {
-    this->styleEx = style;
-
     if (this->hwnd)
     {
-        SetWindowLongPtr(this->hwnd, GWL_EXSTYLE, style);
+        SetWindowLongPtrW(this->hwnd, GWL_EXSTYLE, style);
+        this->styleEx = (DWORD)GetWindowLongPtrW(this->hwnd, GWL_EXSTYLE);
         SetWindowPos(this->hwnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_DRAWFRAME);
+    }
+    else
+    {
+        this->styleEx = style;
     }
 }
 
@@ -573,11 +579,11 @@ DialogItem View::Item(int id) const
     return DialogItem(this->hwnd, id);
 }
 
-void View::Cursor(LPTSTR name)
+void View::Cursor(LPWSTR name)
 {
     if (name)
     {
-        this->cursor = LoadCursor(nullptr, name);
+        this->cursor = LoadCursorW(nullptr, name);
     }
     else
     {
@@ -616,14 +622,17 @@ wstring View::Caption() const
     return wstring();
 }
 
-void View::Icon(UINT iconId)
+bool View::Icon(UINT resourceId)
 {
-    HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(iconId));
+    HICON hIcon = LoadIconW(GetModuleHandleW(NULL), MAKEINTRESOURCE(resourceId));
     if (hIcon)
     {
         SendMessageW(this->hwnd, WM_SETICON, ICON_BIG, LPARAM(hIcon));
         DestroyIcon(hIcon);
+        return true;
     }
+
+    return false;
 }
 
 void View::SetTimer(UINT_PTR id, UINT elapse)

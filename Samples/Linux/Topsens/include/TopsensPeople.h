@@ -1,4 +1,4 @@
-#ifndef _TOPSENS_PEOPLE_H_
+﻿#ifndef _TOPSENS_PEOPLE_H_
 #define _TOPSENS_PEOPLE_H_
 
 #include "Topsens.h"

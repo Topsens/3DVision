@@ -12,8 +12,8 @@ class DepthView : public Window
 public:
     DepthView();
 
-    void Draw(const uint16_t* depth, uint32_t w, uint32_t h);
-    void Draw(const Topsens::UsersFrame& users);
+    void Draw(const uint16_t* depth, uint32_t w, uint32_t h, Topsens::Orientation orientation);
+    void Draw(const Topsens::UsersFrame& users, Topsens::Orientation orientation);
     void Error(const std::wstring& error);
 
 protected:

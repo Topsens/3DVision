@@ -4,7 +4,7 @@
 #include "ui_panel.h"
 #include <librealsense2/rs.hpp>
 
-#define MIN_WIDTH   (848)
+#define MIN_WIDTH   (810)
 
 using namespace std;
 using namespace rs2;
@@ -37,7 +37,7 @@ MainWindow::~MainWindow()
 void MainWindow::showEvent(QShowEvent *e)
 {
     QMainWindow::showEvent(e);
-    this->Resize(MIN_WIDTH, 480);
+    this->Arrange(MIN_WIDTH, 480, Orientation::Landscape);
 }
 
 void MainWindow::OnStart()
@@ -51,7 +51,6 @@ void MainWindow::OnStart()
 
     auto w = this->panel->Width();
     auto h = this->panel->Height();
-    this->Resize(w, h);
 
     auto flip = this->panel->Flip();
     auto orient = this->panel->Orientation();
@@ -130,7 +129,7 @@ void MainWindow::OnStart()
                     depth = flipped.data();
                 }
 
-                this->dview->Draw(depth, w, h);
+                this->dview->Draw(depth, w, h, orient);
 
                 UsersFrame users;
                 auto err = people.Detect(depth, w, h, (int64_t)frame.get_timestamp(), users);
@@ -153,6 +152,7 @@ void MainWindow::OnStart()
     });
 
     this->panel->Disable();
+    this->Arrange(w, h, orient);
     this->Status("");
 }
 
@@ -173,8 +173,15 @@ void MainWindow::OnStatus()
     this->statusBar()->showMessage(this->status);
 }
 
-void MainWindow::Resize(uint32_t w, uint32_t h)
+void MainWindow::Arrange(uint32_t w, uint32_t h, Orientation o)
 {
+    if (Orientation::Landscape != o)
+    {
+        w = w ^ h;
+        h = w ^ h;
+        w = w ^ h;
+    }
+
     this->dview->resize(w, h);
     this->dview->move(std::max(0, (MIN_WIDTH - (int)w) / 2), 0);
 

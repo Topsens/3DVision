@@ -11,5 +11,5 @@ var searchData=
   ['deviceclosed_19',['DeviceClosed',['../namespace_topsens.html#ad0c594dde2da13681db90a1c7b345963a182eb22ef614b8dcde6f89be13fdeacc',1,'Topsens']]],
   ['devicepermission_20',['DevicePermission',['../namespace_topsens.html#ad0c594dde2da13681db90a1c7b345963a45e2e25cb1478ca8f7cb1cea38b4a7a5',1,'Topsens']]],
   ['disabled_21',['Disabled',['../namespace_topsens.html#a1d0de37f078279a89999653211d008e2ab9f5c797ebbf55adccdd8539a65a0241',1,'Topsens']]],
-  ['dispose_22',['Dispose',['../class_topsens_1_1_people.html#a5e5cf2b7bf6cbd5cf99b7be9e20b350a',1,'Topsens.People.Dispose()'],['../class_topsens_1_1_unity_1_1_permission.html#a72f04e2ac3e69c93834b1df5d43d15ae',1,'Topsens.Unity.Permission.Dispose()']]]
+  ['dispose_22',['Dispose',['../class_topsens_1_1_people.html#a5e5cf2b7bf6cbd5cf99b7be9e20b350a',1,'Topsens.People.Dispose()'],['../class_topsens_1_1_toolkit_1_1_user_extractor.html#ac9ad5c004ab72fa2607607165a734b88',1,'Topsens.Toolkit.UserExtractor.Dispose()'],['../class_topsens_1_1_unity_1_1_permission.html#a72f04e2ac3e69c93834b1df5d43d15ae',1,'Topsens.Unity.Permission.Dispose()']]]
 ];

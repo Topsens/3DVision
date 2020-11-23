@@ -24,33 +24,64 @@ Panel::~Panel()
     delete ui;
 }
 
-Error Panel::Refresh(uint32_t& count)
+void Panel::Count(uint32_t count)
 {
-    this->DisableOptions();
-
     this->ui->cbDevice->clear();
 
-    auto err = Sensor::Count(count);
-    if (Error::Ok != err)
+    for (uint32_t i = 0; i < count; i++)
     {
-        return err;
+        this->ui->cbDevice->addItem(QString::fromStdString(std::to_string(i)));
     }
 
-    if (count > 0)
+    if (count)
     {
-        for (uint32_t i = 0; i < count; i++)
-        {
-            this->ui->cbDevice->addItem(QString::fromStdString(std::to_string(i)));
-        }
-
         this->ui->cbDevice->setCurrentIndex(0);
-        this->EnableOptions();
+        this->Enable();
     }
-
-    return Error::Ok;
+    else
+    {
+        this->Disable();
+        this->ui->bnRefresh->setEnabled(true);
+        this->ui->bnStop->setEnabled(false);
+    }
 }
 
-Orientation Panel::Orientation()
+bool Panel::Align() const
+{
+    return this->ui->rbAlignYes->isChecked();
+}
+
+bool Panel::Flip() const
+{
+    return this->ui->rbFlipYes->isChecked();
+}
+
+bool Panel::Record() const
+{
+    return this->ui->rbRecordYes->isChecked();
+}
+
+bool Panel::GenUsers() const
+{
+    return this->ui->rbUsersYes->isChecked();
+}
+
+bool Panel::PaintGround() const
+{
+    return this->ui->rbGroundYes->isChecked();
+}
+
+Resolution Panel::ColorRes() const
+{
+    return (Resolution)this->ui->cbCres->currentIndex();
+}
+
+Resolution Panel::DepthRes() const
+{
+    return (Resolution)this->ui->cbDres->currentIndex();
+}
+
+Orientation Panel::Orientation() const
 {
     if (this->ui->rbLand->isChecked())
     {
@@ -65,7 +96,7 @@ Orientation Panel::Orientation()
     return Topsens::Orientation::PortraitAntiClockwise;
 }
 
-void Panel::EnableOptions()
+void Panel::Enable()
 {
     this->ui->cbDevice->setEnabled(true);
     this->ui->cbCres->setEnabled(true);
@@ -77,9 +108,11 @@ void Panel::EnableOptions()
     this->ui->gbRecord->setEnabled(true);
     this->ui->gbGround->setEnabled(true);
     this->ui->bnStart->setEnabled(true);
+    this->ui->bnRefresh->setEnabled(true);
+    this->ui->bnStop->setEnabled(false);
 }
 
-void Panel::DisableOptions()
+void Panel::Disable()
 {
     this->ui->cbDevice->setEnabled(false);
     this->ui->cbCres->setEnabled(false);
@@ -91,18 +124,8 @@ void Panel::DisableOptions()
     this->ui->gbRecord->setEnabled(false);
     this->ui->gbGround->setEnabled(false);
     this->ui->bnStart->setEnabled(false);
-}
-
-void Panel::EnableControls()
-{
     this->ui->bnRefresh->setEnabled(false);
     this->ui->bnStop->setEnabled(true);
-}
-
-void Panel::DisableControls()
-{
-    this->ui->bnRefresh->setEnabled(true);
-    this->ui->bnStop->setEnabled(false);
 }
 
 void Panel::resizeEvent(QResizeEvent* e)

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['open_248',['Open',['../class_topsens_1_1_sensor.html#a2aa84e9c23c63b41f5b9e51b43fc579c',1,'Topsens::Sensor']]]
+  ['mapto2d_263',['MapTo2D',['../struct_topsens_1_1_users_frame.html#a61098facdcd258a5d1a752ba0265c18a',1,'Topsens::UsersFrame']]]
 ];

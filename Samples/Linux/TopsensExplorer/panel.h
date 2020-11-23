@@ -16,14 +16,19 @@ public:
     explicit Panel(QWidget *parent = 0);
     ~Panel();
 
-    Topsens::Error Refresh(uint32_t& count);
+    void Count(uint32_t count);
 
-    Topsens::Orientation Orientation();
+    bool Align() const;
+    bool Flip() const;
+    bool Record() const;
+    bool GenUsers() const;
+    bool PaintGround() const;
+    Topsens::Resolution ColorRes() const;
+    Topsens::Resolution DepthRes() const;
+    Topsens::Orientation Orientation() const;
 
-    void EnableOptions();
-    void DisableOptions();
-    void EnableControls();
-    void DisableControls();
+    void Enable();
+    void Disable();
 
 protected:
     void resizeEvent(QResizeEvent*) override;

@@ -1,3 +1,10 @@
+Version 1.6.0 (2020-11-23)
+--------------------------
+  * Add Android Squat sample program;
+  * Add UserExtractor Toolkit and sample programs;
+  * Update the sample programs for image portrait direction;
+  * SDK optimization.
+
 Version 1.5.0 (2020-10-21)
 --------------------------
   * Add APIs to set image portrait direction;

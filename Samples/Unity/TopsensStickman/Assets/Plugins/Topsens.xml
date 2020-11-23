@@ -531,12 +531,12 @@
         </member>
         <member name="F:Topsens.Vector2.X">
             <summary>
-            X-axis vector. Rightward direction is positive.
+            X-axis component. Rightward direction is positive.
             </summary>
         </member>
         <member name="F:Topsens.Vector2.Y">
             <summary>
-            Y-axis vector. Downward direction is positive.
+            Y-axis component. Downward direction is positive.
             </summary>
         </member>
         <member name="M:Topsens.Vector2.IsNaN">
@@ -558,17 +558,17 @@
         </member>
         <member name="F:Topsens.Vector3.X">
             <summary>
-            X-axis vector. Rightward direction is positive.
+            X-axis component. Rightward direction is positive.
             </summary>
         </member>
         <member name="F:Topsens.Vector3.Y">
             <summary>
-            Y-axis vector. Upward direction is positive.
+            Y-axis component. Upward direction is positive.
             </summary>
         </member>
         <member name="F:Topsens.Vector3.Z">
             <summary>
-            Z-axis vector. The camera illumination direction is positive.
+            Z-axis component. The camera illumination direction is positive.
             </summary>
         </member>
         <member name="M:Topsens.Vector3.IsNaN">

@@ -42,6 +42,7 @@ private:
     void PaintDepth(const Topsens::DepthFrame& frame);
     void PaintUsers(const Topsens::UsersFrame& frame);
     void PaintGround(const Topsens::DepthFrame& frame, const Topsens::Vector4& groundPlain);
+    void Arrange(Topsens::Orientation orientation);
 
     static inline bool IsGround(const Topsens::Vector3& point, const Topsens::Vector4& groundPlane)
     {
@@ -54,6 +55,7 @@ private:
     Panel* panel;
 
     Topsens::Sensor sensor;
+    Topsens::Orientation orientation;
 
     bool stop;
     std::thread thread;

@@ -93,10 +93,10 @@ namespace TopsensExplorerWpf
 
             var b = this.bones[index++];
             b.Visibility = Visibility.Visible;
-            b.X1 = beg2d.X;
-            b.Y1 = beg2d.Y;
-            b.X2 = end2d.X;
-            b.Y2 = end2d.Y;
+            b.X1 = beg2d.X * this.Ratio;
+            b.Y1 = beg2d.Y * this.Ratio;
+            b.X2 = end2d.X * this.Ratio;
+            b.Y2 = end2d.Y * this.Ratio;
         }
 
         private void PaintJoint(Joint joint, ref int index)
@@ -122,9 +122,11 @@ namespace TopsensExplorerWpf
             var j = this.joints[index++];
             j.Visibility = Visibility.Visible;
 
-            Canvas.SetLeft(j, pos2d.X - j.Width * 0.5f);
-            Canvas.SetTop(j, pos2d.Y - j.Height * 0.5f);
+            Canvas.SetLeft(j, (pos2d.X - j.Width * 0.5f) * this.Ratio);
+            Canvas.SetTop(j, (pos2d.Y - j.Height * 0.5f) * this.Ratio);
         }
+
+        public double Ratio { get; set; }
 
         private UsersFrame frame;
 

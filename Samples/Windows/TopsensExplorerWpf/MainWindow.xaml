@@ -3,13 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:l="clr-namespace:TopsensExplorerWpf"
         Title="Topsens Explorer WPF" Loaded="Window_Loaded" Closing="Window_Closing" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight" Icon="Topsens.ico">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        
-        <Grid Grid.Row="0">
+    <StackPanel>
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -18,9 +13,15 @@
             <Image x:Name="cimage" Grid.Column="0" Width="640" Height="480"/>
             <Image x:Name="dimage" Grid.Column="1" Width="640" Height="480"/>
 
-            <Canvas x:Name="canvas" Grid.Column="1"/>
+            <Canvas x:Name="canvas" Grid.Column="1" Width="{Binding ActualWidth, ElementName=dimage}" Height="{Binding ActualHeight, ElementName=dimage}"/>
         </Grid>
+
+        <l:Panel x:Name="panel"/>
         
-        <l:Panel Grid.Row="1" x:Name="panel"/>
-    </Grid>
+        <StatusBar Width="{Binding ActualWidth, ElementName=panel}">
+            <StatusBarItem>
+                <TextBlock x:Name="status"/>
+            </StatusBarItem>
+        </StatusBar>
+    </StackPanel>
 </Window>

@@ -15,5 +15,6 @@ var hierarchy =
     [ "_TOPSENS_VECTOR4", "struct___t_o_p_s_e_n_s___v_e_c_t_o_r4.html", null ],
     [ "JointIndex", "class_topsens_1_1_joint_index.html", null ],
     [ "People", "class_topsens_1_1_people.html", null ],
-    [ "Sensor", "class_topsens_1_1_sensor.html", null ]
+    [ "Sensor", "class_topsens_1_1_sensor.html", null ],
+    [ "UserExtractor", "class_topsens_1_1_toolkit_1_1_user_extractor.html", null ]
 ];

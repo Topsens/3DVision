@@ -1,4 +1,4 @@
-#ifndef _TOPSENS_SENSOR_H_
+﻿#ifndef _TOPSENS_SENSOR_H_
 #define _TOPSENS_SENSOR_H_
 
 #include "Topsens.h"

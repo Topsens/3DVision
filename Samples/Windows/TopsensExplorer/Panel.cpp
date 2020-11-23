@@ -3,8 +3,33 @@
 #include "CheckBox.h"
 #include "ComboBox.h"
 
+using namespace std;
+
 Panel::Panel() : Dialog(IDD_PANEL)
 {
+}
+
+void Panel::Count(uint32_t count)
+{
+    auto list = (ComboBox&)this->Item(IDC_SENSOR);
+    list.Clear();
+
+    for (uint32_t i = 0; i < count; i++)
+    {
+        list.Add(to_wstring(i));
+    }
+
+    if (count)
+    {
+        list.Select(0);
+        this->Enable();
+    }
+    else
+    {
+        this->Disable();
+        this->Item(IDC_REFRESH).Enable();
+        this->Item(IDC_STOP).Disable();
+    }
 }
 
 void Panel::Enable()
@@ -26,6 +51,8 @@ void Panel::Enable()
     this->Item(IDC_GROUND_YES).Enable();
     this->Item(IDC_GROUND_NO).Enable();
     this->Item(IDC_START).Enable();
+    this->Item(IDC_REFRESH).Enable();
+    this->Item(IDC_STOP).Disable();
 }
 
 void Panel::Disable()
@@ -47,6 +74,8 @@ void Panel::Disable()
     this->Item(IDC_GROUND_YES).Disable();
     this->Item(IDC_GROUND_NO).Disable();
     this->Item(IDC_START).Disable();
+    this->Item(IDC_REFRESH).Disable();
+    this->Item(IDC_STOP).Enable();
 }
 
 int Panel::ColorResolution()

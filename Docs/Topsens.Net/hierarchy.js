@@ -6,6 +6,7 @@ var hierarchy =
     [ "Topsens.DepthFrameExtension", "class_topsens_1_1_depth_frame_extension.html", null ],
     [ "IDisposable", null, [
       [ "Topsens.People", "class_topsens_1_1_people.html", null ],
+      [ "Topsens.Toolkit.UserExtractor", "class_topsens_1_1_toolkit_1_1_user_extractor.html", null ],
       [ "Topsens.Unity.Permission", "class_topsens_1_1_unity_1_1_permission.html", null ]
     ] ],
     [ "Topsens.Joint", "struct_topsens_1_1_joint.html", null ],

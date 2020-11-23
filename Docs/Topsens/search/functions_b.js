@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['waitcolor_299',['WaitColor',['../class_topsens_1_1_sensor.html#a09298479415ae9ce008c83dacace6a29',1,'Topsens::Sensor']]],
-  ['waitdepth_300',['WaitDepth',['../class_topsens_1_1_sensor.html#a73e09a7a2456ad4bf3c5c538f92c40b5',1,'Topsens::Sensor']]],
-  ['waitusers_301',['WaitUsers',['../class_topsens_1_1_sensor.html#aa7429df486cd597fbaa9f04a4311a109',1,'Topsens::Sensor']]]
+  ['uninitialize_318',['Uninitialize',['../class_topsens_1_1_people.html#a58e1e9806e90f64564f413f0f8d5deb4',1,'Topsens::People']]],
+  ['userextractor_319',['UserExtractor',['../class_topsens_1_1_toolkit_1_1_user_extractor.html#a0cf6b811ea94385b192d39aca4803327',1,'Topsens::Toolkit::UserExtractor']]]
 ];

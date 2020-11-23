@@ -18,7 +18,7 @@ public:
     explicit DepthView(QWidget *parent = 0);
     ~DepthView();
 
-    void Draw(const uint16_t* depth, uint32_t width, uint32_t height);
+    void Draw(const uint16_t* depth, uint32_t width, uint32_t height, Topsens::Orientation orientation);
     void Draw(const Topsens::UsersFrame&);
 
 signals:
@@ -37,6 +37,7 @@ private:
     std::vector<uint32_t> pixels;
 
     QPixmap pixmap;
+    Topsens::Orientation orientation;
 
     static std::vector<uint32_t> palette;
 };

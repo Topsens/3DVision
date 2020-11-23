@@ -147,12 +147,12 @@ namespace TopsensRealSenseWpf
                                     }
                                 }
 
-                                this.dview.Draw(depth, res.Width, res.Height);
+                                this.dview.Draw(depth, res.Width, res.Height, orient);
 
                                 err = people.Detect(depth, res.Width, res.Height, (long)frame.Timestamp, users);
                                 if (Error.Ok == err)
                                 {
-                                    this.uview.Draw(users);
+                                    this.uview.Draw(users, orient);
                                     this.Status("");
                                 }
                                 else

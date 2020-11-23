@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Topsens;
+using Orientation = Topsens.Orientation;
 
 namespace TopsensExplorerWpf
 {
@@ -30,7 +31,7 @@ namespace TopsensExplorerWpf
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.RefreshDevices();
+            this.Refresh();
 
             this.panel.refresh.Click += this.OnRefresh;
             this.panel.start.Click += this.OnStart;
@@ -51,7 +52,7 @@ namespace TopsensExplorerWpf
 
         private void OnRefresh(object sender, RoutedEventArgs args)
         {
-            this.RefreshDevices();
+            this.Refresh();
         }
 
         private void OnStart(object sender, RoutedEventArgs args)
@@ -61,43 +62,44 @@ namespace TopsensExplorerWpf
             var err = this.sensor.Open(this.panel.devices.SelectedIndex);
             if (Error.Ok != err)
             {
-                MessageBox.Show("Failed to open sensor: " + this.GetError(err));
-                this.RefreshDevices();
+                this.Status("Failed to open sensor: " + this.GetError(err));
+                this.Refresh();
                 return;
             }
 
-            err = this.sensor.SetOrientation(this.panel.Orientation());
+            var orient = this.panel.Orientation();
+            err = this.sensor.SetOrientation(orient);
             if (Error.Ok != err)
             {
-                MessageBox.Show("Failed to set sensor orientation: " + this.GetError(err));
+                this.Status("Failed to set sensor orientation: " + this.GetError(err));
                 return;
             }
 
-            err = this.sensor.SetDepthAligned(this.panel.align.IsChecked ?? false);
+            err = this.sensor.SetDepthAligned(this.panel.Align());
             if (Error.Ok != err)
             {
-                MessageBox.Show("Failed to set depth alignmnent: " + this.GetError(err));
+                this.Status("Failed to set depth alignmnent: " + this.GetError(err));
                 return;
             }
 
-            err = this.sensor.SetImageFlipped(this.panel.flip.IsChecked ?? false);
+            err = this.sensor.SetImageFlipped(this.panel.Flip());
             if (Error.Ok != err)
             {
-                MessageBox.Show("Failed to set image flipped: " + this.GetError(err));
+                this.Status("Failed to set image flipped: " + this.GetError(err));
                 return;
             }
 
-            err = this.sensor.SetRecording(this.panel.record.IsChecked ?? false);
+            err = this.sensor.SetRecording(this.panel.Record());
             if (Error.Ok != err)
             {
-                MessageBox.Show("Failed to set stream recording: " + this.GetError(err));
+                this.Status("Failed to set stream recording: " + this.GetError(err));
                 return;
             }
 
-            err = this.sensor.Start((Resolution)this.panel.cres.SelectedIndex, (Resolution)this.panel.dres.SelectedIndex, this.panel.users.IsChecked ?? false);
+            err = this.sensor.Start(this.panel.ColorRes(), this.panel.DepthRes(), this.panel.GenUsers());
             if (Error.Ok != err)
             {
-                MessageBox.Show("Failed to start sensor: " + this.GetError(err));
+                this.Status("Failed to start sensor: " + this.GetError(err));
                 return;
             }
 
@@ -107,9 +109,40 @@ namespace TopsensExplorerWpf
             this.sensor.DepthReady += this.OnDepthReady;
             this.sensor.UsersReady += this.OnUsersReady;
 
-            this.DisableOptions();
-            this.panel.refresh.IsEnabled = false;
-            this.panel.stop.IsEnabled = true;
+            this.panel.Disable();
+            
+            if (null == this.userPainter)
+            {
+                this.userPainter = new UserPainter(this.canvas);
+            }
+
+            if (Orientation.Landscape == orient)
+            {
+                this.cimage.Width  = 640.0;
+                this.cimage.Height = 480.0;
+                this.dimage.Width  = 640.0;
+                this.dimage.Height = 480.0;
+                this.cimage.LayoutTransform = new RotateTransform(0.0);
+                this.dimage.LayoutTransform = new RotateTransform(0.0);
+                this.canvas.LayoutTransform = new RotateTransform(0.0);
+
+                this.userPainter.Ratio = 640.0 / this.panel.DepthRes().Width();
+            }
+            else
+            {
+                this.cimage.Width  = 640.0 * 4.0 / 3.0;
+                this.cimage.Height = 640.0;
+                this.dimage.Width  = 640.0 * 4.0 / 3.0;
+                this.dimage.Height = 640.0;
+
+                var rotate = (Orientation.PortraitClockwise == orient) ? 90.0 : -90.0;
+                this.cimage.LayoutTransform = new RotateTransform(rotate);
+                this.dimage.LayoutTransform = new RotateTransform(rotate);
+                this.canvas.LayoutTransform = new RotateTransform(rotate);
+
+                this.userPainter.Ratio = 640.0 * 4.0 / 3.0 / this.panel.DepthRes().Width();
+            }
+
         }
 
         private void OnStop(object sender, RoutedEventArgs args)
@@ -125,9 +158,7 @@ namespace TopsensExplorerWpf
                 this.sensor = null;
             }
 
-            this.RefreshDevices();
-            this.panel.refresh.IsEnabled = true;
-            this.panel.stop.IsEnabled = false;
+            this.panel.Enable();
         }
 
         private void OnColorReady(Sensor sensor, ColorFrame frame, Error err)
@@ -256,11 +287,6 @@ namespace TopsensExplorerWpf
 
             this.Dispatcher.BeginInvoke(new Action(()=>
             {
-                if (null == this.userPainter)
-                {
-                    this.userPainter = new UserPainter(this.canvas);
-                }
-
                 lock (this.uframe)
                 {
                     this.userPainter.Paint(this.uframe);
@@ -326,55 +352,32 @@ namespace TopsensExplorerWpf
             }
         }
 
-        private void RefreshDevices()
+        private void Refresh()
         {
             int count;
             var err = Sensor.Count(out count);
 
             if (Error.Ok != err)
             {
-                MessageBox.Show("Failed to get sensor count: " + this.GetError(err));
+                this.panel.Count(0);
+                this.Status("Failed to get sensor count: " + this.GetError(err));
                 return;
             }
 
-            this.panel.devices.Items.Clear();
-
-            if (count > 0)
+            if (0 == count)
             {
-                for (int i = 0; i < count; i++)
-                {
-                    this.panel.devices.Items.Add(i.ToString());
-                }
+                this.Status("No sensor found");
+            }
 
-                this.panel.devices.SelectedIndex = 0;
-                this.EnableOptions();
-            }
-            else
-            {
-                this.DisableOptions();
-            }
+            this.panel.Count(count);
         }
 
-        private void EnableOptions()
+        private void Status(string info)
         {
-            this.panel.devices.IsEnabled = true;
-            this.panel.cres.IsEnabled = true;
-            this.panel.dres.IsEnabled = true;
-            this.panel.start.IsEnabled = true;
-            this.panel.usersGroup.IsEnabled = true;
-            this.panel.alignGroup.IsEnabled = true;
-            this.panel.flipGroup.IsEnabled = true;
-        }
-
-        private void DisableOptions()
-        {
-            this.panel.devices.IsEnabled = false;
-            this.panel.cres.IsEnabled = false;
-            this.panel.dres.IsEnabled = false;
-            this.panel.start.IsEnabled = false;
-            this.panel.usersGroup.IsEnabled = false;
-            this.panel.alignGroup.IsEnabled = false;
-            this.panel.flipGroup.IsEnabled = false;
+            this.Dispatcher.BeginInvoke(new Action(()=>
+            {
+                this.status.Text = info;
+            }));
         }
 
         private string GetError(Error err)

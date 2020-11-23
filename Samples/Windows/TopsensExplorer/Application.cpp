@@ -35,22 +35,12 @@ bool Application::OnCreated()
     this->Icon(IDI_APP);
     this->Style(this->Style() &~ WS_SIZEBOX &~ WS_MAXIMIZEBOX);
 
-    this->cview.Resize(640, 480);
-    this->cview.MoveTo(0, 0);
     this->cview.Show();
-
-    this->dview.Resize(640, 480);
-    this->dview.MoveTo(this->cview.Width(), 0);
     this->dview.Show();
-
-    this->panel.Resize(this->cview.Width() + this->dview.Width(), this->panel.Height());
-    this->panel.MoveTo(0, max(this->cview.Height(), this->dview.Height()));
     this->panel.Show();
-
     this->status.Show();
 
-    this->ResizeClient(this->cview.Width() + this->dview.Width(), this->cview.Height() + this->panel.Height() + this->status.Height());
-
+    this->Arrange(Orientation::Landscape);
     this->OnRefresh();
 
     // Preload resources to minimize sensor start delay.
@@ -119,25 +109,8 @@ void Application::OnRefresh()
         return;
     }
 
-    auto& sensors = (ComboBox&)this->panel.Item(IDC_SENSOR);
-    sensors.Clear();
-
-    if (count > 0)
-    {
-        for (uint32_t i = 0; i < count; i++)
-        {
-            sensors.Add(to_wstring(i));
-        }
-
-        sensors.Select(0);
-        this->panel.Enable();
-        this->status.Text(nullptr);
-    }
-    else
-    {
-        this->panel.Disable();
-        this->status.Text(L"No sensor found");
-    }
+    this->panel.Count(count);
+    this->status.Text(count ? L"" : L"No sensor found");
 }
 
 void Application::OnStart()
@@ -148,6 +121,14 @@ void Application::OnStart()
     if (Error::Ok != err)
     {
         this->status.Text(L"Failed to open sensor. Error: " + GetError(err));
+        return;
+    }
+
+    auto orient = (Orientation)this->panel.Orientation();
+    err = this->sensor.SetOrientation(orient);
+    if (Error::Ok != err)
+    {
+        this->status.Text(L"Failed to set image orientation. Error: " + GetError(err));
         return;
     }
 
@@ -162,13 +143,6 @@ void Application::OnStart()
     if (Error::Ok != err)
     {
         this->status.Text(L"Failed to set image flipped. Error: " + GetError(err));
-        return;
-    }
-
-    err = this->sensor.SetOrientation((Orientation)this->panel.Orientation());
-    if (Error::Ok != err)
-    {
-        this->status.Text(L"Failed to set image orientation. Error: " + GetError(err));
         return;
     }
 
@@ -190,6 +164,8 @@ void Application::OnStart()
     }
 
     this->status.Text(nullptr);
+    this->panel.Disable();
+    this->Arrange(orient);
 
     this->stop = false;
     this->thread = std::thread([=]
@@ -206,7 +182,8 @@ void Application::OnStart()
                 case Error::Ok:
                 {
                     this->cview.Error(nullptr);
-                    this->cview.Draw(cframe);
+                    this->cview.Draw(cframe, orient);
+                    this->cview.Invalidate();
                 }
 
                 case Error::Timeout:
@@ -215,6 +192,7 @@ void Application::OnStart()
                 default:
                 {
                     this->cview.Error((L"Color: " + GetError(err)).c_str());
+                    this->cview.Invalidate();
                 }
             }
 
@@ -223,6 +201,9 @@ void Application::OnStart()
             {
                 case Error::Ok:
                 {
+                    this->dview.Error(nullptr);
+                    this->dview.Ground(nullptr);
+
                     if (generateUsers)
                     {
                         err = this->sensor.WaitUsers(uframe, 0);
@@ -230,29 +211,30 @@ void Application::OnStart()
                         {
                             case Error::Ok:
                             {
-                                this->dview.Error(nullptr);
-                                this->dview.Draw(dframe, uframe, paintGround);
+                                this->dview.Draw(uframe, orient);
+
+                                if (paintGround)
+                                {
+                                    this->dview.Ground(&uframe.GroundPlane);
+                                }
                                 break;
                             }
 
                             case Error::Timeout:
                             {
                                 this->dview.Error(L"Users/Depth lost sync");
-                                this->dview.Draw(dframe);
                                 break;
                             }
 
                             default:
                             {
                                 this->dview.Error((L"Users: " + GetError(err)).c_str());
-                                this->dview.Draw(dframe);
                             }
                         }
                     }
-                    else
-                    {
-                        this->dview.Draw(dframe);
-                    }
+
+                    this->dview.Draw(dframe, orient);
+                    this->dview.Invalidate();
                 }
 
                 case Error::Timeout:
@@ -261,14 +243,11 @@ void Application::OnStart()
                 default:
                 {
                     this->dview.Error((L"Depth: " + GetError(err)).c_str());
+                    this->dview.Invalidate();
                 }
             }
         }
     });
-
-    this->panel.Disable();
-    this->panel.Item(IDC_REFRESH).Disable();
-    this->panel.Item(IDC_STOP).Enable();
 }
 
 void Application::OnStop()
@@ -282,8 +261,27 @@ void Application::OnStop()
     this->sensor.Stop();
     this->sensor.Close();
     this->panel.Enable();
-    this->panel.Item(IDC_REFRESH).Enable();
-    this->panel.Item(IDC_STOP).Disable();
+}
+
+void Application::Arrange(Orientation o)
+{
+    if (Orientation::Landscape == o)
+    {
+        this->cview.Resize(640, 480);
+        this->dview.Resize(640, 480);
+    }
+    else
+    {
+        this->cview.Resize(640, 854);
+        this->dview.Resize(640, 854);
+    }
+    this->cview.MoveTo(0, 0);
+    this->dview.MoveTo(this->cview.Width(), 0);
+
+    this->panel.MoveTo(0, max(this->cview.Height(), this->dview.Height()));
+    this->panel.Resize(this->cview.Width() + this->dview.Width(), this->panel.Height());
+
+    this->ResizeClient(this->cview.Width() + this->dview.Width(), this->cview.Height() + this->panel.Height() + this->status.Height());
 }
 
 wstring Application::GetError(Error error)

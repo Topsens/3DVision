@@ -98,21 +98,9 @@ MainWindow::~MainWindow()
 void MainWindow::showEvent(QShowEvent* e)
 {
     QMainWindow::showEvent(e);
-    this->setFixedSize(this->width(), max(this->ui->lbColor->height(), this->ui->lbDepth->height()) + this->panel->height() + this->ui->statusBar->height());
 
-    uint32_t count;
-    auto err = this->panel->Refresh(count);
-
-    if (Error::Ok != err)
-    {
-        this->ui->statusBar->showMessage(QString("Failed to get sensor count. Error: ") + GetError(err));
-        return;
-    }
-
-    if (!count)
-    {
-        this->ui->statusBar->showMessage(QString("No sensor found"));
-    }
+    this->Arrange(Orientation::Landscape);
+    this->OnRefresh();
 
     // Pre-load resources to minimize sensor start delay.
     Sensor::Preload({ 0, 1 });
@@ -128,23 +116,74 @@ void MainWindow::OnUpdateColor()
 {
     lock_guard<mutex> lock(this->cmutex);
 
-    auto l = this->ui->lbColor;
-    l->setPixmap(this->cpixmap.width() ? this->cpixmap.scaled(l->width(), l->height()) : this->cpixmap);
+    if (this->cpixmap.width())
+    {
+        auto l = this->ui->lbColor;
+
+        switch (this->orientation)
+        {
+            case Orientation::Landscape:
+            {
+                l->setPixmap(this->cpixmap.scaled(l->width(), l->height()));
+                break;
+            }
+
+            case Orientation::PortraitClockwise:
+            {
+                l->setPixmap(this->cpixmap.transformed(QTransform().rotate(90)).scaled(l->width(), l->height()));
+                break;
+            }
+
+            case Orientation::PortraitAntiClockwise:
+            {
+                l->setPixmap(this->cpixmap.transformed(QTransform().rotate(-90)).scaled(l->width(), l->height()));
+                break;
+            }
+
+            default: break;
+        }
+    }
 }
 
 void MainWindow::OnUpdateDepth()
 {
     lock_guard<mutex> lock(this->dmutex);
 
-    auto l = this->ui->lbDepth;
-    l->setPixmap(this->dpixmap.width() ? this->dpixmap.scaled(l->width(), l->height()) : this->dpixmap);
+    if (this->dpixmap.width())
+    {
+        auto l = this->ui->lbDepth;
+
+        switch (this->orientation)
+        {
+            case Orientation::Landscape:
+            {
+                l->setPixmap(this->dpixmap.scaled(l->width(), l->height()));
+                break;
+            }
+
+            case Orientation::PortraitClockwise:
+            {
+                l->setPixmap(this->dpixmap.transformed(QTransform().rotate(90)).scaled(l->width(), l->height()));
+                break;
+            }
+
+            case Orientation::PortraitAntiClockwise:
+            {
+                l->setPixmap(this->dpixmap.transformed(QTransform().rotate(-90)).scaled(l->width(), l->height()));
+                break;
+            }
+
+            default: break;
+        }
+    }
 }
 
 void MainWindow::OnRefresh()
 {
-    uint32_t count;
+    this->ui->statusBar->showMessage(QString());
 
-    auto err = this->panel->Refresh(count);
+    uint32_t count;
+    auto err = Sensor::Count(count);
     if (Error::Ok != err)
     {
         this->ui->statusBar->showMessage(QString("Failed to get sensor count. Error: ") + GetError(err));
@@ -155,6 +194,8 @@ void MainWindow::OnRefresh()
     {
         this->ui->statusBar->showMessage(QString("No sensor found"));
     }
+
+    this->panel->Count(count);
 }
 
 void MainWindow::OnStart()
@@ -166,40 +207,41 @@ void MainWindow::OnStart()
         return;
     }
 
-    err = this->sensor.SetOrientation(this->panel->Orientation());
+    this->orientation = this->panel->Orientation();
+    err = this->sensor.SetOrientation(this->orientation);
     if (Error::Ok != err)
     {
         this->ui->statusBar->showMessage(QString("Failed to set sensor orientation. Error: ") + GetError(err));
         return;
     }
 
-    err = this->sensor.SetDepthAligned(this->panel->ui->rbAlignYes->isChecked());
+    err = this->sensor.SetDepthAligned(this->panel->Align());
     if (Error::Ok != err)
     {
         this->ui->statusBar->showMessage(QString("Failed to set depth alignment. Error: ") + GetError(err));
         return;
     }
 
-    err = this->sensor.SetImageFlipped(this->panel->ui->rbFlipYes->isChecked());
+    err = this->sensor.SetImageFlipped(this->panel->Flip());
     if (Error::Ok != err)
     {
         this->ui->statusBar->showMessage(QString("Failed to set image flipping. Error: ") + GetError(err));
         return;
     }
 
-    err = this->sensor.SetRecording(this->panel->ui->rbRecordYes->isChecked());
+    err = this->sensor.SetRecording(this->panel->Record());
     if (Error::Ok != err)
     {
         this->ui->statusBar->showMessage(QString("Failed to set stream recording. Error: ") + GetError(err));
         return;
     }
 
-    auto colorResolution = this->panel->ui->cbCres->currentIndex();
-    auto depthResolution = this->panel->ui->cbDres->currentIndex();
-    auto generateUsers   = this->panel->ui->rbUsersYes->isChecked();
-    auto paintGround     = this->panel->ui->rbGroundYes->isChecked();
+    auto colorResolution = this->panel->ColorRes();
+    auto depthResolution = this->panel->DepthRes();
+    auto generateUsers   = this->panel->GenUsers();
+    auto paintGround     = this->panel->PaintGround();
 
-    err = this->sensor.Start((Resolution)colorResolution, (Resolution)depthResolution, generateUsers);
+    err = this->sensor.Start(colorResolution, depthResolution, generateUsers);
     if (Error::Ok != err)
     {
         this->ui->statusBar->showMessage(QString("Failed to start sensor. Error: ") + GetError(err));
@@ -311,8 +353,9 @@ void MainWindow::OnStart()
         this->sensor.Close();
     });
 
-    this->panel->DisableOptions();
-    this->panel->EnableControls();
+    this->panel->Disable();
+
+    this->Arrange(this->orientation);
 }
 
 void MainWindow::OnStop()
@@ -323,7 +366,7 @@ void MainWindow::OnStop()
         this->thread.join();
     }
 
-    this->panel->DisableControls();
+    this->panel->Enable();
     this->OnRefresh();
 }
 
@@ -403,6 +446,23 @@ void MainWindow::PaintGround(const DepthFrame& frame, const Vector4& groundPlane
 
         this->dpixmap = QPixmap::fromImage(QImage((uchar*)this->dpixels.data(), frame.Width, frame.Height, QImage::Format_ARGB32));
     }
+}
+
+void MainWindow::Arrange(Orientation orientation)
+{
+    if (Orientation::Landscape == orientation)
+    {
+        this->ui->lbColor->setFixedSize(640, 480);
+        this->ui->lbDepth->setFixedSize(640, 480);
+    }
+    else
+    {
+        this->ui->lbColor->setFixedSize(640, 640 * 4 / 3);
+        this->ui->lbDepth->setFixedSize(640, 640 * 4 / 3);
+    }
+
+    this->panel->move(this->panel->x(), this->ui->lbColor->height());
+    this->setFixedSize(this->width(), this->ui->lbColor->height() + this->panel->height() + this->ui->statusBar->height());
 }
 
 QString MainWindow::GetError(Error error)

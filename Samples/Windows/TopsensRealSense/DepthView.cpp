@@ -61,33 +61,67 @@ DepthView::DepthView()
     }
 }
 
-void DepthView::Draw(const uint16_t* depth, uint32_t w, uint32_t h)
+void DepthView::Draw(const uint16_t* depth, uint32_t w, uint32_t h, Orientation orientation)
 {
-    this->width  = w;
-    this->height = h;
+    if (Orientation::Landscape == orientation)
+    {
+        this->width  = w;
+        this->height = h;
+    }
+    else
+    {
+        this->width  = h;
+        this->height = w;
+    }
 
     lock_guard<std::mutex> lock(this->mutex);
     this->pixels.resize(this->width * this->height);
 
-    for (size_t i = 0; i < w * h; i++)
+    if (Orientation::Landscape == orientation)
     {
-        auto d = depth[i];
-
-        if (d < this->palette.size())
+        for (size_t i = 0; i < this->pixels.size(); i++)
         {
-            this->pixels[i] = this->palette[d];
+            auto d = depth[i];
+            this->pixels[i] = d < this->palette.size() ? this->palette[d] : COLOR_FAR;
+        }
+    }
+    else
+    {
+        vector<int> off(this->height);
+        for (int i = 0; i < this->height; i++)
+        {
+            off[i] = i * this->width;
+        }
+
+        if (Orientation::PortraitClockwise == orientation)
+        {
+            for (int i = this->width - 1; i >= 0; i--)
+            {
+                for (int j = 0; j < this->height; j++)
+                {
+                    auto d = *depth++;
+                    this->pixels[off[j] + i] = d < this->palette.size() ? this->palette[d] : COLOR_FAR;
+                }
+            }
         }
         else
         {
-            this->pixels[i] = COLOR_FAR;
+            for (int i = 0; i < this->width; i++)
+            {
+                for (int j = this->height - 1; j >= 0; j--)
+                {
+                    auto d = *depth++;
+                    this->pixels[off[j] + i] = d < this->palette.size() ? this->palette[d] : COLOR_FAR;
+                }
+            }
         }
     }
 }
 
-void DepthView::Draw(const UsersFrame& frame)
+void DepthView::Draw(const UsersFrame& frame, Orientation orientation)
 {
     lock_guard<std::mutex> lock(this->mutex);
-    this->users.Draw(frame);
+    this->users.Draw(frame, orientation, this->width, this->height);
 }
 
 void DepthView::Error(const wstring& error)
@@ -116,7 +150,7 @@ void DepthView::OnPaint()
             renderer.PixelsARGB((BYTE*)this->pixels.data(), this->width, this->height, (this->ClientWidth() - this->width) / 2, 0, this->width, this->height);
         }
 
-        this->users.Paint(renderer, (this->ClientWidth() - this->width) / 2, 0, this->ClientHeight() / (float)this->height);
+        this->users.Paint(renderer, (this->ClientWidth() - this->width) / 2, 0, 1.f);
 
         if (!this->error.empty() && renderer.Font(L"Segou UI", 40))
         {

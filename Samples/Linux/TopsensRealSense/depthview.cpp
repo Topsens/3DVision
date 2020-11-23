@@ -79,7 +79,7 @@ DepthView::~DepthView()
     delete ui;
 }
 
-void DepthView::Draw(const uint16_t* depth, uint32_t w, uint32_t h)
+void DepthView::Draw(const uint16_t* depth, uint32_t w, uint32_t h, Orientation orientation)
 {
     lock_guard<mutex> lock(this->lock);
 
@@ -91,6 +91,7 @@ void DepthView::Draw(const uint16_t* depth, uint32_t w, uint32_t h)
     }
 
     this->pixmap = QPixmap::fromImage(QImage((uchar*)this->pixels.data(), w, h, QImage::Format_ARGB32));
+    this->orientation = orientation;
 }
 
 void DepthView::Draw(const UsersFrame& users)
@@ -109,5 +110,17 @@ void DepthView::resizeEvent(QResizeEvent* e)
 void DepthView::OnUpdate()
 {
     lock_guard<mutex> lock(this->lock);
-    this->ui->label->setPixmap(this->pixmap);
+
+    if (Orientation::Landscape == this->orientation)
+    {
+        this->ui->label->setPixmap(this->pixmap);
+    }
+    else if (Orientation::PortraitClockwise == this->orientation)
+    {
+        this->ui->label->setPixmap(this->pixmap.transformed(QTransform().rotate(90)));
+    }
+    else
+    {
+        this->ui->label->setPixmap(this->pixmap.transformed(QTransform().rotate(-90)));
+    }
 }

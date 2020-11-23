@@ -59,27 +59,40 @@ DepthView::DepthView()
 
         this->palette[d] = b | (g << 8) | (r << 16) | 0xFF000000;
     }
+
+    this->Ground(nullptr);
 }
 
-void DepthView::Draw(const DepthFrame& frame)
+void DepthView::Draw(const DepthFrame& frame, Orientation orientation)
 {
-    this->DrawDepth(frame);
-    this->Invalidate();
-}
-
-void DepthView::Draw(const DepthFrame& depth, const UsersFrame& users, bool drawGround)
-{
-    if (drawGround && !(isnan(users.GroundPlane.X) || isnan(users.GroundPlane.Y) || isnan(users.GroundPlane.Z) || isnan(users.GroundPlane.W)))
+    if (!isnan(this->ground.X) && !isnan(this->ground.Y) && !isnan(this->ground.Z) && !isnan(this->ground.W))
     {
-        this->DrawGround(depth, users.GroundPlane);
+        this->DrawGround(frame, orientation);
     }
     else
     {
-        this->DrawDepth(depth);
+        this->DrawDepth(frame, orientation);
     }
+}
 
-    this->DrawUsers(users);
-    this->Invalidate();
+void DepthView::Draw(const UsersFrame& frame, Orientation orientation)
+{
+    this->users.Draw(frame, orientation, this->width, this->height);
+}
+
+void DepthView::Ground(const Vector4* ground)
+{
+    if (ground)
+    {
+        this->ground = *ground;
+    }
+    else
+    {
+        this->ground.X = NAN;
+        this->ground.Y = NAN;
+        this->ground.W = NAN;
+        this->ground.Z = NAN;;
+    }
 }
 
 void DepthView::Error(const wchar_t* error)
@@ -133,38 +146,77 @@ void DepthView::OnPaint()
     }
 }
 
-void DepthView::DrawDepth(const DepthFrame& frame)
+void DepthView::DrawDepth(const DepthFrame& frame, Orientation o)
 {
-    this->width  = frame.Width;
-    this->height = frame.Height;
+    if (Orientation::Landscape == o)
+    {
+        this->width  = frame.Width;
+        this->height = frame.Height;
+    }
+    else
+    {
+        this->width  = frame.Height;
+        this->height = frame.Width;
+    }
 
     lock_guard<std::mutex> lock(this->mutex);
     this->pixels.resize(this->width * this->height);
 
-    for (size_t i = 0; i < this->pixels.size(); i++)
+    if (Orientation::Landscape == o)
     {
-        auto d = frame.Pixels[i];
-
-        if (d < this->palette.size())
+        for (size_t i = 0; i < this->pixels.size(); i++)
         {
-            this->pixels[i] = this->palette[d];
+            auto d = frame.Pixels[i];
+            this->pixels[i] = d < this->palette.size() ? this->palette[d] : COLOR_FAR;
+        }
+    }
+    else
+    {
+        auto p = frame.Pixels;
+
+        vector<int> off(this->height);
+        for (int i = 0; i < this->height; i++)
+        {
+            off[i] = i * this->width;
+        }
+
+        if (Orientation::PortraitClockwise == o)
+        {
+            for (int i = this->width - 1; i >= 0; i--)
+            {
+                for (int j = 0; j < this->height; j++)
+                {
+                    auto d = *p++;
+                    this->pixels[off[j] + i] = d < this->palette.size() ? this->palette[d] : COLOR_FAR;
+                }
+            }
         }
         else
         {
-            this->pixels[i] = COLOR_FAR;
+            for (int i = 0; i < this->width; i++)
+            {
+                for (int j = this->height - 1; j >= 0; j--)
+                {
+                    auto d = *p++;
+                    this->pixels[off[j] + i] = d < this->palette.size() ? this->palette[d] : COLOR_FAR;
+                }
+            }
         }
     }
 }
 
-void DepthView::DrawUsers(const UsersFrame& frame)
+void DepthView::DrawGround(const DepthFrame& frame, Orientation o)
 {
-    this->users.Draw(frame);
-}
-
-void DepthView::DrawGround(const DepthFrame& frame, const Vector4& groundPlane)
-{
-    this->width  = frame.Width;
-    this->height = frame.Height;
+    if (Orientation::Landscape == o)
+    {
+        this->width  = frame.Width;
+        this->height = frame.Height;
+    }
+    else
+    {
+        this->width  = frame.Height;
+        this->height = frame.Width;
+    }
 
     lock_guard<std::mutex> lock(this->mutex);
 
@@ -172,17 +224,76 @@ void DepthView::DrawGround(const DepthFrame& frame, const Vector4& groundPlane)
     if (Error::Ok == frame.ToPointCloud(cloud))
     {
         this->pixels.resize(this->width * this->height);
-        for (size_t i = 0; i < this->pixels.size(); i++)
-        {
-            auto d = frame.Pixels[i];
 
-            if (d < this->palette.size())
+        if (Orientation::Landscape == o)
+        {
+            for (size_t i = 0; i < this->pixels.size(); i++)
             {
-                this->pixels[i] = IsGround(cloud[i], groundPlane) ? COLOR_GROUND : this->palette[d];
+                auto d = frame.Pixels[i];
+
+                if (d < this->palette.size())
+                {
+                    this->pixels[i] = IsGround(cloud[i], this->ground) ? COLOR_GROUND : this->palette[d];
+                }
+                else
+                {
+                    this->pixels[i] = COLOR_FAR;
+                }
+            }
+        }
+        else
+        {
+            auto p = frame.Pixels;
+
+            vector<int> off(this->height);
+            for (int i = 0; i < this->height; i++)
+            {
+                off[i] = i * this->width;
+            }
+
+            if (Orientation::PortraitClockwise == o)
+            {
+                int idx = 0;
+
+                for (int i = this->width - 1; i >= 0; i--)
+                {
+                    for (int j = 0; j < this->height; j++)
+                    {
+                        auto d = frame.Pixels[idx];
+                        if (d < this->palette.size())
+                        {
+                            this->pixels[off[j] + i] = IsGround(cloud[idx], this->ground) ? COLOR_GROUND : this->palette[d];
+                        }
+                        else
+                        {
+                            this->pixels[off[j] + i] = COLOR_FAR;
+                        }
+
+                        idx++;
+                    }
+                }
             }
             else
             {
-                this->pixels[i] = COLOR_FAR;
+                int idx = 0;
+
+                for (int i = 0; i < this->width; i++)
+                {
+                    for (int j = this->height - 1; j >= 0; j--)
+                    {
+                        auto d = frame.Pixels[idx];
+                        if (d < this->palette.size())
+                        {
+                            this->pixels[off[j] + i] = IsGround(cloud[idx], this->ground) ? COLOR_GROUND : this->palette[d];
+                        }
+                        else
+                        {
+                            this->pixels[off[j] + i] = COLOR_FAR;
+                        }
+
+                        idx++;
+                    }
+                }
             }
         }
     }

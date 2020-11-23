@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Topsens.Toolkit</name>
+    </assembly>
+    <members>
+        <member name="T:Topsens.Toolkit.UserExtractor">
+            <summary>
+            User pixels extractor.
+            </summary>
+        </member>
+        <member name="M:Topsens.Toolkit.UserExtractor.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Topsens.Toolkit.UserExtractor.Initialize(Topsens.Resolution)">
+            <summary>
+            Initializes user pixels extractor instance.
+            </summary>
+            <param name="resolution">The resolution of depth image corresponding to the input users frame.</param>
+            <returns><see cref="F:Topsens.Error.Ok"/> if the call succeeds, otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.</returns>
+        </member>
+        <member name="M:Topsens.Toolkit.UserExtractor.Extract(Topsens.ColorFrame,Topsens.UsersFrame,System.Int32[]@)">
+            <summary>
+            Extracts user pixels.
+            </summary>
+            <param name="cframe">Color image frame.</param>
+            <param name="uframe">Users frame.</param>
+            <param name="extracted">The collection of extracted user pixels.</param>
+            <returns><see cref="F:Topsens.Error.Ok"/> if the call succeeds, otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.</returns>
+        </member>
+        <member name="M:Topsens.Toolkit.UserExtractor.Dispose">
+            <summary>
+            Releases the resources.
+            </summary>
+        </member>
+    </members>
+</doc>

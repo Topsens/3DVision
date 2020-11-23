@@ -14,6 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
+using Topsens;
+using Orientation = Topsens.Orientation;
+
 namespace TopsensRealSenseWpf
 {
     /// <summary>
@@ -27,7 +30,7 @@ namespace TopsensRealSenseWpf
             InitPalette();
         }
 
-        public void Draw(short[] depth, int width, int height)
+        public void Draw(short[] depth, int width, int height, Orientation orientation)
         {
             var w = this.image.ActualWidth;
             var h = this.image.ActualHeight;
@@ -60,6 +63,19 @@ namespace TopsensRealSenseWpf
 
                 lock (this.pixels)
                 {
+                    if (Orientation.Landscape == orientation)
+                    {
+                        this.LayoutTransform = new RotateTransform(0.0);
+                    }
+                    else if (Orientation.PortraitClockwise == orientation)
+                    {
+                        this.LayoutTransform = new RotateTransform(90.0);
+                    }
+                    else
+                    {
+                        this.LayoutTransform = new RotateTransform(-90.0);
+                    }
+
                     this.bitmap.WritePixels(new Int32Rect(0, 0, width, height), this.pixels, width * 4, 0);
                 }
             }), DispatcherPriority.Render);

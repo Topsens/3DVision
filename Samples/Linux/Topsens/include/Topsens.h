@@ -1,4 +1,4 @@
-#ifndef _TOPSENS_H_
+﻿#ifndef _TOPSENS_H_
 #define _TOPSENS_H_
 
 #include <stdint.h>
@@ -53,8 +53,8 @@ typedef enum _TOPSENS_RESOLUTION
  */
 typedef struct _TOPSENS_VECTOR2
 {
-    float X; /**< X-axis vector. Rightward direction is positive. */
-    float Y; /**< Y-axis vector. Downward direction is positive. */
+    float X; /**< X-axis component. Rightward direction is positive. */
+    float Y; /**< Y-axis component. Downward direction is positive. */
 } TOPSENS_VECTOR2;
 
 /**
@@ -63,9 +63,9 @@ typedef struct _TOPSENS_VECTOR2
  */
 typedef struct _TOPSENS_VECTOR3
 {
-    float X; /**< X-axis vector. Rightward direction is positive. */
-    float Y; /**< Y-axis vector. Upward direction is positive. */
-    float Z; /**< Z-axis vector. The camera illumination direction is positive. */
+    float X; /**< X-axis component. Rightward direction is positive. */
+    float Y; /**< Y-axis component. Upward direction is positive. */
+    float Z; /**< Z-axis component. The camera illumination direction is positive. */
 
 } TOPSENS_VECTOR3;
 

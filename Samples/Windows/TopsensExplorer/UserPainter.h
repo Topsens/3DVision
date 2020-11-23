@@ -8,7 +8,7 @@
 class UserPainter
 {
 public:
-    void Draw(const Topsens::UsersFrame& users);
+    void Draw(const Topsens::UsersFrame& users, Topsens::Orientation orientation, int width, int height);
     void Paint(GDIRenderer& renderer, float scale);
 
 private:

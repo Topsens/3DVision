@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['uninitialize_221',['Uninitialize',['../class_topsens_1_1_people.html#a3f3da5a44c79fc18f1d9a723a3674865',1,'Topsens.People.Uninitialize()'],['../class_topsens_1_1_unity_1_1_permission.html#a150cc361fcde1da927e26448921ccaee',1,'Topsens.Unity.Permission.Uninitialize()']]],
-  ['usershandler_222',['UsersHandler',['../namespace_topsens.html#ac35b6865a5c3aa058b5a8b847ec6c14e',1,'Topsens']]]
+  ['topointcloud_227',['ToPointCloud',['../class_topsens_1_1_depth_frame_extension.html#a65f3ffbafe21a005b7a0f5f82eaea713',1,'Topsens::DepthFrameExtension']]],
+  ['tounity_228',['ToUnity',['../class_topsens_1_1_unity_1_1_vector_extension.html#adae5d510ba15602420d885c0c2925f6b',1,'Topsens.Unity.VectorExtension.ToUnity(this Topsens.Vector2 v)'],['../class_topsens_1_1_unity_1_1_vector_extension.html#abd7e3ed371d3541a2d5696a0eb9951b5',1,'Topsens.Unity.VectorExtension.ToUnity(this Topsens.Vector3 v)'],['../class_topsens_1_1_unity_1_1_vector_extension.html#a36ca755e9fcadf3ba7a425c2187ed85c',1,'Topsens.Unity.VectorExtension.ToUnity(this Topsens.Vector4 v)']]]
 ];

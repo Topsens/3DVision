@@ -3,7 +3,7 @@
 using namespace std;
 using namespace Topsens;
 
-void UserPainter::Draw(const UsersFrame& users)
+void UserPainter::Draw(const UsersFrame& users, Orientation orientation, int width, int height)
 {
     lock_guard<mutex> lock(this->lock);
 
@@ -24,6 +24,25 @@ void UserPainter::Draw(const UsersFrame& users)
     else
     {
         this->skeletons.clear();
+    }
+
+    for (auto& skeleton : this->skeletons)
+    {
+        for (auto& joint : skeleton)
+        {
+            auto j = joint;
+
+            if (Orientation::PortraitClockwise == orientation)
+            {
+                joint.X = width - j.Y - 1;
+                joint.Y = j.X;
+            }
+            else if (Orientation::PortraitAntiClockwise == orientation)
+            {
+                joint.X = j.Y;
+                joint.Y = height - j.X - 1;
+            }
+        }
     }
 }
 

@@ -32,7 +32,7 @@ private slots:
     void OnStatus();
 
 private:
-    void Resize(uint32_t, uint32_t);
+    void Arrange(uint32_t, uint32_t, Topsens::Orientation);
     void Status(const QString&);
 
     static QString GetError(Topsens::Error);

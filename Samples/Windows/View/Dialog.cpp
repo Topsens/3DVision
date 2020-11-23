@@ -26,7 +26,6 @@ bool Dialog::Create(View* parent)
 
         if (this->hwnd)
         {
-            this->parent  = parent;
             this->style   = (DWORD)GetWindowLongPtrW(this->hwnd, GWL_STYLE);
             this->styleEx = (DWORD)GetWindowLongPtrW(this->hwnd, GWL_EXSTYLE);
 

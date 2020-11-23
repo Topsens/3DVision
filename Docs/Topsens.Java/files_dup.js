@@ -34,6 +34,9 @@ var files_dup =
     [ "Skeleton.java", "_skeleton_8java.html", [
       [ "Skeleton", "classcn_1_1topsens_1_1_skeleton.html", "classcn_1_1topsens_1_1_skeleton" ]
     ] ],
+    [ "UserExtractor.java", "_user_extractor_8java.html", [
+      [ "UserExtractor", "classcn_1_1topsens_1_1toolkit_1_1_user_extractor.html", "classcn_1_1topsens_1_1toolkit_1_1_user_extractor" ]
+    ] ],
     [ "UserMask.java", "_user_mask_8java.html", [
       [ "UserMask", "classcn_1_1topsens_1_1_user_mask.html", "classcn_1_1topsens_1_1_user_mask" ]
     ] ],

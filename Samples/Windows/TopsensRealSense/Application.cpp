@@ -85,14 +85,21 @@ void Application::OnStart()
         return;
     }
 
-    uint32_t w = this->panel.XRes();
-    uint32_t h = this->panel.YRes();
-
-    this->ResizeClient(w, h + this->panel.Height() + this->status.Height());
-
     auto flip   = this->panel.Flip();
     auto serial = this->panel.Serial();
     auto orient = this->panel.Orientation();
+
+    uint32_t w = this->panel.XRes();
+    uint32_t h = this->panel.YRes();
+
+    if (Orientation::Landscape == orient)
+    {
+        this->ResizeClient(w, h + this->panel.Height() + this->status.Height());
+    }
+    else
+    {
+        this->ResizeClient(h, w + this->panel.Height() + this->status.Height());
+    }
 
     this->stop = false;
     this->thread = std::thread([=]
@@ -167,13 +174,13 @@ void Application::OnStart()
                     depth = flipped.data();
                 }
 
-                this->dview.Draw(depth, w, h);
+                this->dview.Draw(depth, w, h, orient);
 
                 UsersFrame users;
                 auto err = people.Detect(depth, w, h, (int64_t)frame.get_timestamp(), users);
                 if (Error::Ok == err)
                 {
-                    this->dview.Draw(users);
+                    this->dview.Draw(users, orient);
                     this->dview.Error(L"");
                 }
                 else

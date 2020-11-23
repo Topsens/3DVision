@@ -1,0 +1,9 @@
+﻿<Window x:Class="TopsensUserExtractorWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Topsens User Extractor WPF" Loaded="Window_Loaded" Closing="Window_Closing" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
+    <Grid>
+        <Image x:Name="background" Source="Background.jpg" Width="640" Height="480"/>
+        <Image x:Name="foreground"/>
+    </Grid>
+</Window>

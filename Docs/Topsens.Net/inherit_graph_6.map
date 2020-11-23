@@ -1,5 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,95,57"/>
-<area shape="rect" id="node2" href="$class_topsens_1_1_people.html" title="The people detector operation interface (Dedicated for all third&#45;party cameras)." alt="" coords="173,5,287,32"/>
-<area shape="rect" id="node3" href="$class_topsens_1_1_unity_1_1_permission.html" title="The permission management under Unity Android platform (Dedicated for TOPSENS own cameras)." alt="" coords="143,56,317,83"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,95,83"/>
+<area shape="rect" id="node2" href="$class_topsens_1_1_people.html" title="The people detector operation interface (Dedicated for all third&#45;party cameras)." alt="" coords="184,5,299,32"/>
+<area shape="rect" id="node3" href="$class_topsens_1_1_toolkit_1_1_user_extractor.html" title="User pixels extractor." alt="" coords="143,56,340,83"/>
+<area shape="rect" id="node4" href="$class_topsens_1_1_unity_1_1_permission.html" title="The permission management under Unity Android platform (Dedicated for TOPSENS own cameras)." alt="" coords="154,107,329,133"/>
 </map>

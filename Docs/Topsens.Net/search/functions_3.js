@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['height_194',['Height',['../class_topsens_1_1_resolution_extension.html#a6bca638c8371911322c93723143ee51c',1,'Topsens::ResolutionExtension']]]
+  ['getidentity_200',['GetIdentity',['../class_topsens_1_1_unity_1_1_permission.html#a03385adc07febc344a54f83f506e4c6e',1,'Topsens::Unity::Permission']]],
+  ['getorientation_201',['GetOrientation',['../class_topsens_1_1_people.html#aae97cda0361bbd9d34b818aee6c79042',1,'Topsens.People.GetOrientation()'],['../class_topsens_1_1_sensor.html#a951580adc743418c3de846e2ef28ab96',1,'Topsens.Sensor.GetOrientation()']]]
 ];

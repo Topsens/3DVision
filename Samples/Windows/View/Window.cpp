@@ -26,15 +26,16 @@ bool Window::Create(View* parent)
         if (parent)
         {
             hWndParent = parent->Handle();
-            if (!this->Style())
-            {
-                this->Style(WS_CHILDWINDOW);
-            }
+            this->Style(this->Style() | WS_CHILD);
         }
         else
         {
             hWndParent = nullptr;
-            if (!this->Style())
+            if (this->Style())
+            {
+                this->Style(this->Style() &~ WS_CHILD);
+            }
+            else
             {
                 this->Style(WS_OVERLAPPEDWINDOW);
             }
@@ -55,6 +56,9 @@ bool Window::Create(View* parent)
 
         if (this->hwnd)
         {
+            this->style   = (DWORD)GetWindowLongPtrW(this->hwnd, GWL_STYLE);
+            this->styleEx = (DWORD)GetWindowLongPtrW(this->hwnd, GWL_EXSTYLE);
+            
             if (!this->OnCreated())
             {
                 this->Destroy();

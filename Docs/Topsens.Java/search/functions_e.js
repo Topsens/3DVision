@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['waitcolor_188',['waitColor',['../classcn_1_1topsens_1_1_sensor.html#a2983942c1f24ce32d28703e694f3c939',1,'cn::topsens::Sensor']]],
-  ['waitdepth_189',['waitDepth',['../classcn_1_1topsens_1_1_sensor.html#a3b629f6f5ceee677e6dd841e6cf3a3b4',1,'cn::topsens::Sensor']]],
-  ['waitusers_190',['waitUsers',['../classcn_1_1topsens_1_1_sensor.html#a6d315ea24423af6309aaf49b8edcb465',1,'cn::topsens::Sensor']]],
-  ['width_191',['width',['../enumcn_1_1topsens_1_1_resolution.html#a3eeed61a3424d2f907c8a1e420fddf6d',1,'cn::topsens::Resolution']]]
+  ['vector2_196',['Vector2',['../classcn_1_1topsens_1_1_vector2.html#a3a5df4502ce081e8b80838fe2c15628d',1,'cn.topsens.Vector2.Vector2()'],['../classcn_1_1topsens_1_1_vector2.html#ae17a63b0c563f7997b976432c326b55b',1,'cn.topsens.Vector2.Vector2(float x, float y)']]],
+  ['vector3_197',['Vector3',['../classcn_1_1topsens_1_1_vector3.html#ac40804b7686a1152bcba217dfe5dde6f',1,'cn.topsens.Vector3.Vector3()'],['../classcn_1_1topsens_1_1_vector3.html#a1bbdb6703f7802eefdcf70adc844ef96',1,'cn.topsens.Vector3.Vector3(float x, float y, float z)']]],
+  ['vector4_198',['Vector4',['../classcn_1_1topsens_1_1_vector4.html#a7620f20e8868d975c2e6af52042d6433',1,'cn.topsens.Vector4.Vector4()'],['../classcn_1_1topsens_1_1_vector4.html#a7a10bda557a2b9d5bc156f7b9aad1a3a',1,'cn.topsens.Vector4.Vector4(float x, float y, float z, float w)']]]
 ];

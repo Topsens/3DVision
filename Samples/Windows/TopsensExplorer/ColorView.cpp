@@ -4,19 +4,58 @@
 using namespace std;
 using namespace Topsens;
 
-void ColorView::Draw(const ColorFrame& frame)
+void ColorView::Draw(const ColorFrame& frame, Orientation orientation)
 {
-    this->width  = frame.Width;
-    this->height = frame.Height;
-
-    auto len = this->width * this->height;
+    if (Orientation::Landscape == orientation)
+    {
+        this->width  = frame.Width;
+        this->height = frame.Height;
+    }
+    else
+    {
+        this->height = frame.Width;
+        this->width  = frame.Height;
+    }
 
     lock_guard<std::mutex> lock(this->mutex);
 
-    this->pixels.resize(len * 4);
-    memcpy(&this->pixels[0], frame.Pixels, this->pixels.size());
+    this->pixels.resize(this->width * this->height);
 
-    this->Invalidate();
+    if (Orientation::Landscape == orientation)
+    {
+        memcpy(&this->pixels[0], frame.Pixels, this->pixels.size() * sizeof(this->pixels[0]));
+    }
+    else
+    {
+        auto p = frame.Pixels;
+
+        vector<int> off(this->height);
+        for (int i = 0; i < this->height; i++)
+        {
+            off[i] = i * this->width;
+        }
+
+        if (Orientation::PortraitClockwise == orientation)
+        {
+            for (int i = this->width - 1; i >= 0; i--)
+            {
+                for (int j = 0; j < this->height; j++)
+                {
+                    this->pixels[off[j] + i] = *p++;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < this->width; i++)
+            {
+                for (int j = this->height - 1; j >= 0; j--)
+                {
+                    this->pixels[off[j] + i] = *p++;
+                }
+            }
+        }
+    }
 }
 
 void ColorView::Error(const wchar_t* error)
@@ -31,8 +70,6 @@ void ColorView::Error(const wchar_t* error)
     {
         this->error.clear();
     }
-
-    this->Invalidate();
 }
 
 void ColorView::OnPaint()

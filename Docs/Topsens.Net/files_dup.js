@@ -38,6 +38,9 @@ var files_dup =
     [ "Skeleton.cs", "_skeleton_8cs.html", [
       [ "Skeleton", "class_topsens_1_1_skeleton.html", "class_topsens_1_1_skeleton" ]
     ] ],
+    [ "UserExtractor.cs", "_user_extractor_8cs.html", [
+      [ "UserExtractor", "class_topsens_1_1_toolkit_1_1_user_extractor.html", "class_topsens_1_1_toolkit_1_1_user_extractor" ]
+    ] ],
     [ "UserMask.cs", "_user_mask_8cs.html", [
       [ "UserMask", "class_topsens_1_1_user_mask.html", "class_topsens_1_1_user_mask" ]
     ] ],

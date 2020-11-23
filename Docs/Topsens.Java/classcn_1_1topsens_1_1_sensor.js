@@ -6,7 +6,7 @@ var classcn_1_1topsens_1_1_sensor =
     [ "error", "classcn_1_1topsens_1_1_sensor.html#a166c61a6160a776a54c9f83b107ff6aa", null ],
     [ "getOrientation", "classcn_1_1topsens_1_1_sensor.html#a95884c88fffec0adede68a797367f7f3", null ],
     [ "hasPermission", "classcn_1_1topsens_1_1_sensor.html#abb05741844040e09c590d7feef231881", null ],
-    [ "initialize", "classcn_1_1topsens_1_1_sensor.html#a90f4456a04966cd45827cd35e4d7dae7", null ],
+    [ "initialize", "classcn_1_1topsens_1_1_sensor.html#ad8110beb445d0090d5133240d94505ad", null ],
     [ "isDepthAligned", "classcn_1_1topsens_1_1_sensor.html#a342253fa313edea742d6e6a466440136", null ],
     [ "isImageFlipped", "classcn_1_1topsens_1_1_sensor.html#ad1aa59628180ee2ecbb6ac1a93f2d07c", null ],
     [ "isMaskEnabled", "classcn_1_1topsens_1_1_sensor.html#a3f07167631764b3099e8db4f5337bfa4", null ],
