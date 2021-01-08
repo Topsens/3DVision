@@ -26,9 +26,17 @@ typedef enum _TOPSENS_ERROR
     TOPSENS_ERROR_STREAM_END         = 105, /**< Stream end reached. */
     TOPSENS_ERROR_STREAM_IO          = 106, /**< Stream IO error. */
     TOPSENS_ERROR_TIMESTAMP          = 200, /**< Stream frame timestamp error. */
-    TOPSENS_ERROR_RESOURCE           = 201  /**< Resource loading error. */
+    TOPSENS_ERROR_RESOURCE           = 201, /**< Resource loading error. */
+    TOPSENS_ERROR_CONFIG             = 202  /**< Config loading error. */
 
 } TOPSENS_ERROR;
+
+/** @brief Preconfigured identity. */
+typedef enum _TOPSENS_CONFIG
+{
+    TOPSENS_CONFIG_RSD415 = 0x1000, /**< Intel RealSense D415 depth camera. */
+    TOPSENS_CONFIG_RSD435 = 0x1001  /**< Intel RealSense D435 depth camera. */
+} TOPSENS_CONFIG;
 
 /** @brief Image direction. */
 typedef enum _TOPSENS_ORIENTATION

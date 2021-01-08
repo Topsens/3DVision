@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="Topsens.ico"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Topsens C++ API
-   &#160;<span id="projectnumber">1.6.0</span>
+   &#160;<span id="projectnumber">1.7.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -166,6 +166,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af5ed4970fc5db8736a9a637de973edd1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_topsens_1_1_sensor.html#af5ed4970fc5db8736a9a637de973edd1">IsRecording</a> ()</td></tr>
 <tr class="memdesc:af5ed4970fc5db8736a9a637de973edd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether records stream to file.  <a href="class_topsens_1_1_sensor.html#af5ed4970fc5db8736a9a637de973edd1">More...</a><br /></td></tr>
 <tr class="separator:af5ed4970fc5db8736a9a637de973edd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acaa4ed816fc5ac4cacde6907646ada51"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_topsens.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_topsens_1_1_sensor.html#acaa4ed816fc5ac4cacde6907646ada51">SetConfig</a> (<a class="el" href="namespace_topsens.html#a0d8785f1f5499688f53bc72e6900460d">Config</a> config)</td></tr>
+<tr class="memdesc:acaa4ed816fc5ac4cacde6907646ada51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets preconfigured identity.  <a href="class_topsens_1_1_sensor.html#acaa4ed816fc5ac4cacde6907646ada51">More...</a><br /></td></tr>
+<tr class="separator:acaa4ed816fc5ac4cacde6907646ada51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -583,6 +586,43 @@ Static Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="namespace_topsens.html#a2c3e4bb40f36b262a5214e2da2bca9c5aa60852f204ed8028c1c58808b746d115" title="Method executed successfully.">Error::Ok</a> if the call succeeds, otherwise refer to <a class="el" href="namespace_topsens.html#a2c3e4bb40f36b262a5214e2da2bca9c5" title="The error code.">Error</a> for the specific meaning. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_topsens_sensor_8hpp_source.html#l00030">30</a> of file <a class="el" href="_topsens_sensor_8hpp_source.html">TopsensSensor.hpp</a>.</p>
+
+</div>
+</div>
+<a id="acaa4ed816fc5ac4cacde6907646ada51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acaa4ed816fc5ac4cacde6907646ada51">&#9670;&nbsp;</a></span>SetConfig()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_topsens.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a> SetConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_topsens.html#a0d8785f1f5499688f53bc72e6900460d">Config</a>&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets preconfigured identity. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>Preconfigured identity. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="namespace_topsens.html#a2c3e4bb40f36b262a5214e2da2bca9c5aa60852f204ed8028c1c58808b746d115" title="Method executed successfully.">Error::Ok</a> if the call succeeds, <a class="el" href="namespace_topsens.html#a2c3e4bb40f36b262a5214e2da2bca9c5a1cd5ecce6fe138df5c3f7e8854a1a66d" title="Invalid operation.">Error::InvalidOperation</a> if the sensor has been started, otherwise refer to <a class="el" href="namespace_topsens.html#a2c3e4bb40f36b262a5214e2da2bca9c5" title="The error code.">Error</a> for the specific meaning. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_topsens_sensor_8hpp_source.html#l00329">329</a> of file <a class="el" href="_topsens_sensor_8hpp_source.html">TopsensSensor.hpp</a>.</p>
 
 </div>
 </div>

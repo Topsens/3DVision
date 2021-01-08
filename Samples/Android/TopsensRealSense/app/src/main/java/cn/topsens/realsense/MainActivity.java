@@ -32,6 +32,7 @@ import com.intel.realsense.librealsense.*;
 
 import cn.topsens.*;
 import cn.topsens.Error;
+import cn.topsens.Config;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -137,6 +138,15 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     this.serial = serial;
+
+                    String name = dev.getInfo(CameraInfo.NAME);
+                    if (name.contains("D415")) {
+                        this.config = Config.RSD415;
+                    } else if (name.contains("D435")) {
+                        this.config = Config.RSD435;
+                    } else {
+                        this.config = 0;
+                    }
 
                     ArrayList<String> list = new ArrayList<String>();
 
@@ -270,34 +280,14 @@ public class MainActivity extends AppCompatActivity {
         this.thread = new Thread() {
             @Override
             public void run() {
-                try (Config cfg = new Config()) {
+                Pipeline pipe = new Pipeline();
+                People people = new People();
+
+                try ( com.intel.realsense.librealsense.Config cfg = new  com.intel.realsense.librealsense.Config()) {
                     cfg.enableDevice(serial);
                     cfg.enableStream(StreamType.DEPTH, -1, w, h, StreamFormat.Z16, fps);
 
-                    float fx, fy, cx, cy;
-
-                    Pipeline pipe = new Pipeline();
                     try (PipelineProfile prof = pipe.start(cfg)) {
-                        Intrinsic intr = getIntrisic(prof, w, h);
-                        if (null == intr) {
-                            toast("Failed to get intrinsic");
-                            pipe.stop();
-                            pipe.close();
-                            return;
-                        }
-
-                        fx = getFloat(intr, "mFx");
-                        fy = getFloat(intr, "mFy");
-                        cx = getFloat(intr, "mPpx");
-                        cy = getFloat(intr, "mPpy");
-
-                    } catch (Exception e) {
-                        toast("Failed to start RealSense: " + e.getMessage());
-                        return;
-                    }
-
-                    People people = new People();
-                    try {
                         Error err = people.setImageFlipped(flip);
                         if (Error.Ok != err) {
                             toast("Failed to set image flip: " + err.toString());
@@ -310,7 +300,33 @@ public class MainActivity extends AppCompatActivity {
                             return;
                         }
 
-                        err = people.initialize(w, h, fx, fy, cx, cy);
+                        // if camera is offically supported, preset config can be used to initialize people object.
+                        // otherwise we have to retrieve camera parameters to initialize people.
+                        if (0 != config) {
+                            err = people.setConfig(config);
+                            if (Error.Ok != err) {
+                                toast("Failed to set config: " + err.toString());
+                                return;
+                            }
+
+                            err = people.initialize(w, h);
+                        }
+                        else {
+                            float fx, fy, cx, cy;
+                            Intrinsic intr = getIntrisic(prof, w, h);
+                            if (null == intr) {
+                                toast("Failed to get intrinsic");
+                                return;
+                            }
+
+                            fx = getFloat(intr, "mFx");
+                            fy = getFloat(intr, "mFy");
+                            cx = getFloat(intr, "mPpx");
+                            cy = getFloat(intr, "mPpy");
+
+                            err = people.initialize(w, h, fx, fy, cx, cy);
+                        }
+
                         if (Error.Ok != err) {
                             toast("Failed to initialize people: " + err.toString());
                             return;
@@ -344,7 +360,6 @@ public class MainActivity extends AppCompatActivity {
 
                     } catch (Exception e) {
                         toast("Error: " + e.getMessage());
-                        return;
                     } finally {
                         people.uninitialize();
                         people.close();
@@ -574,6 +589,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int rotate;
+    private int config;
     private String info;
     private String serial;
     private Bitmap bitmap;

@@ -3,6 +3,9 @@ var files_dup =
     [ "ColorFrame.java", "_color_frame_8java.html", [
       [ "ColorFrame", "classcn_1_1topsens_1_1_color_frame.html", "classcn_1_1topsens_1_1_color_frame" ]
     ] ],
+    [ "Config.java", "_config_8java.html", [
+      [ "Config", "classcn_1_1topsens_1_1_config.html", "classcn_1_1topsens_1_1_config" ]
+    ] ],
     [ "DepthFrame.java", "_depth_frame_8java.html", [
       [ "DepthFrame", "classcn_1_1topsens_1_1_depth_frame.html", "classcn_1_1topsens_1_1_depth_frame" ]
     ] ],

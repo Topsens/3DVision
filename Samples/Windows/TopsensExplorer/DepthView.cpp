@@ -1,7 +1,7 @@
 #include "DepthView.h"
 
 #define COLOR_FAR       (0xFFFF0000)
-#define COLOR_GROUND    (0xFF808080)
+#define COLOR_GND    (0xFF808080)
 
 using namespace std;
 using namespace Topsens;
@@ -233,7 +233,7 @@ void DepthView::DrawGround(const DepthFrame& frame, Orientation o)
 
                 if (d < this->palette.size())
                 {
-                    this->pixels[i] = IsGround(cloud[i], this->ground) ? COLOR_GROUND : this->palette[d];
+                    this->pixels[i] = IsGround(cloud[i], this->ground) ? COLOR_GND : this->palette[d];
                 }
                 else
                 {
@@ -262,7 +262,7 @@ void DepthView::DrawGround(const DepthFrame& frame, Orientation o)
                         auto d = frame.Pixels[idx];
                         if (d < this->palette.size())
                         {
-                            this->pixels[off[j] + i] = IsGround(cloud[idx], this->ground) ? COLOR_GROUND : this->palette[d];
+                            this->pixels[off[j] + i] = IsGround(cloud[idx], this->ground) ? COLOR_GND : this->palette[d];
                         }
                         else
                         {
@@ -284,7 +284,7 @@ void DepthView::DrawGround(const DepthFrame& frame, Orientation o)
                         auto d = frame.Pixels[idx];
                         if (d < this->palette.size())
                         {
-                            this->pixels[off[j] + i] = IsGround(cloud[idx], this->ground) ? COLOR_GROUND : this->palette[d];
+                            this->pixels[off[j] + i] = IsGround(cloud[idx], this->ground) ? COLOR_GND : this->palette[d];
                         }
                         else
                         {

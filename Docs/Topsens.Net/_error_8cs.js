@@ -18,6 +18,7 @@ var _error_8cs =
       [ "StreamEnd", "_error_8cs.html#ad0c594dde2da13681db90a1c7b345963a62c256a11372a584631c0ce45183a983", null ],
       [ "StreamIO", "_error_8cs.html#ad0c594dde2da13681db90a1c7b345963a349509775cd199c770b4cb8da29bf8c0", null ],
       [ "Timestamp", "_error_8cs.html#ad0c594dde2da13681db90a1c7b345963aa3d5de3eac8bb00ae86fd1a1005f1500", null ],
-      [ "Resource", "_error_8cs.html#ad0c594dde2da13681db90a1c7b345963abe8545ae7ab0276e15898aae7acfbd7a", null ]
+      [ "Resource", "_error_8cs.html#ad0c594dde2da13681db90a1c7b345963abe8545ae7ab0276e15898aae7acfbd7a", null ],
+      [ "Config", "_error_8cs.html#ad0c594dde2da13681db90a1c7b345963afa535ffb25e1fd20341652f9be21e06e", null ]
     ] ]
 ];

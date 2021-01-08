@@ -9,6 +9,7 @@ var class_topsens_1_1_sensor =
     [ "IsRecording", "class_topsens_1_1_sensor.html#a3f0e6a6666e48094a0038f1e08a4dd64", null ],
     [ "Open", "class_topsens_1_1_sensor.html#a160e475cd6ee5b31f40cd5b010feac08", null ],
     [ "Preload", "class_topsens_1_1_sensor.html#a71b752b0e8a1470faf02edd4282a6ea4", null ],
+    [ "SetConfig", "class_topsens_1_1_sensor.html#afb175c04a9f11f3413d9d5884f2fd482", null ],
     [ "SetDepthAligned", "class_topsens_1_1_sensor.html#a2cc2d120d86c94a2ee19bc217be65f16", null ],
     [ "SetImageFlipped", "class_topsens_1_1_sensor.html#a65351afde9f2599a7be10f65b483830b", null ],
     [ "SetMaskEnabled", "class_topsens_1_1_sensor.html#a8193643e43407c8ee705b7700ea432bd", null ],

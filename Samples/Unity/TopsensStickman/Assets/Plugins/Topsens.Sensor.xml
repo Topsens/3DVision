@@ -193,6 +193,16 @@
             <remarks>Doesn't record stream to file by defaul.</remarks>
             <returns>True if records strem to file, otherwise false.</returns>
         </member>
+        <member name="M:Topsens.Sensor.SetConfig(Topsens.Config)">
+            <summary>
+            Sets preconfigured identity.
+            </summary>
+            <param name="config">Preconfigured identity.</param>
+            <returns>
+            <see cref="F:Topsens.Error.Ok"/> if the call succeeds, <see cref="F:Topsens.Error.InvalidOperation"/> if the sensor has been started,
+            otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.
+            </returns>
+        </member>
         <member name="M:Topsens.Sensor.Finalize">
             <summary>
             Destructor.

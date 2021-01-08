@@ -12,6 +12,7 @@ var _topsens_8h =
     [ "_CALL_", "_topsens_8h.html#ad38246435c382ffd60b72005e8338ca0", null ],
     [ "_FUNC_", "_topsens_8h.html#a37bf61eeebf4210672b544208de49505", null ],
     [ "TOPSENS_COLOR_FRAME", "_topsens_8h.html#ae920459fb48a4453fc48cdd935fbe4eb", null ],
+    [ "TOPSENS_CONFIG", "_topsens_8h.html#a5cc55d2d365a749809b7f80014665d21", null ],
     [ "TOPSENS_DEPTH_FRAME", "_topsens_8h.html#a22a75abcd4684a3bde53d67fe26c60d5", null ],
     [ "TOPSENS_ERROR", "_topsens_8h.html#adbc47731cf133112a60cf65a9bad5857", null ],
     [ "TOPSENS_JOINT", "_topsens_8h.html#ae184d6b1e0b485fbe72a545a1762a101", null ],
@@ -24,6 +25,10 @@ var _topsens_8h =
     [ "TOPSENS_VECTOR2", "_topsens_8h.html#ab624cd463bc97af428db9ac493d1adc0", null ],
     [ "TOPSENS_VECTOR3", "_topsens_8h.html#af20ec94516d2d524ddf86c7320c76ff4", null ],
     [ "TOPSENS_VECTOR4", "_topsens_8h.html#a825c50426335220c96d37f187cc9251a", null ],
+    [ "_TOPSENS_CONFIG", "_topsens_8h.html#afa1bee427b8a8135403d091bad26a4bb", [
+      [ "TOPSENS_CONFIG_RSD415", "_topsens_8h.html#afa1bee427b8a8135403d091bad26a4bbad833e8e5aa8708fd7a9457c1b5dddb6c", null ],
+      [ "TOPSENS_CONFIG_RSD435", "_topsens_8h.html#afa1bee427b8a8135403d091bad26a4bba3fa76de2092519595781d62612909ba9", null ]
+    ] ],
     [ "_TOPSENS_ERROR", "_topsens_8h.html#a0bac4151dea46ad8d800eecc14992fbb", [
       [ "TOPSENS_ERROR_OK", "_topsens_8h.html#a0bac4151dea46ad8d800eecc14992fbba9f68f5ffdeaecd658baa39c609ad86ba", null ],
       [ "TOPSENS_ERROR_TIMEOUT", "_topsens_8h.html#a0bac4151dea46ad8d800eecc14992fbbad0f5ddd98903ad66c48174f2a8f5715c", null ],
@@ -42,7 +47,8 @@ var _topsens_8h =
       [ "TOPSENS_ERROR_STREAM_END", "_topsens_8h.html#a0bac4151dea46ad8d800eecc14992fbbafc00971fda696b8138acf17b71a5daae", null ],
       [ "TOPSENS_ERROR_STREAM_IO", "_topsens_8h.html#a0bac4151dea46ad8d800eecc14992fbba4bd94cf19c969c8b40c44e54121f30ff", null ],
       [ "TOPSENS_ERROR_TIMESTAMP", "_topsens_8h.html#a0bac4151dea46ad8d800eecc14992fbba490d31235b8729b160d0340bd471350d", null ],
-      [ "TOPSENS_ERROR_RESOURCE", "_topsens_8h.html#a0bac4151dea46ad8d800eecc14992fbba9430967179fa2bc00a0edc95663040b9", null ]
+      [ "TOPSENS_ERROR_RESOURCE", "_topsens_8h.html#a0bac4151dea46ad8d800eecc14992fbba9430967179fa2bc00a0edc95663040b9", null ],
+      [ "TOPSENS_ERROR_CONFIG", "_topsens_8h.html#a0bac4151dea46ad8d800eecc14992fbbaf34a8ccab7b7e1cb064ad18b10931566", null ]
     ] ],
     [ "_TOPSENS_JOINT_INDEX", "_topsens_8h.html#a067a0f163ccf6cccfe3d5ee3ecef9d6c", [
       [ "TOPSENS_JOINT_INDEX_HEAD", "_topsens_8h.html#a067a0f163ccf6cccfe3d5ee3ecef9d6ca32228f9d27dab214255432bf7a2c2947", null ],

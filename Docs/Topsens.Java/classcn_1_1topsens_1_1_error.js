@@ -5,6 +5,7 @@ var classcn_1_1topsens_1_1_error =
     [ "toString", "classcn_1_1topsens_1_1_error.html#ad146fa8579a5f8a876c4688cc5a68520", null ],
     [ "Authentication", "classcn_1_1topsens_1_1_error.html#a0cb640ae85aa9a5cc90ec425110cfbb9", null ],
     [ "Closed", "classcn_1_1topsens_1_1_error.html#a716c200da3b9073fdddd92a5c7e0b47f", null ],
+    [ "Config", "classcn_1_1topsens_1_1_error.html#a13a41b2b1d9e6d49155c9ed850f73ec0", null ],
     [ "DeviceClosed", "classcn_1_1topsens_1_1_error.html#a730f734ff5c11c62b8914b939bef5270", null ],
     [ "DevicePermission", "classcn_1_1topsens_1_1_error.html#a3e93e6de993fb0fe733b44566bcafedb", null ],
     [ "Initialization", "classcn_1_1topsens_1_1_error.html#a0963fbb9a8cfc800e3d8ed035085ddd0", null ],

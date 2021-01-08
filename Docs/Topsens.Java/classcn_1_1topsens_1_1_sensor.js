@@ -14,6 +14,7 @@ var classcn_1_1topsens_1_1_sensor =
     [ "open", "classcn_1_1topsens_1_1_sensor.html#a701629de9fee771540783276cebe1b8b", null ],
     [ "preload", "classcn_1_1topsens_1_1_sensor.html#a622b31e3bbc741800201e408609d3d81", null ],
     [ "requestPermission", "classcn_1_1topsens_1_1_sensor.html#a83786b4b520cb3dd66f19b93f9fb797e", null ],
+    [ "setConfig", "classcn_1_1topsens_1_1_sensor.html#a9cb506ffc0b44a83c3ded0458a507376", null ],
     [ "setDepthAligned", "classcn_1_1topsens_1_1_sensor.html#a194d0bb539a628fc9a1749cf016dc4d2", null ],
     [ "setImageFlipped", "classcn_1_1topsens_1_1_sensor.html#aa9685dc178208dfed0246166e213c26c", null ],
     [ "setMaskEnabled", "classcn_1_1topsens_1_1_sensor.html#ad9ef2b685cc1116fc04eb27b429b7ca3", null ],

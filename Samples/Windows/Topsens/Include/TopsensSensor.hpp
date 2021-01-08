@@ -320,6 +320,17 @@ namespace Topsens
             return false;
         }
 
+        /**
+         * @brief Sets preconfigured identity.
+         * @param config Preconfigured identity.
+         * @return #Error::Ok if the call succeeds, #Error::InvalidOperation if the sensor has been started,
+         *         otherwise refer to #Error for the specific meaning.
+         */
+        Error SetConfig(Config config)
+        {
+            return (Error)TopsensSensorSetConfig(this->handle, (uint32_t)config);
+        }
+
     private:
         TOPSENS_SENSOR handle;
     };

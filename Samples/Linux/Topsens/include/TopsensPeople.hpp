@@ -49,7 +49,7 @@ namespace Topsens
         /**
          * @brief Initializes people detector.
          * @param width Depth frame width.
-         * @param height Depth frame hedith.
+         * @param height Depth frame height.
          * @param fx Horizontal focal length.
          * @param fy Vertical focal length.
          * @param cx Horizontal center coordinate.
@@ -61,6 +61,27 @@ namespace Topsens
             this->Uninitialize();
 
             auto err = TopsensPeopleInitialize(this->handle, width, height, fx, fy, cx, cy);
+            if (err)
+            {
+                this->Uninitialize();
+                return (Error)err;
+            }
+
+            return Error::Ok;
+        }
+
+        /**
+         * @brief Initializes people detector with preconfigured identity.
+         * @remarks Works with #SetConfig(Config). Call #SetConfig(Config) to set preconfigured identity before this method.
+         * @param width Depth frame width.
+         * @param height Depth frame height.
+         * @return #Error::Ok if the call succeeds, otherwise refer to #Error for the specific meaning.
+         */
+        Error Initialize(uint32_t width, uint32_t height)
+        {
+            this->Uninitialize();
+
+            auto err = TopsensPeopleInitialize(this->handle, width, height, 0, 0, 0, 0);
             if (err)
             {
                 this->Uninitialize();
@@ -140,6 +161,17 @@ namespace Topsens
         bool IsMaskEnabled() const
         {
             return TopsensPeopleIsMaskEnabled(this->handle) ? true : false;
+        }
+
+        /**
+         * @brief Sets preconfigured identity.
+         * @param config Preconfigured identity.
+         * @return #Error.Ok if the call succeeds, #Error::InvalidOperation if the people detector has been initialized,
+         *         otherwise refer to #Error for the specific meaning.
+         */
+        Error SetConfig(Config config)
+        {
+            return (Error)TopsensPeopleSetConfig(this->handle, (uint32_t)config);
         }
         
         /**

@@ -69,7 +69,7 @@ namespace TopsensRealSenseWpf
             this.stop = false;
             this.thread = new Thread(()=>
             {
-                var cfg = new Config();
+                var cfg = new Intel.RealSense.Config();
                 cfg.EnableStream(Stream.Depth, res.Width, res.Height, Format.Z16, 30);
                 cfg.EnableDevice(serial);
 

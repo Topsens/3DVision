@@ -48,6 +48,7 @@ _FUNC_ int32_t _CALL_ TopsensSensorSetMaskEnabled(TOPSENS_SENSOR handle, int32_t
 _FUNC_ int32_t _CALL_ TopsensSensorIsMaskEnabled(TOPSENS_SENSOR handle);
 _FUNC_ int32_t _CALL_ TopsensSensorSetRecording(TOPSENS_SENSOR handle, int32_t recording);
 _FUNC_ int32_t _CALL_ TopsensSensorIsRecording(TOPSENS_SENSOR handle);
+_FUNC_ int32_t _CALL_ TopsensSensorSetConfig(TOPSENS_SENSOR handle, uint32_t config);
 _FUNC_ int32_t _CALL_ TopsensSensorPreload(uint32_t* resources, uint32_t count);
 
 #ifdef __cplusplus

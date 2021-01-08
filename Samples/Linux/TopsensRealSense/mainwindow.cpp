@@ -31,6 +31,7 @@ MainWindow::~MainWindow()
     this->OnStop();
 
     delete this->panel;
+    delete this->dview;
     delete ui;
 }
 

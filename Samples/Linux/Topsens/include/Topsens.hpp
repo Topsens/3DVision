@@ -38,7 +38,15 @@ namespace Topsens
         StreamEnd        = TOPSENS_ERROR_STREAM_END,        /**< Stream end reached. */
         StreamIO         = TOPSENS_ERROR_STREAM_IO,         /**< Stream IO error. */
         Timestamp        = TOPSENS_ERROR_TIMESTAMP,         /**< Stream frame timestamp error. */
-        Resource         = TOPSENS_ERROR_RESOURCE           /**< Resource loading error. */
+        Resource         = TOPSENS_ERROR_RESOURCE,          /**< Resource loading error. */
+        Config           = TOPSENS_ERROR_CONFIG             /**< Config loading error. */
+    };
+
+    /** @brief Preconfigured identity. */
+    enum class Config
+    {
+        RSD415  = TOPSENS_CONFIG_RSD415, /**< Intel RealSense D415 depth camera. */
+        RSD435  = TOPSENS_CONFIG_RSD435  /**< Intel RealSense D435 depth camera. */
     };
 
     /** @brief Image direction. */

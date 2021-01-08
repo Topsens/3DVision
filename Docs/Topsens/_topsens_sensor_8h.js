@@ -12,6 +12,7 @@ var _topsens_sensor_8h =
     [ "TopsensSensorIsMaskEnabled", "_topsens_sensor_8h.html#a88a024000d9fe720857cbcc6cb8399d8", null ],
     [ "TopsensSensorIsRecording", "_topsens_sensor_8h.html#ab96299244420b2e53532fd73d4892604", null ],
     [ "TopsensSensorPreload", "_topsens_sensor_8h.html#a1ff459399e223fb87e14bfba384cab82", null ],
+    [ "TopsensSensorSetConfig", "_topsens_sensor_8h.html#a288ce1e87234aca58de60b38a222bfbc", null ],
     [ "TopsensSensorSetDepthAligned", "_topsens_sensor_8h.html#a17aab27e651b211afbd99970db172bda", null ],
     [ "TopsensSensorSetImageFlipped", "_topsens_sensor_8h.html#af21c77136a87faa29a2cb95133a672ee", null ],
     [ "TopsensSensorSetMaskEnabled", "_topsens_sensor_8h.html#a224aca03071b03441e55097e0d93d763", null ],

@@ -55,5 +55,3 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
-
-!Assets/Plugins/Android/libs/armeabi-v7a/*.so

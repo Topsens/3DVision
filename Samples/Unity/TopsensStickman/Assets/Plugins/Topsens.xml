@@ -225,6 +225,11 @@
             Resource loading error.
             </summary>
         </member>
+        <member name="F:Topsens.Error.Config">
+            <summary>
+            Config loading error.
+            </summary>
+        </member>
         <member name="T:Topsens.Joint">
             <summary>
             Skeleton joint.
@@ -625,6 +630,21 @@
         <member name="F:Topsens.Vector4.NaN">
             <summary>
             The NaN vector with all components equal to NaN.
+            </summary>
+        </member>
+        <member name="T:Topsens.Config">
+            <summary>
+            预设配置标识
+            </summary>
+        </member>
+        <member name="F:Topsens.Config.RSD415">
+            <summary>
+            Intel RealSense D415 camera
+            </summary>
+        </member>
+        <member name="F:Topsens.Config.RSD435">
+            <summary>
+            Intel RealSense D435 camera
             </summary>
         </member>
     </members>

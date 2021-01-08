@@ -10,6 +10,10 @@ var _topsens_8hpp =
     [ "Vector2", "_topsens_8hpp.html#ac60f1a52185c5df099e9aa2c188407ff", null ],
     [ "Vector3", "_topsens_8hpp.html#af299e5b38c734525951d4b5a04fa43bb", null ],
     [ "Vector4", "_topsens_8hpp.html#ae7416581966ffeb8dc501e09aedf0e19", null ],
+    [ "Config", "_topsens_8hpp.html#a0d8785f1f5499688f53bc72e6900460d", [
+      [ "RSD415", "_topsens_8hpp.html#a0d8785f1f5499688f53bc72e6900460da674b18eca7c1d8452e3405b1c21a9b2c", null ],
+      [ "RSD435", "_topsens_8hpp.html#a0d8785f1f5499688f53bc72e6900460da95794f5676b7384f6e6bb8470ebb0454", null ]
+    ] ],
     [ "Error", "_topsens_8hpp.html#a2c3e4bb40f36b262a5214e2da2bca9c5", [
       [ "Ok", "_topsens_8hpp.html#a2c3e4bb40f36b262a5214e2da2bca9c5aa60852f204ed8028c1c58808b746d115", null ],
       [ "Timeout", "_topsens_8hpp.html#a2c3e4bb40f36b262a5214e2da2bca9c5ac85a251cc457840f1e032f1b733e9398", null ],
@@ -28,7 +32,8 @@ var _topsens_8hpp =
       [ "StreamEnd", "_topsens_8hpp.html#a2c3e4bb40f36b262a5214e2da2bca9c5a62c256a11372a584631c0ce45183a983", null ],
       [ "StreamIO", "_topsens_8hpp.html#a2c3e4bb40f36b262a5214e2da2bca9c5a349509775cd199c770b4cb8da29bf8c0", null ],
       [ "Timestamp", "_topsens_8hpp.html#a2c3e4bb40f36b262a5214e2da2bca9c5aa3d5de3eac8bb00ae86fd1a1005f1500", null ],
-      [ "Resource", "_topsens_8hpp.html#a2c3e4bb40f36b262a5214e2da2bca9c5abe8545ae7ab0276e15898aae7acfbd7a", null ]
+      [ "Resource", "_topsens_8hpp.html#a2c3e4bb40f36b262a5214e2da2bca9c5abe8545ae7ab0276e15898aae7acfbd7a", null ],
+      [ "Config", "_topsens_8hpp.html#a2c3e4bb40f36b262a5214e2da2bca9c5afa535ffb25e1fd20341652f9be21e06e", null ]
     ] ],
     [ "Orientation", "_topsens_8hpp.html#a871118a09520247c78a71ecd7b0abd58", [
       [ "Landscape", "_topsens_8hpp.html#a871118a09520247c78a71ecd7b0abd58a815dff01257e5ef182b25d4c1ef0a7a0", null ],

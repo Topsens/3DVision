@@ -26,11 +26,22 @@
             Initializes people detector.
             </summary>
             <param name="width">Depth frame width.</param>
-            <param name="height">Depth frame hedith.</param>
+            <param name="height">Depth frame height.</param>
             <param name="fx">Horizontal focal length.</param>
             <param name="fy">Vertical focal length.</param>
             <param name="cx">Horizontal center coordinate.</param>
             <param name="cy">Vertical center coordinate.</param>
+            <returns><see cref="F:Topsens.Error.Ok"/> if the call succeeds, otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.</returns>
+        </member>
+        <member name="M:Topsens.People.Initialize(System.Int32,System.Int32)">
+            <summary>
+            Initializes people detector with preconfigured identity.
+            </summary>
+            <remarks>
+            Works with <see cref="M:Topsens.People.SetConfig(Topsens.Config)"/>. Call <see cref="M:Topsens.People.SetConfig(Topsens.Config)"/> to set preconfigured identity before this method.
+            </remarks>
+            <param name="width">Depth frame width.</param>
+            <param name="height">Depth frame height.</param>
             <returns><see cref="F:Topsens.Error.Ok"/> if the call succeeds, otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.</returns>
         </member>
         <member name="M:Topsens.People.Uninitialize">
@@ -95,6 +106,16 @@
             </summary>
             <remarks>Default is not enabled.</remarks>
             <returns>True if user mask is enabled, otherwise false.</returns>
+        </member>
+        <member name="M:Topsens.People.SetConfig(Topsens.Config)">
+            <summary>
+            Sets preconfigured identity.
+            </summary>
+            <param name="config">Preconfigured identity.</param>
+            <returns>
+            <see cref="F:Topsens.Error.Ok"/> if the call succeeds, <see cref="F:Topsens.Error.InvalidOperation"/> if the people detector has been initialized,
+            otherwise refer to <see cref="T:Topsens.Error"/> for the specific meaning.
+            </returns>
         </member>
         <member name="M:Topsens.People.Detect(System.Int16[],System.Int32,System.Int32,System.Int64,Topsens.UsersFrame)">
             <summary>

@@ -40,6 +40,7 @@ _FUNC_ int32_t _CALL_ TopsensPeopleSetImageFlipped(TOPSENS_PEOPLE handle, int32_
 _FUNC_ int32_t _CALL_ TopsensPeopleIsImageFlipped(TOPSENS_PEOPLE handle);
 _FUNC_ int32_t _CALL_ TopsensPeopleSetMaskEnabled(TOPSENS_PEOPLE handle, int32_t enabled);
 _FUNC_ int32_t _CALL_ TopsensPeopleIsMaskEnabled(TOPSENS_PEOPLE handle);
+_FUNC_ int32_t _CALL_ TopsensPeopleSetConfig(TOPSENS_PEOPLE handle, uint32_t config);
 _FUNC_ int32_t _CALL_ TopsensPeopleDetect(TOPSENS_PEOPLE handle, const uint16_t* depth, uint32_t width, uint32_t height, uint64_t timestamp, TOPSENS_USERS_FRAME* users);
 _FUNC_ int32_t _CALL_ TopsensPeoplePreload(uint32_t* resources, uint32_t count);
 

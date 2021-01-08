@@ -2,6 +2,7 @@ var namespacecn_1_1topsens =
 [
     [ "toolkit", "namespacecn_1_1topsens_1_1toolkit.html", "namespacecn_1_1topsens_1_1toolkit" ],
     [ "ColorFrame", "classcn_1_1topsens_1_1_color_frame.html", "classcn_1_1topsens_1_1_color_frame" ],
+    [ "Config", "classcn_1_1topsens_1_1_config.html", "classcn_1_1topsens_1_1_config" ],
     [ "DepthFrame", "classcn_1_1topsens_1_1_depth_frame.html", "classcn_1_1topsens_1_1_depth_frame" ],
     [ "Error", "classcn_1_1topsens_1_1_error.html", "classcn_1_1topsens_1_1_error" ],
     [ "Fake", "classcn_1_1topsens_1_1_fake.html", "classcn_1_1topsens_1_1_fake" ],

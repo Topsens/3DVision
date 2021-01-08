@@ -130,13 +130,15 @@ void MainWindow::OnUpdateColor()
 
             case Orientation::PortraitClockwise:
             {
-                l->setPixmap(this->cpixmap.transformed(QTransform().rotate(90)).scaled(l->width(), l->height()));
+                float scale = (float)l->height() / this->cpixmap.width();
+                l->setPixmap(this->cpixmap.transformed(QTransform().rotate(90).scale(scale, scale)));
                 break;
             }
 
             case Orientation::PortraitAntiClockwise:
             {
-                l->setPixmap(this->cpixmap.transformed(QTransform().rotate(-90)).scaled(l->width(), l->height()));
+                float scale = (float)l->height() / this->cpixmap.width();
+                l->setPixmap(this->cpixmap.transformed(QTransform().rotate(-90).scale(scale, scale)));
                 break;
             }
 
@@ -163,13 +165,15 @@ void MainWindow::OnUpdateDepth()
 
             case Orientation::PortraitClockwise:
             {
-                l->setPixmap(this->dpixmap.transformed(QTransform().rotate(90)).scaled(l->width(), l->height()));
+                float scale = (float)l->height() / this->cpixmap.width();
+                l->setPixmap(this->dpixmap.transformed(QTransform().rotate(90).scale(scale, scale)));
                 break;
             }
 
             case Orientation::PortraitAntiClockwise:
             {
-                l->setPixmap(this->dpixmap.transformed(QTransform().rotate(-90)).scaled(l->width(), l->height()));
+                float scale = (float)l->height() / this->cpixmap.width();
+                l->setPixmap(this->dpixmap.transformed(QTransform().rotate(-90).scale(scale, scale)));
                 break;
             }
 

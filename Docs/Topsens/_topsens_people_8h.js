@@ -11,6 +11,7 @@ var _topsens_people_8h =
     [ "TopsensPeopleIsImageFlipped", "_topsens_people_8h.html#a48c27dc9eeea180f1f81e2e7b97ac465", null ],
     [ "TopsensPeopleIsMaskEnabled", "_topsens_people_8h.html#a8253355f2c1de7b293e3356843292abe", null ],
     [ "TopsensPeoplePreload", "_topsens_people_8h.html#a1a5c7bf8e7c62b99c85f75e589b8e84d", null ],
+    [ "TopsensPeopleSetConfig", "_topsens_people_8h.html#ade8ca969f84d219e7363ab073ebc8ef7", null ],
     [ "TopsensPeopleSetImageFlipped", "_topsens_people_8h.html#a9e25e2592d28b7953aa16899bb38866e", null ],
     [ "TopsensPeopleSetMaskEnabled", "_topsens_people_8h.html#ab7686f615006932d1930af5ae80131a4", null ],
     [ "TopsensPeopleSetOrientation", "_topsens_people_8h.html#ac3b5fc00254f0055ba2e5cbdd924bba1", null ],
