@@ -1,0 +1,10 @@
+Linux/build-*/
+!Linux/Topsens/libs/*
+
+!Unity/TopsensRealSense/Assets/Plugins/Android/libs/armeabi-v7a/*.so
+!Unity/TopsensStickman/Assets/Plugins/Android/libs/armeabi-v7a/*.so
+
+!Windows/Topsens/Bin/
+!Windows/Topsens/Lib/
+!Windows/GL/glew-2.1.0/bin/
+!Windows/GL/glew-2.1.0/lib/
