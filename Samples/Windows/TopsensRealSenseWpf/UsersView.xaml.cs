@@ -54,7 +54,7 @@ namespace TopsensRealSenseWpf
 
                 lock (this.frame)
                 {
-                    if (Orientation.Landscape == orientation)
+                    if (Orientation.Landscape == orientation || Orientation.Aerial == orientation)
                     {
                         this.LayoutTransform = new RotateTransform(0.0);
                     }
@@ -67,7 +67,7 @@ namespace TopsensRealSenseWpf
                         this.LayoutTransform = new RotateTransform(-90.0);
                     }
 
-                    this.painter.Paint(this.frame);
+                    this.painter.Paint(this.frame, orientation);
                 }
             }), DispatcherPriority.Render);
         }

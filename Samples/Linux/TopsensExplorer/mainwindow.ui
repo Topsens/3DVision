@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1280</width>
-    <height>640</height>
+    <height>617</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,6 +46,16 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="Panel" name="panel" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>480</y>
+      <width>1280</width>
+      <height>90</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -60,6 +70,14 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>Panel</class>
+   <extends>QWidget</extends>
+   <header location="global">panel.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

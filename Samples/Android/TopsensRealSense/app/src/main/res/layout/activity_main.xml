@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10sp"
-            android:text="Device"/>
+            android:text="Sensor"/>
 
         <Spinner
             android:id="@+id/device"
@@ -63,12 +63,14 @@
             android:id="@+id/start"
             android:text="Start"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/stop"
             android:text="Stop"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"/>
     </LinearLayout>
 </LinearLayout>

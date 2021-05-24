@@ -1,3 +1,9 @@
+Version 1.8.1 (2021-05-24)
+--------------------------
+  * Add image aerial direction;
+  * Add ROS platform support and corresponding sample programs;
+  * SDK and sample programs optimization.
+
 Version 1.7.0 (2021-01-08)
 --------------------------
   * Add preconfigured identity: Intel RealSense D415, D435;

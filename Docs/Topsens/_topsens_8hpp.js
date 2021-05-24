@@ -2,7 +2,7 @@ var _topsens_8hpp =
 [
     [ "DepthFrame", "struct_topsens_1_1_depth_frame.html", "struct_topsens_1_1_depth_frame" ],
     [ "UsersFrame", "struct_topsens_1_1_users_frame.html", "struct_topsens_1_1_users_frame" ],
-    [ "JointIndex", "class_topsens_1_1_joint_index.html", "class_topsens_1_1_joint_index" ],
+    [ "JointIndex", "class_topsens_1_1_joint_index.html", null ],
     [ "ColorFrame", "_topsens_8hpp.html#aab8190000949144abc31093d29a3eca0", null ],
     [ "Joint", "_topsens_8hpp.html#af416b5ea4aa049bf07bbd5913058f11a", null ],
     [ "Skeleton", "_topsens_8hpp.html#a78f419b70954ed4c2b591c160a7f37b1", null ],
@@ -38,13 +38,17 @@ var _topsens_8hpp =
     [ "Orientation", "_topsens_8hpp.html#a871118a09520247c78a71ecd7b0abd58", [
       [ "Landscape", "_topsens_8hpp.html#a871118a09520247c78a71ecd7b0abd58a815dff01257e5ef182b25d4c1ef0a7a0", null ],
       [ "PortraitClockwise", "_topsens_8hpp.html#a871118a09520247c78a71ecd7b0abd58a77d523ea3fe90b98f2047d061d6ebf46", null ],
-      [ "PortraitAntiClockwise", "_topsens_8hpp.html#a871118a09520247c78a71ecd7b0abd58a9654adb559534c0cde796795975c10ed", null ]
+      [ "PortraitAntiClockwise", "_topsens_8hpp.html#a871118a09520247c78a71ecd7b0abd58a9654adb559534c0cde796795975c10ed", null ],
+      [ "Aerial", "_topsens_8hpp.html#a871118a09520247c78a71ecd7b0abd58ae9d313040a8fb97cb1e960d9faaed3c9", null ]
     ] ],
     [ "Resolution", "_topsens_8hpp.html#a3c1fc1369ee351f25804c8cde5e85ac3", [
       [ "Disabled", "_topsens_8hpp.html#a3c1fc1369ee351f25804c8cde5e85ac3ab9f5c797ebbf55adccdd8539a65a0241", null ],
       [ "QVGA", "_topsens_8hpp.html#a3c1fc1369ee351f25804c8cde5e85ac3ab7cee8a1320b6bde25e5673d74af15a6", null ],
       [ "VGA", "_topsens_8hpp.html#a3c1fc1369ee351f25804c8cde5e85ac3adb4371197d1f58c7d4edb7dcd0565ad1", null ]
     ] ],
+    [ "IsNaN", "_topsens_8hpp.html#a7c800c09001bd7fec701af2d2639ff69", null ],
+    [ "IsNaN", "_topsens_8hpp.html#ab745fcb1aa19fbbc33bfb0d19577d514", null ],
+    [ "IsNaN", "_topsens_8hpp.html#a64fb255904d55a48eeb769a8a67cd7ff", null ],
     [ "ResolutionHeight", "_topsens_8hpp.html#ab5a30b793c76b9507983bab40aa7107e", null ],
     [ "ResolutionWidth", "_topsens_8hpp.html#a417a4fa6734f96cf04d64067f706c299", null ]
 ];

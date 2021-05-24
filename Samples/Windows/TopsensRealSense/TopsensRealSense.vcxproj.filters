@@ -27,7 +27,7 @@
     <ClCompile Include="..\View\DialogItem.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
-    <ClCompile Include="..\View\GDIRenderer.cpp">
+    <ClCompile Include="..\View\GdiRenderer.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
     <ClCompile Include="..\View\MainWindow.cpp">
@@ -68,7 +68,7 @@
     <ClInclude Include="..\View\DialogItem.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
-    <ClInclude Include="..\View\GDIRenderer.h">
+    <ClInclude Include="..\View\GdiRenderer.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
     <ClInclude Include="..\View\MainWindow.h">

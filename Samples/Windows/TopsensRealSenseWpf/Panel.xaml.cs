@@ -61,7 +61,12 @@ namespace TopsensRealSenseWpf
                 return Topsens.Orientation.PortraitClockwise;
             }
 
-            return Topsens.Orientation.PortraitAntiClockwise;
+            if (this.antic.IsChecked ?? false)
+            {
+                return Topsens.Orientation.PortraitAntiClockwise;
+            }
+
+            return Topsens.Orientation.Aerial;
         }
 
         public void Enable()

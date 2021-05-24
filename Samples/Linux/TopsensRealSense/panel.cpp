@@ -57,7 +57,12 @@ Orientation Panel::Orientation() const
         return Topsens::Orientation::PortraitClockwise;
     }
 
-    return Topsens::Orientation::PortraitAntiClockwise;
+    if (this->ui->antic->isChecked())
+    {
+        return Topsens::Orientation::PortraitAntiClockwise;
+    }
+
+    return Topsens::Orientation::Aerial;
 }
 
 void Panel::Enable()
@@ -69,6 +74,7 @@ void Panel::Enable()
     this->ui->land->setEnabled(true);
     this->ui->clock->setEnabled(true);
     this->ui->antic->setEnabled(true);
+    this->ui->aerial->setEnabled(true);
     this->ui->start->setEnabled(true);
     this->ui->stop->setEnabled(false);
 }
@@ -82,6 +88,7 @@ void Panel::Disable()
     this->ui->land->setEnabled(false);
     this->ui->clock->setEnabled(false);
     this->ui->antic->setEnabled(false);
+    this->ui->aerial->setEnabled(false);
     this->ui->start->setEnabled(false);
     this->ui->stop->setEnabled(true);
 }

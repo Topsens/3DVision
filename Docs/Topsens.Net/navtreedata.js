@@ -53,7 +53,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_cloud_frame_8cs.html"
+"_cloud_frame_8cs.html",
+"struct_topsens_1_1_vector3.html#a82de243f111d9f1f29980de7f3513a15"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

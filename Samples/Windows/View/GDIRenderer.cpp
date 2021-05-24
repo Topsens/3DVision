@@ -1,15 +1,15 @@
-#include "GDIRenderer.h"
+#include "GdiRenderer.h"
 #include "Cleanup.h"
 
 HPEN   NullPen   = (HPEN)GetStockObject(NULL_PEN);
 HBRUSH NullBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
 
-GDIRenderer::GDIRenderer()
+GdiRenderer::GdiRenderer()
   : hdc(nullptr), mem(nullptr), bmp(nullptr), old(nullptr), hWnd(nullptr), font(nullptr), pen(NullPen), brush(NullBrush)
 {
 }
 
-GDIRenderer::~GDIRenderer()
+GdiRenderer::~GdiRenderer()
 {
     if (this->pen && this->pen != NullPen)
     {
@@ -27,7 +27,7 @@ GDIRenderer::~GDIRenderer()
     }
 }
 
-bool GDIRenderer::BeginPaint(HWND hwnd, bool copyBackground)
+bool GdiRenderer::BeginPaint(HWND hwnd, bool copyBackground)
 {
     if (!hwnd)
     {
@@ -92,7 +92,7 @@ bool GDIRenderer::BeginPaint(HWND hwnd, bool copyBackground)
     return true;
 }
 
-void GDIRenderer::EndPaint()
+void GdiRenderer::EndPaint()
 {
     if (this->hdc)
     {
@@ -119,7 +119,7 @@ void GDIRenderer::EndPaint()
     }
 }
 
-bool GDIRenderer::Pen(HPEN pen)
+bool GdiRenderer::Pen(HPEN pen)
 {
     if (pen)
     {
@@ -147,7 +147,7 @@ bool GDIRenderer::Pen(HPEN pen)
     }
 }
 
-bool GDIRenderer::Pen(int style, int width, COLORREF color)
+bool GdiRenderer::Pen(int style, int width, COLORREF color)
 {
     if (this->hdc)
     {
@@ -164,7 +164,7 @@ bool GDIRenderer::Pen(int style, int width, COLORREF color)
     return false;
 }
 
-bool GDIRenderer::Brush(HBRUSH brush)
+bool GdiRenderer::Brush(HBRUSH brush)
 {
     if (brush)
     {
@@ -192,7 +192,7 @@ bool GDIRenderer::Brush(HBRUSH brush)
     }
 }
 
-bool GDIRenderer::SolidBrush(COLORREF color)
+bool GdiRenderer::SolidBrush(COLORREF color)
 {
     if (this->hdc)
     {
@@ -209,7 +209,7 @@ bool GDIRenderer::SolidBrush(COLORREF color)
     return false;
 }
 
-bool GDIRenderer::Pixel(int x, int y, COLORREF color)
+bool GdiRenderer::Pixel(int x, int y, COLORREF color)
 {
     if (!this->hdc)
     {
@@ -219,7 +219,7 @@ bool GDIRenderer::Pixel(int x, int y, COLORREF color)
     return -1 != SetPixel(this->mem, x, y, color);
 }
 
-bool GDIRenderer::PixelsRGB(const BYTE* pixels, int width, int height, int x, int y, int cx, int cy)
+bool GdiRenderer::PixelsRgb(const BYTE* pixels, int width, int height, int x, int y, int cx, int cy)
 {
     if (!pixels || width <= 0 || height <= 0 || cx <= 0 || cy <= 0)
     {
@@ -272,7 +272,7 @@ bool GDIRenderer::PixelsRGB(const BYTE* pixels, int width, int height, int x, in
     return StretchBlt(this->mem, x, y, cx, cy, hdc, 0, 0, width, height, SRCCOPY) ? true : false;
 }
 
-bool GDIRenderer::PixelsARGB(const BYTE* pixels, int width, int height, int x, int y, int cx, int cy, bool useAlpha)
+bool GdiRenderer::PixelsArgb(const BYTE* pixels, int width, int height, int x, int y, int cx, int cy, bool useAlpha)
 {
     if (!pixels || width <= 0 || height <= 0 || cx <= 0 || cy <= 0)
     {
@@ -376,13 +376,13 @@ bool GDIRenderer::PixelsARGB(const BYTE* pixels, int width, int height, int x, i
     return true;
 }
 
-void GDIRenderer::From(int x, int y)
+void GdiRenderer::From(int x, int y)
 {
     this->fromX = x;
     this->fromY = y;
 }
 
-bool GDIRenderer::LineTo(int x, int y)
+bool GdiRenderer::LineTo(int x, int y)
 {
     if (!this->hdc)
     {
@@ -408,7 +408,7 @@ bool GDIRenderer::LineTo(int x, int y)
     return ::LineTo(this->mem, x, y) ? true : false;
 }
 
-bool GDIRenderer::Rectangle(int left, int top, int right, int bottom)
+bool GdiRenderer::Rectangle(int left, int top, int right, int bottom)
 {
     if (!this->hdc)
     {
@@ -447,7 +447,7 @@ bool GDIRenderer::Rectangle(int left, int top, int right, int bottom)
     return FALSE != ret;
 }
 
-bool GDIRenderer::Rectangle(int left, int top, int right, int bottom, BYTE opacity)
+bool GdiRenderer::Rectangle(int left, int top, int right, int bottom, BYTE opacity)
 {
     auto w = right - left;
     auto h = bottom - top;
@@ -494,7 +494,7 @@ bool GDIRenderer::Rectangle(int left, int top, int right, int bottom, BYTE opaci
     return true;
 }
 
-bool GDIRenderer::Ellipse(int left, int top, int right, int bottom)
+bool GdiRenderer::Ellipse(int left, int top, int right, int bottom)
 {
     if (!this->hdc || !this->pen)
     {
@@ -533,7 +533,7 @@ bool GDIRenderer::Ellipse(int left, int top, int right, int bottom)
     return FALSE != ret;
 }
 
-bool GDIRenderer::Ellipse(int left, int top, int right, int bottom, BYTE opacity)
+bool GdiRenderer::Ellipse(int left, int top, int right, int bottom, BYTE opacity)
 {
     auto w = right - left;
     auto h = bottom - top;
@@ -580,7 +580,7 @@ bool GDIRenderer::Ellipse(int left, int top, int right, int bottom, BYTE opacity
     return true;
 }
 
-bool GDIRenderer::Font(const wchar_t* family, int size, int weight, bool italic, bool underline, bool strikeOut, DWORD charSet, DWORD outPrecision, DWORD clipPrecision, DWORD quality, DWORD pitchAndFamity, int escapement, int orientation)
+bool GdiRenderer::Font(const wchar_t* family, int size, int weight, bool italic, bool underline, bool strikeOut, DWORD charSet, DWORD outPrecision, DWORD clipPrecision, DWORD quality, DWORD pitchAndFamity, int escapement, int orientation)
 {
     if (this->hdc)
     {
@@ -596,7 +596,7 @@ bool GDIRenderer::Font(const wchar_t* family, int size, int weight, bool italic,
     return false;
 }
 
-bool GDIRenderer::Text(const wchar_t* text, int x, int y, int w, int h, UINT align, COLORREF color, BYTE opacity)
+bool GdiRenderer::Text(const wchar_t* text, int x, int y, int w, int h, UINT align, COLORREF color, BYTE opacity)
 {
     if (!this->hdc)
     {
@@ -645,7 +645,7 @@ bool GDIRenderer::Text(const wchar_t* text, int x, int y, int w, int h, UINT ali
     return true;
 }
 
-bool GDIRenderer::Clear(COLORREF color)
+bool GdiRenderer::Clear(COLORREF color)
 {
     if (this->hdc)
     {
@@ -659,7 +659,7 @@ bool GDIRenderer::Clear(COLORREF color)
     return false;
 }
 
-HDC GDIRenderer::CreateDC(int width, int height, HDC src, int x, int y)
+HDC GdiRenderer::CreateDC(int width, int height, HDC src, int x, int y)
 {
     if (!this->hdc || width <= 0 || height <= 0 || x < 0 || y < 0)
     {
@@ -707,7 +707,7 @@ HDC GDIRenderer::CreateDC(int width, int height, HDC src, int x, int y)
     return hdc;
 }
 
-void GDIRenderer::DestroyDC(HDC hdc)
+void GdiRenderer::DestroyDC(HDC hdc)
 {
     if (hdc)
     {

@@ -93,7 +93,12 @@ Orientation Panel::Orientation() const
         return Topsens::Orientation::PortraitClockwise;
     }
 
-    return Topsens::Orientation::PortraitAntiClockwise;
+    if (this->ui->rbAntic->isChecked())
+    {
+        return Topsens::Orientation::PortraitAntiClockwise;
+    }
+
+    return Topsens::Orientation::Aerial;
 }
 
 void Panel::Enable()

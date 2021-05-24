@@ -6,8 +6,8 @@
 #include <QMessageBox>
 #include <iostream>
 
-#define COLOR_FAR       (0xFFFF0000)
-#define COLOR_GROUND    (0xFF808080)
+#define COLOR_FAR   (0xFFFF0000)
+#define COLOR_GND   (0xFF808080)
 
 using namespace std;
 using namespace Topsens;
@@ -20,18 +20,14 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->panel = new Panel(this);
-    this->panel->resize(this->width(), this->panel->height());
-    this->panel->move(0, max(this->ui->lbColor->height(), this->ui->lbDepth->height()));
-
     this->connect(this, SIGNAL(UpdateColor()), this, SLOT(OnUpdateColor()));
     this->connect(this, SIGNAL(UpdateDepth()), this, SLOT(OnUpdateDepth()));
 
-    this->connect(this->panel->ui->rbUsersNo,   SIGNAL(clicked(bool)), this, SLOT(OnUsersNo(bool)));
-    this->connect(this->panel->ui->rbGroundYes, SIGNAL(clicked(bool)), this, SLOT(OnGroundYes(bool)));
-    this->connect(this->panel->ui->bnRefresh,   SIGNAL(clicked()),     this, SLOT(OnRefresh()));
-    this->connect(this->panel->ui->bnStart,     SIGNAL(clicked()),     this, SLOT(OnStart()));
-    this->connect(this->panel->ui->bnStop,      SIGNAL(clicked()),     this, SLOT(OnStop()));
+    this->connect(this->ui->panel->ui->rbUsersNo,   SIGNAL(clicked(bool)), this, SLOT(OnUsersNo(bool)));
+    this->connect(this->ui->panel->ui->rbGroundYes, SIGNAL(clicked(bool)), this, SLOT(OnGroundYes(bool)));
+    this->connect(this->ui->panel->ui->bnRefresh,   SIGNAL(clicked()),     this, SLOT(OnRefresh()));
+    this->connect(this->ui->panel->ui->bnStart,     SIGNAL(clicked()),     this, SLOT(OnStart()));
+    this->connect(this->ui->panel->ui->bnStop,      SIGNAL(clicked()),     this, SLOT(OnStop()));
 
     if (palette.empty())
     {
@@ -91,7 +87,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    delete this->panel;
     delete ui;
 }
 
@@ -123,6 +118,7 @@ void MainWindow::OnUpdateColor()
         switch (this->orientation)
         {
             case Orientation::Landscape:
+            case Orientation::Aerial:
             {
                 l->setPixmap(this->cpixmap.scaled(l->width(), l->height()));
                 break;
@@ -158,6 +154,7 @@ void MainWindow::OnUpdateDepth()
         switch (this->orientation)
         {
             case Orientation::Landscape:
+            case Orientation::Aerial:
             {
                 l->setPixmap(this->dpixmap.scaled(l->width(), l->height()));
                 break;
@@ -199,19 +196,19 @@ void MainWindow::OnRefresh()
         this->ui->statusBar->showMessage(QString("No sensor found"));
     }
 
-    this->panel->Count(count);
+    this->ui->panel->Count(count);
 }
 
 void MainWindow::OnStart()
 {
-    auto err = this->sensor.Open(this->panel->ui->cbDevice->currentIndex());
+    auto err = this->sensor.Open(this->ui->panel->ui->cbDevice->currentIndex());
     if (Error::Ok != err)
     {
         this->ui->statusBar->showMessage(QString("Failed to open sensor. Error: ") + GetError(err));
         return;
     }
 
-    this->orientation = this->panel->Orientation();
+    this->orientation = this->ui->panel->Orientation();
     err = this->sensor.SetOrientation(this->orientation);
     if (Error::Ok != err)
     {
@@ -219,31 +216,31 @@ void MainWindow::OnStart()
         return;
     }
 
-    err = this->sensor.SetDepthAligned(this->panel->Align());
+    err = this->sensor.SetDepthAligned(this->ui->panel->Align());
     if (Error::Ok != err)
     {
         this->ui->statusBar->showMessage(QString("Failed to set depth alignment. Error: ") + GetError(err));
         return;
     }
 
-    err = this->sensor.SetImageFlipped(this->panel->Flip());
+    err = this->sensor.SetImageFlipped(this->ui->panel->Flip());
     if (Error::Ok != err)
     {
         this->ui->statusBar->showMessage(QString("Failed to set image flipping. Error: ") + GetError(err));
         return;
     }
 
-    err = this->sensor.SetRecording(this->panel->Record());
+    err = this->sensor.SetRecording(this->ui->panel->Record());
     if (Error::Ok != err)
     {
         this->ui->statusBar->showMessage(QString("Failed to set stream recording. Error: ") + GetError(err));
         return;
     }
 
-    auto colorResolution = this->panel->ColorRes();
-    auto depthResolution = this->panel->DepthRes();
-    auto generateUsers   = this->panel->GenUsers();
-    auto paintGround     = this->panel->PaintGround();
+    auto colorResolution = this->ui->panel->ColorRes();
+    auto depthResolution = this->ui->panel->DepthRes();
+    auto generateUsers   = this->ui->panel->GenUsers();
+    auto paintGround     = this->ui->panel->PaintGround();
 
     err = this->sensor.Start(colorResolution, depthResolution, generateUsers);
     if (Error::Ok != err)
@@ -357,7 +354,7 @@ void MainWindow::OnStart()
         this->sensor.Close();
     });
 
-    this->panel->Disable();
+    this->ui->panel->Disable();
 
     this->Arrange(this->orientation);
 }
@@ -370,7 +367,7 @@ void MainWindow::OnStop()
         this->thread.join();
     }
 
-    this->panel->Enable();
+    this->ui->panel->Enable();
     this->OnRefresh();
 }
 
@@ -378,7 +375,7 @@ void MainWindow::OnUsersNo(bool checked)
 {
     if (checked)
     {
-        this->panel->ui->rbGroundNo->setChecked(true);
+        this->ui->panel->ui->rbGroundNo->setChecked(true);
     }
 }
 
@@ -386,7 +383,7 @@ void MainWindow::OnGroundYes(bool checked)
 {
     if (checked)
     {
-        this->panel->ui->rbUsersYes->setChecked(true);
+        this->ui->panel->ui->rbUsersYes->setChecked(true);
     }
 }
 
@@ -415,7 +412,7 @@ void MainWindow::PaintDepth(const DepthFrame& frame)
 void MainWindow::PaintUsers(const UsersFrame& frame)
 {
     QPainter painter(&this->dpixmap);
-    UserPainter::Paint(frame, painter, this->dpixmap.width() / 640.f);
+    UserPainter::Paint(frame, painter, this->orientation, this->dpixmap.width() / 640.f);
 }
 
 void MainWindow::PaintGround(const DepthFrame& frame, const Vector4& groundPlane)
@@ -423,6 +420,8 @@ void MainWindow::PaintGround(const DepthFrame& frame, const Vector4& groundPlane
     vector<Vector3> cloud;
     if (Error::Ok == frame.ToPointCloud(cloud))
     {
+        const float thresh = Orientation::Aerial == this->orientation ? 0.06f : 0.035f;
+
         lock_guard<mutex> lock(this->dmutex);
 
         this->dpixels.resize(frame.Width * frame.Height);
@@ -432,15 +431,7 @@ void MainWindow::PaintGround(const DepthFrame& frame, const Vector4& groundPlane
             auto d = frame.Pixels[i];
             if (d < palette.size())
             {
-                if (IsGround(cloud[i], groundPlane))
-                {
-                    this->dpixels[i] = COLOR_GROUND;
-                }
-                else
-                {
-                    this->dpixels[i] = palette[d];
-                }
-                //this->dpixels[i] = IsGround(cloud[i], groundPlane) ? COLOR_GROUND : palette[d];
+                this->dpixels[i] = IsGround(cloud[i], groundPlane, thresh) ? COLOR_GND : palette[d];
             }
             else
             {
@@ -454,7 +445,7 @@ void MainWindow::PaintGround(const DepthFrame& frame, const Vector4& groundPlane
 
 void MainWindow::Arrange(Orientation orientation)
 {
-    if (Orientation::Landscape == orientation)
+    if (Orientation::Landscape == orientation || Orientation::Aerial == orientation)
     {
         this->ui->lbColor->setFixedSize(640, 480);
         this->ui->lbDepth->setFixedSize(640, 480);
@@ -465,8 +456,8 @@ void MainWindow::Arrange(Orientation orientation)
         this->ui->lbDepth->setFixedSize(640, 640 * 4 / 3);
     }
 
-    this->panel->move(this->panel->x(), this->ui->lbColor->height());
-    this->setFixedSize(this->width(), this->ui->lbColor->height() + this->panel->height() + this->ui->statusBar->height());
+    this->ui->panel->move(this->ui->panel->x(), this->ui->lbColor->height());
+    this->setFixedSize(this->width(), this->ui->lbColor->height() + this->ui->panel->height() + this->ui->statusBar->height());
 }
 
 QString MainWindow::GetError(Error error)

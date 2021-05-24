@@ -26,13 +26,13 @@ apply plugin: 'com.android.application'
 
 repositories {
     maven {
-        url "https://dl.bintray.com/intel-realsense/librealsense"
+        url "https://egiintel.jfrog.io/artifactory/librealsense"
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.intel.realsense:librealsense:2.38.1@aar'
+    implementation 'com.intel.realsense:librealsense:2.45.0@aar'
 **DEPS**}
 
 android {

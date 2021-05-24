@@ -94,11 +94,11 @@ void DepthView::Draw(const uint16_t* depth, uint32_t w, uint32_t h, Orientation 
     this->orientation = orientation;
 }
 
-void DepthView::Draw(const UsersFrame& users)
+void DepthView::Draw(const UsersFrame& users, Orientation orienation)
 {
     lock_guard<mutex> lock(this->lock);
     QPainter painter(&this->pixmap);
-    UserPainter::Paint(users, painter, this->pixmap.height() / 480.f);
+    UserPainter::Paint(users, painter, this->pixmap.height() / 480.f, orientation);
 }
 
 void DepthView::resizeEvent(QResizeEvent* e)
@@ -111,7 +111,7 @@ void DepthView::OnUpdate()
 {
     lock_guard<mutex> lock(this->lock);
 
-    if (Orientation::Landscape == this->orientation)
+    if (Orientation::Landscape == this->orientation || Orientation::Aerial == this->orientation)
     {
         this->ui->label->setPixmap(this->pixmap);
     }

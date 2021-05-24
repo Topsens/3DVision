@@ -92,7 +92,7 @@ void Application::OnStart()
     uint32_t w = this->panel.XRes();
     uint32_t h = this->panel.YRes();
 
-    if (Orientation::Landscape == orient)
+    if (Orientation::Landscape == orient || Orientation::Aerial == orient)
     {
         this->ResizeClient(w, h + this->panel.Height() + this->status.Height());
     }

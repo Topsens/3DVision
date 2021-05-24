@@ -46,7 +46,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Resolution:</string>
+    <string>Resolution</string>
    </property>
   </widget>
   <widget class="QPushButton" name="start">
@@ -85,7 +85,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Device:</string>
+    <string>Sensor</string>
    </property>
   </widget>
   <widget class="QComboBox" name="device">
@@ -108,7 +108,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>Flip image</string>
+    <string>Flip Image</string>
    </property>
    <widget class="QRadioButton" name="flipYes">
     <property name="geometry">
@@ -214,11 +214,19 @@
      <string>AntiClock</string>
     </property>
    </widget>
-   <zorder>land</zorder>
-   <zorder>clock</zorder>
-   <zorder>antic</zorder>
-   <zorder>start</zorder>
-   <zorder>stop</zorder>
+   <widget class="QRadioButton" name="aerial">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>100</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Aerial</string>
+    </property>
+   </widget>
   </widget>
   <widget class="Line" name="vline3">
    <property name="geometry">

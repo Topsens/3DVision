@@ -63,7 +63,7 @@ DepthView::DepthView()
 
 void DepthView::Draw(const uint16_t* depth, uint32_t w, uint32_t h, Orientation orientation)
 {
-    if (Orientation::Landscape == orientation)
+    if (Orientation::Landscape == orientation || Orientation::Aerial == orientation)
     {
         this->width  = w;
         this->height = h;
@@ -77,7 +77,7 @@ void DepthView::Draw(const uint16_t* depth, uint32_t w, uint32_t h, Orientation 
     lock_guard<std::mutex> lock(this->mutex);
     this->pixels.resize(this->width * this->height);
 
-    if (Orientation::Landscape == orientation)
+    if (Orientation::Landscape == orientation || Orientation::Aerial == orientation)
     {
         for (size_t i = 0; i < this->pixels.size(); i++)
         {
@@ -132,7 +132,7 @@ void DepthView::Error(const wstring& error)
 
 void DepthView::OnPaint()
 {
-    GDIRenderer renderer;
+    GdiRenderer renderer;
 
     if (renderer.BeginPaint(this->Handle()))
     {
@@ -147,7 +147,7 @@ void DepthView::OnPaint()
         }
         else
         {
-            renderer.PixelsARGB((BYTE*)this->pixels.data(), this->width, this->height, (this->ClientWidth() - this->width) / 2, 0, this->width, this->height);
+            renderer.PixelsArgb((BYTE*)this->pixels.data(), this->width, this->height, (this->ClientWidth() - this->width) / 2, 0, this->width, this->height);
         }
 
         this->users.Paint(renderer, (this->ClientWidth() - this->width) / 2, 0, 1.f);

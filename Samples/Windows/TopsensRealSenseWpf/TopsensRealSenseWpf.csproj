@@ -157,6 +157,7 @@
   <PropertyGroup>
     <PostBuildEvent>xcopy /y /d "$(ProjectDir)..\Topsens\Bin\$(Platform)\TopsensPeople.dll" $(TargetDir)
 xcopy /y /d "$(ProjectDir)..\Topsens\Rpk\Topsens.rpk" $(TargetDir)
+xcopy /y /d "$(ProjectDir)..\Topsens\Rpk\Aerial.rpk" $(TargetDir)
 xcopy /y /d "$(librealsenseSDK)\bin\$(Platform)\realsense2.dll" $(TargetDir)
 xcopy /y /d "$(librealsenseSDK)\bin\$(Platform)\Intel.Realsense.dll" $(TargetDir)</PostBuildEvent>
   </PropertyGroup>

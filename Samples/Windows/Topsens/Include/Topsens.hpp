@@ -52,9 +52,10 @@ namespace Topsens
     /** @brief Image direction. */
     enum class Orientation
     {
-        Landscape             = TOPSENS_ORIENTATION_LANDSCAPE,             /**< Default landscape direction. */
-        PortraitClockwise     = TOPSENS_ORIENTATION_PORTRAIT_CLOCKWISE,    /**< Portrait direction, rotate 90 degrees clockwise to get landscape image. */
-        PortraitAntiClockwise = TOPSENS_ORIENTATION_PORTRAIT_ANTICLOCKWISE /**< Portrait direction, rotate 90 degrees anticlockwise to get landscape image. */
+        Landscape             = TOPSENS_ORIENTATION_LANDSCAPE,              /**< Default landscape direction. */
+        PortraitClockwise     = TOPSENS_ORIENTATION_PORTRAIT_CLOCKWISE,     /**< Portrait direction, rotate 90 degrees clockwise to get landscape image. */
+        PortraitAntiClockwise = TOPSENS_ORIENTATION_PORTRAIT_ANTICLOCKWISE, /**< Portrait direction, rotate 90 degrees anticlockwise to get landscape image. */
+        Aerial                = TOPSENS_ORIENTATION_AERIAL                  /**< Aerial direction. */
     };
 
     /** @brief Image resolution. */
@@ -86,6 +87,36 @@ namespace Topsens
     }
 
     /**
+     * @brief Checks whether the Vector2 object contains NaN.
+     * @param v Vector2 object.
+     * @return True if the Vector2 object contains any NaN, otherwise false.
+     */
+    inline bool IsNaN(const Vector2& v)
+    {
+        return v.X != v.X || v.Y != v.Y;
+    }
+
+    /**
+     * @brief Checks whether the Vector3 object contains NaN.
+     * @param v Vector3 object.
+     * @return True if the Vector3 object contains any NaN, otherwise false.
+     */
+    inline bool IsNaN(const Vector3& v)
+    {
+        return v.X != v.X || v.Y != v.Y || v.Z != v.Z;
+    }
+
+    /**
+     * @brief Checks whether the Vector4 object contains NaN.
+     * @param v Vector4 object.
+     * @return True if the Vector4 object contains any NaN, otherwise false.
+     */
+    inline bool IsNaN(const Vector4& v)
+    {
+        return v.X != v.X || v.Y != v.Y || v.Z != v.Z || v.W != v.W;
+    }
+
+    /**
      * @brief Depth image frame.
      * @remarks Contains a complete frame of depth images captured from sensor.
      */
@@ -93,7 +124,7 @@ namespace Topsens
     {
         /**
          * @brief Converts depth frame to cloud frame.
-         * @param cloud Cloud frame object.
+         * @param cloud Cloud frame pixel collection.
          * @param onlyValid Whether to convert only valid depth values. 
          *                  If this parameter is true, only depth pixels with a depth value other than 0 will be converted to point cloud pixels.
          * @return #Error::Ok if the call succeeds, otherwise refer to #Error for the specific meaning.

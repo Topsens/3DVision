@@ -1,12 +1,12 @@
 #include "ColorView.h"
-#include "GDIRenderer.h"
+#include "GdiRenderer.h"
 
 using namespace std;
 using namespace Topsens;
 
-void ColorView::Draw(const ColorFrame& frame, Orientation orientation)
+void ColorView::Draw(const ColorFrame& frame)
 {
-    if (Orientation::Landscape == orientation)
+    if (Orientation::Landscape == this->orient || Orientation::Aerial == this->orient)
     {
         this->width  = frame.Width;
         this->height = frame.Height;
@@ -21,7 +21,7 @@ void ColorView::Draw(const ColorFrame& frame, Orientation orientation)
 
     this->pixels.resize(this->width * this->height);
 
-    if (Orientation::Landscape == orientation)
+    if (Orientation::Landscape == this->orient || Orientation::Aerial == this->orient)
     {
         memcpy(&this->pixels[0], frame.Pixels, this->pixels.size() * sizeof(this->pixels[0]));
     }
@@ -35,7 +35,7 @@ void ColorView::Draw(const ColorFrame& frame, Orientation orientation)
             off[i] = i * this->width;
         }
 
-        if (Orientation::PortraitClockwise == orientation)
+        if (Orientation::PortraitClockwise == this->orient)
         {
             for (int i = this->width - 1; i >= 0; i--)
             {
@@ -72,9 +72,14 @@ void ColorView::Error(const wchar_t* error)
     }
 }
 
+void ColorView::Orientation(Topsens::Orientation orient)
+{
+    this->orient = orient;
+}
+
 void ColorView::OnPaint()
 {
-    GDIRenderer renderer;
+    GdiRenderer renderer;
 
     if (renderer.BeginPaint(this->Handle()))
     {
@@ -89,7 +94,7 @@ void ColorView::OnPaint()
         }
         else
         {
-            renderer.PixelsARGB((BYTE*)this->pixels.data(), this->width, this->height, 0, 0, this->ClientWidth(), this->ClientHeight());
+            renderer.PixelsArgb((BYTE*)this->pixels.data(), this->width, this->height, 0, 0, this->ClientWidth(), this->ClientHeight());
         }
 
         if (!this->error.empty() && renderer.Font(L"Segou UI", 40))

@@ -1,5 +1,5 @@
 #include "Application.h"
-#include "GDIRenderer.h"
+#include "GdiRenderer.h"
 #include "resource.h"
 #include <gdiplus.h>
 
@@ -128,14 +128,14 @@ void Application::OnDestroy()
 
 void Application::OnPaint()
 {
-    GDIRenderer renderer;
+    GdiRenderer renderer;
     if (renderer.BeginPaint(this->Handle()))
     {
-        renderer.PixelsRGB(this->bkgPixels.data(), this->bkgW, this->bkgH, 0, 0, this->ClientWidth(), this->ClientHeight());
+        renderer.PixelsRgb(this->bkgPixels.data(), this->bkgW, this->bkgH, 0, 0, this->ClientWidth(), this->ClientHeight());
 
         if (!this->extracted.empty())
         {
-            renderer.PixelsARGB((BYTE*)this->extracted.data(), this->imgW, this->imgH, 0, 0, this->ClientWidth(), this->ClientHeight(), true);
+            renderer.PixelsArgb((BYTE*)this->extracted.data(), this->imgW, this->imgH, 0, 0, this->ClientWidth(), this->ClientHeight(), true);
         }
 
         renderer.EndPaint();

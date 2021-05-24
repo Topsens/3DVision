@@ -21,7 +21,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\View\GDIRenderer.cpp">
+    <ClCompile Include="..\View\GdiRenderer.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
     <ClCompile Include="..\View\MainWindow.cpp">
@@ -41,7 +41,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\View\GDIRenderer.h">
+    <ClInclude Include="..\View\GdiRenderer.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
     <ClInclude Include="..\View\MainWindow.h">

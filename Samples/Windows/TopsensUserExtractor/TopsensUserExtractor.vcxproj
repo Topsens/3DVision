@@ -196,7 +196,7 @@ xcopy /y /d ".\Background.jpg" $(OutDir)</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\View\DialogItem.cpp" />
-    <ClCompile Include="..\View\GDIRenderer.cpp" />
+    <ClCompile Include="..\View\GdiRenderer.cpp" />
     <ClCompile Include="..\View\MainWindow.cpp" />
     <ClCompile Include="..\View\View.cpp" />
     <ClCompile Include="..\View\Window.cpp" />
@@ -204,7 +204,7 @@ xcopy /y /d ".\Background.jpg" $(OutDir)</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\View\DialogItem.h" />
-    <ClInclude Include="..\View\GDIRenderer.h" />
+    <ClInclude Include="..\View\GdiRenderer.h" />
     <ClInclude Include="..\View\MainWindow.h" />
     <ClInclude Include="..\View\View.h" />
     <ClInclude Include="..\View\Window.h" />

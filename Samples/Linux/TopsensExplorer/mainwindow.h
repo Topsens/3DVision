@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "panel.h"
 #include <QMainWindow>
 #include <TopsensSensor.hpp>
 #include <cmath>
@@ -44,15 +43,14 @@ private:
     void PaintGround(const Topsens::DepthFrame& frame, const Topsens::Vector4& groundPlain);
     void Arrange(Topsens::Orientation orientation);
 
-    static inline bool IsGround(const Topsens::Vector3& point, const Topsens::Vector4& groundPlane)
+    static inline bool IsGround(const Topsens::Vector3& point, const Topsens::Vector4& groundPlane, float thresh)
     {
-        return std::fabs(point.X * groundPlane.X + point.Y * groundPlane.Y + point.Z * groundPlane.Z + groundPlane.W) < 0.035f;
+        return std::fabs(point.X * groundPlane.X + point.Y * groundPlane.Y + point.Z * groundPlane.Z + groundPlane.W) < thresh;
     }
     static QString GetError(Topsens::Error error);
 
 private:
     Ui::MainWindow *ui;
-    Panel* panel;
 
     Topsens::Sensor sensor;
     Topsens::Orientation orientation;

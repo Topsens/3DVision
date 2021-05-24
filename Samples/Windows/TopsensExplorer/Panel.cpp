@@ -2,6 +2,7 @@
 #include "resource.h"
 #include "CheckBox.h"
 #include "ComboBox.h"
+#include <Topsens.h>
 
 using namespace std;
 
@@ -46,6 +47,7 @@ void Panel::Enable()
     this->Item(IDC_ORIENT_LAND).Enable();
     this->Item(IDC_ORIENT_CLOCK).Enable();
     this->Item(IDC_ORIENT_ANTIC).Enable();
+    this->Item(IDC_ORIENT_AERIAL).Enable();
     this->Item(IDC_RECORD_YES).Enable();
     this->Item(IDC_RECORD_NO).Enable();
     this->Item(IDC_GROUND_YES).Enable();
@@ -69,6 +71,7 @@ void Panel::Disable()
     this->Item(IDC_ORIENT_LAND).Disable();
     this->Item(IDC_ORIENT_CLOCK).Disable();
     this->Item(IDC_ORIENT_ANTIC).Disable();
+    this->Item(IDC_ORIENT_AERIAL).Disable();
     this->Item(IDC_RECORD_YES).Disable();
     this->Item(IDC_RECORD_NO).Disable();
     this->Item(IDC_GROUND_YES).Disable();
@@ -90,17 +93,21 @@ int Panel::DepthResolution()
 
 int Panel::Orientation()
 {
-    if (((CheckBox&)this->Item(IDC_ORIENT_CLOCK)).IsChecked())
+    if (((CheckBox&)this->Item(IDC_ORIENT_LAND)).IsChecked())
     {
-        return 1;
+        return TOPSENS_ORIENTATION_LANDSCAPE;
+    }
+    else if (((CheckBox&)this->Item(IDC_ORIENT_CLOCK)).IsChecked())
+    {
+        return TOPSENS_ORIENTATION_PORTRAIT_CLOCKWISE;
     }
     else if (((CheckBox&)this->Item(IDC_ORIENT_ANTIC)).IsChecked())
     {
-        return 2;
+        return TOPSENS_ORIENTATION_PORTRAIT_ANTICLOCKWISE;
     }
     else
     {
-        return 0;
+        return TOPSENS_ORIENTATION_AERIAL;
     }
 }
 

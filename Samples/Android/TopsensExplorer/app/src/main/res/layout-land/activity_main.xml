@@ -38,7 +38,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Device - "/>
+                android:layout_marginHorizontal="10sp"
+                android:text="Sensor"/>
 
             <Spinner
                 android:id="@+id/device"
@@ -48,8 +49,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10sp"
-                android:text="Orientation - "/>
+                android:layout_marginHorizontal="10sp"
+                android:text="Orientation"/>
 
             <Spinner
                 android:id="@+id/orient"
@@ -59,8 +60,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10sp"
-                android:text="Color - "/>
+                android:layout_marginHorizontal="10sp"
+                android:text="Color"/>
 
             <Spinner
                 android:id="@+id/cres"
@@ -70,8 +71,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10sp"
-                android:text="Depth - "/>
+                android:layout_marginHorizontal="10sp"
+                android:text="Depth"/>
 
             <Spinner
                 android:id="@+id/dres"
@@ -123,19 +124,22 @@
                 android:id="@+id/refresh"
                 android:text="Refresh"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"/>
 
             <Button
                 android:id="@+id/start"
                 android:text="Start"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"/>
 
             <Button
                 android:id="@+id/stop"
                 android:text="Stop"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"/>
         </LinearLayout>
     </LinearLayout>
 

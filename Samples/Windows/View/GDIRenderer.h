@@ -3,11 +3,11 @@
 
 #include <Windows.h>
 
-class GDIRenderer
+class GdiRenderer
 {
 public:
-    GDIRenderer();
-   ~GDIRenderer();
+    GdiRenderer();
+   ~GdiRenderer();
 
     bool BeginPaint(HWND hwnd, bool copyBackground = false);
     void EndPaint();
@@ -18,8 +18,8 @@ public:
     bool SolidBrush(COLORREF color);
 
     bool Pixel(int x, int y, COLORREF color);
-    bool PixelsRGB(const BYTE* pixels, int width, int height, int x, int y, int cx, int cy);
-    bool PixelsARGB(const BYTE* pixels, int width, int height, int x, int y, int cx, int cy, bool useAlpha = false);
+    bool PixelsRgb(const BYTE* pixels, int width, int height, int x, int y, int cx, int cy);
+    bool PixelsArgb(const BYTE* pixels, int width, int height, int x, int y, int cx, int cy, bool useAlpha = false);
 
     void From(int x, int y);
     bool LineTo(int x, int y);

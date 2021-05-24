@@ -4,7 +4,6 @@
 #define PALETTE_SIZE 0x1000
 
 uchar4 palette[PALETTE_SIZE];
-uchar4 red;
 
 uint32_t width;
 rs_allocation depth;
@@ -12,7 +11,11 @@ rs_allocation depth;
 uchar4 RS_KERNEL render(uint32_t x, uint32_t y)
 {
     ushort d = rsGetElementAt_uchar(depth, x * 2, y) | rsGetElementAt_uchar(depth, x * 2 + 1, y) << 8;
-    return d < PALETTE_SIZE ? palette[d] : red;
+    if (d >= PALETTE_SIZE)
+    {
+        d = PALETTE_SIZE - 1;
+    }
+    return palette[d];
 }
 
 uchar RS_KERNEL flip(uint32_t x, uint32_t y)
@@ -75,9 +78,4 @@ void init()
         c->b = 0;
         c->a = 0xFF;
     }
-
-    red.a = 0xFF;
-    red.r = 0xFF;
-    red.g = 0;
-    red.b = 0;
 }

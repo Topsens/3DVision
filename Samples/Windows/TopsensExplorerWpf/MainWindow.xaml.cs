@@ -67,36 +67,35 @@ namespace TopsensExplorerWpf
                 return;
             }
 
-            var orient = this.panel.Orientation();
-            err = this.sensor.SetOrientation(orient);
+            err = this.sensor.SetOrientation(this.panel.Orientation);
             if (Error.Ok != err)
             {
                 this.Status("Failed to set sensor orientation: " + this.GetError(err));
                 return;
             }
 
-            err = this.sensor.SetDepthAligned(this.panel.Align());
+            err = this.sensor.SetDepthAligned(this.panel.Align);
             if (Error.Ok != err)
             {
                 this.Status("Failed to set depth alignmnent: " + this.GetError(err));
                 return;
             }
 
-            err = this.sensor.SetImageFlipped(this.panel.Flip());
+            err = this.sensor.SetImageFlipped(this.panel.Flip);
             if (Error.Ok != err)
             {
                 this.Status("Failed to set image flipped: " + this.GetError(err));
                 return;
             }
 
-            err = this.sensor.SetRecording(this.panel.Record());
+            err = this.sensor.SetRecording(this.panel.Record);
             if (Error.Ok != err)
             {
                 this.Status("Failed to set stream recording: " + this.GetError(err));
                 return;
             }
 
-            err = this.sensor.Start(this.panel.ColorRes(), this.panel.DepthRes(), this.panel.GenUsers());
+            err = this.sensor.Start(this.panel.ColorRes, this.panel.DepthRes, this.panel.GenUsers);
             if (Error.Ok != err)
             {
                 this.Status("Failed to start sensor: " + this.GetError(err));
@@ -115,8 +114,9 @@ namespace TopsensExplorerWpf
             {
                 this.userPainter = new UserPainter(this.canvas);
             }
+            this.userPainter.Orientation = this.panel.Orientation;
 
-            if (Orientation.Landscape == orient)
+            if (Orientation.Landscape == this.panel.Orientation || Orientation.Aerial == this.panel.Orientation)
             {
                 this.cimage.Width  = 640.0;
                 this.cimage.Height = 480.0;
@@ -126,7 +126,7 @@ namespace TopsensExplorerWpf
                 this.dimage.LayoutTransform = new RotateTransform(0.0);
                 this.canvas.LayoutTransform = new RotateTransform(0.0);
 
-                this.userPainter.Ratio = 640.0 / this.panel.DepthRes().Width();
+                this.userPainter.Ratio = 640.0 / this.panel.DepthRes.Width();
             }
             else
             {
@@ -135,14 +135,13 @@ namespace TopsensExplorerWpf
                 this.dimage.Width  = 640.0 * 4.0 / 3.0;
                 this.dimage.Height = 640.0;
 
-                var rotate = (Orientation.PortraitClockwise == orient) ? 90.0 : -90.0;
+                var rotate = (Orientation.PortraitClockwise == this.panel.Orientation) ? 90.0 : -90.0;
                 this.cimage.LayoutTransform = new RotateTransform(rotate);
                 this.dimage.LayoutTransform = new RotateTransform(rotate);
                 this.canvas.LayoutTransform = new RotateTransform(rotate);
 
-                this.userPainter.Ratio = 640.0 * 4.0 / 3.0 / this.panel.DepthRes().Width();
+                this.userPainter.Ratio = 640.0 * 4.0 / 3.0 / this.panel.DepthRes.Width();
             }
-
         }
 
         private void OnStop(object sender, RoutedEventArgs args)
@@ -214,6 +213,8 @@ namespace TopsensExplorerWpf
             {
                 int w, h;
 
+                float thresh = Orientation.Aerial == this.panel.Orientation ? 0.06f : 0.035f;
+
                 lock (this.dframe)
                 {
                     w = this.dframe.Width;
@@ -234,7 +235,7 @@ namespace TopsensExplorerWpf
                             if (d < this.palette.Length)
                             {
                                 var c = this.cloud.Pixels[i];
-                                if (Math.Abs(c.X * this.groundPlane.X + c.Y * this.groundPlane.Y + c.Z * this.groundPlane.Z + this.groundPlane.W) < 0.035f)
+                                if (Math.Abs(c.X * this.groundPlane.X + c.Y * this.groundPlane.Y + c.Z * this.groundPlane.Z + this.groundPlane.W) < thresh)
                                 {
                                     unchecked { this.dpixels[i] = (int)0xFF808080; }
                                 }

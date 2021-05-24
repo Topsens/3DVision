@@ -19,7 +19,7 @@ public:
     ~DepthView();
 
     void Draw(const uint16_t* depth, uint32_t width, uint32_t height, Topsens::Orientation orientation);
-    void Draw(const Topsens::UsersFrame&);
+    void Draw(const Topsens::UsersFrame&, Topsens::Orientation Orientation);
 
 signals:
     void Update();

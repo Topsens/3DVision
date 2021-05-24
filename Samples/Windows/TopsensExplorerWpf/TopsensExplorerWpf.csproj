@@ -138,7 +138,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /y /d $(ProjectDir)..\Topsens\Bin\$(Platform)\TopsensSensor.dll $(TargetDir)
-xcopy /y /d $(ProjectDir)..\Topsens\Rpk\Topsens.rpk $(TargetDir)</PostBuildEvent>
+xcopy /y /d $(ProjectDir)..\Topsens\Rpk\Topsens.rpk $(TargetDir)
+xcopy /y /d $(ProjectDir)..\Topsens\Rpk\Aerial.rpk $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

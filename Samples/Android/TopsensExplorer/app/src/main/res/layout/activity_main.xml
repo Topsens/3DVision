@@ -42,15 +42,16 @@
                 android:gravity="right"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5sp">
 
                 <TextView
-                    android:text="Device - "
+                    android:text="Sensor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <TextView
-                    android:text="Orient - "
+                    android:text="Orient"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -77,15 +78,16 @@
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10sp">
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="5sp">>
 
                 <TextView
-                    android:text="Color - "
+                    android:text="Color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <TextView
-                    android:text="Depth - "
+                    android:text="Depth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -156,19 +158,22 @@
                 android:id="@+id/refresh"
                 android:text="Refresh"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"/>
 
             <Button
                 android:id="@+id/start"
                 android:text="Start"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"/>
 
             <Button
                 android:id="@+id/stop"
                 android:text="Stop"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

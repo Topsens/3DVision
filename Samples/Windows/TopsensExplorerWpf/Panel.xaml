@@ -20,7 +20,7 @@
         
         <Border Grid.Column="0" Padding="2">
             <StackPanel VerticalAlignment="Center">
-                <TextBlock Margin="4">Device</TextBlock>
+                <TextBlock Margin="4">Sensor</TextBlock>
                 <TextBlock Margin="4">Color</TextBlock>
                 <TextBlock Margin="4">Depth</TextBlock>
             </StackPanel>
@@ -44,21 +44,21 @@
             </StackPanel>
         </Border>
         
-        <GroupBox x:Name="usersGroup" Grid.Column="2" Header="Generate users" Padding="5" Margin="5">
+        <GroupBox x:Name="usersGroup" Grid.Column="2" Header="Generate Users" Padding="5" Margin="5">
             <StackPanel>
                 <RadioButton Margin="5" x:Name="users" IsChecked="True">Yes</RadioButton>
                 <RadioButton Margin="5" Click="OnUsersNo">No</RadioButton>
             </StackPanel>
         </GroupBox>
 
-        <GroupBox x:Name="alignGroup" Grid.Column="3" Header="Align depth" Padding="5" Margin="5">
+        <GroupBox x:Name="alignGroup" Grid.Column="3" Header="Align Depth" Padding="5" Margin="5">
             <StackPanel>
                 <RadioButton Margin="5" x:Name="align">Yes</RadioButton>
                 <RadioButton Margin="5" IsChecked="True">No</RadioButton>
             </StackPanel>
         </GroupBox>
         
-        <GroupBox x:Name="flipGroup" Grid.Column="4" Header="Flip image" Padding="5" Margin="5">
+        <GroupBox x:Name="flipGroup" Grid.Column="4" Header="Flip Image" Padding="5" Margin="5">
             <StackPanel>
                 <RadioButton Margin="5" IsChecked="True" x:Name="flip">Yes</RadioButton>
                 <RadioButton Margin="5">No</RadioButton>
@@ -67,7 +67,10 @@
         
         <GroupBox x:Name="orientGroup" Grid.Column="5" Header="Orientation" Padding="5" Margin="5">
             <StackPanel Orientation="Horizontal">
-                <RadioButton GroupName="orient" Margin="5" IsChecked="True" x:Name="land">Landscape</RadioButton>
+                <StackPanel>
+                    <RadioButton GroupName="orient" Margin="5" IsChecked="True" x:Name="land">Landscape</RadioButton>
+                    <RadioButton GroupName="orient" Margin="5" x:Name="aerial">Aerial</RadioButton>
+                </StackPanel>
                 <StackPanel>
                     <RadioButton GroupName="orient" Margin="5" x:Name="clock">Clockwise</RadioButton>
                     <RadioButton GroupName="orient" Margin="5" x:Name="antic">AntiClock</RadioButton>
@@ -82,7 +85,7 @@
             </StackPanel>
         </GroupBox>
         
-        <GroupBox x:Name="groundGroup" Grid.Column="7" Header="Paint ground" Padding="5" Margin="5">
+        <GroupBox x:Name="groundGroup" Grid.Column="7" Header="Paint Ground" Padding="5" Margin="5">
             <StackPanel>
                 <RadioButton Margin="5" IsChecked="True" x:Name="groundYes" Click="OnGroundYes">Yes</RadioButton>
                 <RadioButton Margin="5" x:Name="groundNo">No</RadioButton>

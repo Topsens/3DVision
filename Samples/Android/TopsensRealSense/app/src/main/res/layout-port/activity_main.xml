@@ -25,7 +25,7 @@
             android:layout_marginRight="5sp">
 
             <TextView
-                android:text="Dev"
+                android:text="Sensor"
                 android:layout_width="wrap_content"
                 android:layout_height="26sp"/>
 
@@ -103,12 +103,14 @@
             android:id="@+id/start"
             android:text="Start"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/stop"
             android:text="Stop"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"/>
     </LinearLayout>
 </LinearLayout>

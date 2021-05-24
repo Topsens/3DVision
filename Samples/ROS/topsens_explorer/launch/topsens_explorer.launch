@@ -1,0 +1,46 @@
+<launch>
+  <arg name="sensor_node"       default="sensor"/>
+  <arg name="device_index"      default="0"/>
+  <arg name="image_flipped"     default="false"/>
+  <arg name="depth_aligned"     default="false"/>
+  <arg name="mask_enabled"      default="false"/>
+  <arg name="orientation"       default="landscape"/>
+  <arg name="color_resolution"  default="vga"/>
+  <arg name="depth_resolution"  default="vga"/>
+  <arg name="generate_users"    default="true"/>
+  <arg name="color_frame_id"    default="color_frame"/>
+  <arg name="depth_frame_id"    default="depth_frame"/>
+  <arg name="users_frame_id"    default="users_frame"/>
+  <arg name="color_frame"       default="color/image"/>
+  <arg name="depth_frame"       default="depth/image"/>
+  <arg name="users_frame"       default="users/frame"/>
+  <arg name="color_camera"      default="color/camera"/>
+  <arg name="depth_camera"      default="depth/camera"/>
+
+  <node name="$(arg sensor_node)" pkg="topsens" type="sensor" output="screen">
+    <param name="device_index"      value="$(arg device_index)"/>
+    <param name="image_flipped"     value="$(arg image_flipped)"/>
+    <param name="depth_aligned"     value="$(arg depth_aligned)"/>
+    <param name="mask_enabled"      value="$(arg mask_enabled)"/>
+    <param name="orientation"       value="$(arg orientation)"/>
+    <param name="color_resolution"  value="$(arg color_resolution)"/>
+    <param name="depth_resolution"  value="$(arg depth_resolution)"/>
+    <param name="generate_users"    value="$(arg generate_users)"/>
+    <param name="color_frame_id"    value="$(arg sensor_node)_$(arg color_frame_id)"/>
+    <param name="depth_frame_id"    value="$(arg sensor_node)_$(arg depth_frame_id)"/>
+    <param name="users_frame_id"    value="$(arg sensor_node)_$(arg users_frame_id)"/>
+    <param name="color_frame"       value="/$(arg sensor_node)/$(arg color_frame)"/>
+    <param name="depth_frame"       value="/$(arg sensor_node)/$(arg depth_frame)"/>
+    <param name="users_frame"       value="/$(arg sensor_node)/$(arg users_frame)"/>
+    <param name="color_camera"      value="/$(arg sensor_node)/$(arg color_camera)"/>
+    <param name="depth_camera"      value="/$(arg sensor_node)/$(arg depth_camera)"/>
+  </node>
+
+  <node name="topsens_explorer" pkg="topsens_explorer" type="topsens_explorer" output="screen">
+    <param name="orientation"       value="$(arg orientation)"/>
+    <param name="color_frame"       value="/$(arg sensor_node)/$(arg color_frame)"/>
+    <param name="depth_frame"       value="/$(arg sensor_node)/$(arg depth_frame)"/>
+    <param name="users_frame"       value="/$(arg sensor_node)/$(arg users_frame)"/>
+    <param name="depth_camera"      value="/$(arg sensor_node)/$(arg depth_camera)"/>
+  </node>
+</launch>

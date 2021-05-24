@@ -2,14 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
     
     defaultConfig {
         applicationId "cn.topsens.realsense"
         minSdkVersion 19
         targetSdkVersion 27 // https://stackoverflow.com/questions/58335077/can-t-access-usb-camera-in-android-10
         versionCode 1
-        versionName "1.7.0"
+        versionName "1.8.1"
         renderscriptTargetApi 19
         ndk {
             abiFilters 'armeabi-v7a'
@@ -40,7 +39,8 @@ repositories {
     }
 
     maven {
-        url "https://dl.bintray.com/intel-realsense/librealsense"
+        url "https://egiintel.jfrog.io/artifactory/librealsense"
+        // https://github.com/IntelRealSense/librealsense/issues/8287
     }
 }
 
@@ -48,6 +48,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.intel.realsense:librealsense:2.45.0@aar'
     implementation (name: 'libTopsensPeople', ext: 'aar')
-    implementation 'com.intel.realsense:librealsense:2.38.1@aar'
 }

@@ -63,21 +63,21 @@ DepthView::DepthView()
     this->Ground(nullptr);
 }
 
-void DepthView::Draw(const DepthFrame& frame, Orientation orientation)
+void DepthView::Draw(const DepthFrame& frame)
 {
     if (!isnan(this->ground.X) && !isnan(this->ground.Y) && !isnan(this->ground.Z) && !isnan(this->ground.W))
     {
-        this->DrawGround(frame, orientation);
+        this->DrawGround(frame);
     }
     else
     {
-        this->DrawDepth(frame, orientation);
+        this->DrawDepth(frame);
     }
 }
 
-void DepthView::Draw(const UsersFrame& frame, Orientation orientation)
+void DepthView::Draw(const UsersFrame& frame)
 {
-    this->users.Draw(frame, orientation, this->width, this->height);
+    this->users.Draw(frame, this->width, this->height);
 }
 
 void DepthView::Ground(const Vector4* ground)
@@ -111,9 +111,15 @@ void DepthView::Error(const wchar_t* error)
     this->Invalidate();
 }
 
+void DepthView::Orientation(Topsens::Orientation orient)
+{
+    this->orient = orient;
+    this->users.Orientation(orient);
+}
+
 void DepthView::OnPaint()
 {
-    GDIRenderer renderer;
+    GdiRenderer renderer;
 
     if (renderer.BeginPaint(this->Handle()))
     {
@@ -128,7 +134,7 @@ void DepthView::OnPaint()
         }
         else
         {
-            renderer.PixelsARGB((BYTE*)this->pixels.data(), this->width, this->height, 0, 0, this->ClientWidth(), this->ClientHeight());
+            renderer.PixelsArgb((BYTE*)this->pixels.data(), this->width, this->height, 0, 0, this->ClientWidth(), this->ClientHeight());
         }
 
         this->users.Paint(renderer, this->ClientWidth() / (float)this->width);
@@ -146,9 +152,9 @@ void DepthView::OnPaint()
     }
 }
 
-void DepthView::DrawDepth(const DepthFrame& frame, Orientation o)
+void DepthView::DrawDepth(const DepthFrame& frame)
 {
-    if (Orientation::Landscape == o)
+    if (Orientation::Landscape == this->orient || Orientation::Aerial == this->orient)
     {
         this->width  = frame.Width;
         this->height = frame.Height;
@@ -162,7 +168,7 @@ void DepthView::DrawDepth(const DepthFrame& frame, Orientation o)
     lock_guard<std::mutex> lock(this->mutex);
     this->pixels.resize(this->width * this->height);
 
-    if (Orientation::Landscape == o)
+    if (Orientation::Landscape == this->orient || Orientation::Aerial == this->orient)
     {
         for (size_t i = 0; i < this->pixels.size(); i++)
         {
@@ -180,7 +186,7 @@ void DepthView::DrawDepth(const DepthFrame& frame, Orientation o)
             off[i] = i * this->width;
         }
 
-        if (Orientation::PortraitClockwise == o)
+        if (Orientation::PortraitClockwise == this->orient)
         {
             for (int i = this->width - 1; i >= 0; i--)
             {
@@ -205,9 +211,9 @@ void DepthView::DrawDepth(const DepthFrame& frame, Orientation o)
     }
 }
 
-void DepthView::DrawGround(const DepthFrame& frame, Orientation o)
+void DepthView::DrawGround(const DepthFrame& frame)
 {
-    if (Orientation::Landscape == o)
+    if (Orientation::Landscape == this->orient || Orientation::Aerial == this->orient)
     {
         this->width  = frame.Width;
         this->height = frame.Height;
@@ -220,12 +226,14 @@ void DepthView::DrawGround(const DepthFrame& frame, Orientation o)
 
     lock_guard<std::mutex> lock(this->mutex);
 
+    float thresh = Orientation::Aerial == this->orient ? 0.06f : 0.035f;
+
     vector<Vector3> cloud;
     if (Error::Ok == frame.ToPointCloud(cloud))
     {
         this->pixels.resize(this->width * this->height);
 
-        if (Orientation::Landscape == o)
+        if (Orientation::Landscape == this->orient || Orientation::Aerial == this->orient)
         {
             for (size_t i = 0; i < this->pixels.size(); i++)
             {
@@ -233,7 +241,7 @@ void DepthView::DrawGround(const DepthFrame& frame, Orientation o)
 
                 if (d < this->palette.size())
                 {
-                    this->pixels[i] = IsGround(cloud[i], this->ground) ? COLOR_GND : this->palette[d];
+                    this->pixels[i] = IsGround(cloud[i], this->ground, thresh) ? COLOR_GND : this->palette[d];
                 }
                 else
                 {
@@ -251,7 +259,7 @@ void DepthView::DrawGround(const DepthFrame& frame, Orientation o)
                 off[i] = i * this->width;
             }
 
-            if (Orientation::PortraitClockwise == o)
+            if (Orientation::PortraitClockwise == this->orient)
             {
                 int idx = 0;
 
@@ -262,7 +270,7 @@ void DepthView::DrawGround(const DepthFrame& frame, Orientation o)
                         auto d = frame.Pixels[idx];
                         if (d < this->palette.size())
                         {
-                            this->pixels[off[j] + i] = IsGround(cloud[idx], this->ground) ? COLOR_GND : this->palette[d];
+                            this->pixels[off[j] + i] = IsGround(cloud[idx], this->ground, thresh) ? COLOR_GND : this->palette[d];
                         }
                         else
                         {
@@ -284,7 +292,7 @@ void DepthView::DrawGround(const DepthFrame& frame, Orientation o)
                         auto d = frame.Pixels[idx];
                         if (d < this->palette.size())
                         {
-                            this->pixels[off[j] + i] = IsGround(cloud[idx], this->ground) ? COLOR_GND : this->palette[d];
+                            this->pixels[off[j] + i] = IsGround(cloud[idx], this->ground, thresh) ? COLOR_GND : this->palette[d];
                         }
                         else
                         {

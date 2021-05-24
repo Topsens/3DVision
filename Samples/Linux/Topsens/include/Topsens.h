@@ -41,9 +41,10 @@ typedef enum _TOPSENS_CONFIG
 /** @brief Image direction. */
 typedef enum _TOPSENS_ORIENTATION
 {
-    TOPSENS_ORIENTATION_LANDSCAPE = 0,         /**< Default landscape direction. */
-    TOPSENS_ORIENTATION_PORTRAIT_CLOCKWISE,    /**< Portrait direction, rotate 90 degrees clockwise to get landscape image. */
-    TOPSENS_ORIENTATION_PORTRAIT_ANTICLOCKWISE /**< Portrait direction, rotate 90 degrees anticlockwise to get landscape image. */
+    TOPSENS_ORIENTATION_LANDSCAPE = 0,          /**< Default landscape direction. */
+    TOPSENS_ORIENTATION_PORTRAIT_CLOCKWISE,     /**< Portrait direction, rotate 90 degrees clockwise to get landscape image. */
+    TOPSENS_ORIENTATION_PORTRAIT_ANTICLOCKWISE, /**< Portrait direction, rotate 90 degrees anticlockwise to get landscape image. */
+    TOPSENS_ORIENTATION_AERIAL                  /**< Aerial direction. */
 } TOPSENS_ORIENTATION;
 
 /** @brief Image resolution. */
@@ -214,6 +215,10 @@ typedef struct _TOPSENS_SKELETON
     
     /** Joints data. Each element represents the three-dimensional position of a joint on the use's body in the scene. */
     TOPSENS_JOINT Joints[TOPSENS_JOINT_INDEX_COUNT];
+    uint32_t        X;  /**< Pixel abscissa of top left corner in the user mask bounding box. */
+    uint32_t        Y;  /**< Pixel ordinate of top left corner in the user mask bounding box. */
+    uint32_t        W;  /**< Pixel width of the user mask bounding box. */
+    uint32_t        H;  /**< Pixel height of the user mask bounding box.  */
 
 } TOPSENS_SKELETON;
 
@@ -228,11 +233,12 @@ typedef struct _TOPSENS_USER_MASK
     
     /**
      * Mask image pixel collection, array length is #Width * #Height. 
-     * Each pixel values is equal to the user ID to which the corresponding pixel in the depth image belongs.
+     * Each pixel values is equal to the index of #TOPSENS_USERS_FRAME.Skeletons to which the corresponding pixel in the depth image belongs.
      * For example, if the mask pixel value of x=100 and y=100 is 1,
-     * the depth pixel corresponding to x=100 and y=100 in depth image belongs to the user body with ID=1.
+     * the depth pixel corresponding to x=100 and y=100 in depth image belongs to the user body of Skeleton[1].
+	 * All possible values: Skeletons index: 0 ~ UserCount-1; Background: 0xFF.
      */
-    uint16_t* Pixels;
+    uint8_t* Pixels;
 
 } TOPSENS_USER_MASK;
 
@@ -343,7 +349,7 @@ static uint32_t TopsensResolutionHeight(uint32_t resolution)
         #define _FUNC_
     #endif
 #else
-    #if defined(TOPSENS_SENSOR_EXPORT) || defined(TOPSENS_CAMERA_EXPORT)
+    #if defined(TOPSENS_SENSOR_EXPORT) || defined(TOPSENS_CAMERA_EXPORT) || defined(TOPSENS_PEOPLE_EXPORT)
         #define _FUNC_ __attribute__ ((visibility ("default")))
     #else
         #define _FUNC_

@@ -50,7 +50,12 @@ Orientation Panel::Orientation() const
         return Orientation::PortraitClockwise;
     }
 
-    return Orientation::PortraitAntiClockwise;
+    if (((CheckBox&)this->Item(IDC_ANTIC)).IsChecked())
+    {
+        return Orientation::PortraitAntiClockwise;
+    }
+
+    return Orientation::Aerial;
 }
 
 void Panel::Enable()
@@ -60,6 +65,7 @@ void Panel::Enable()
     this->Item(IDC_LAND).Enable();
     this->Item(IDC_CLOCK).Enable();
     this->Item(IDC_ANTIC).Enable();
+    this->Item(IDC_AERIAL).Enable();
     this->Item(IDC_FLIPY).Enable();
     this->Item(IDC_FLIPN).Enable();
     this->Item(IDC_DEVICE).Enable();
@@ -74,6 +80,7 @@ void Panel::Disable()
     this->Item(IDC_LAND).Disable();
     this->Item(IDC_CLOCK).Disable();
     this->Item(IDC_ANTIC).Disable();
+    this->Item(IDC_AERIAL).Disable();
     this->Item(IDC_FLIPY).Disable();
     this->Item(IDC_FLIPN).Disable();
     this->Item(IDC_STOP).Enable();

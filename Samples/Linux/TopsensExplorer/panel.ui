@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1266</width>
+    <width>1280</width>
     <height>90</height>
    </rect>
   </property>
@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Device</string>
+    <string>Sensor</string>
    </property>
   </widget>
   <widget class="QLabel" name="lbColor">
@@ -161,7 +161,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>Generate users</string>
+    <string>Generate Users</string>
    </property>
    <widget class="QRadioButton" name="rbUsersYes">
     <property name="geometry">
@@ -200,7 +200,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>Align depth</string>
+    <string>Align Depth</string>
    </property>
    <widget class="QRadioButton" name="rbAlignYes">
     <property name="geometry">
@@ -291,7 +291,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>Flip image</string>
+    <string>Flip Image</string>
    </property>
    <widget class="QRadioButton" name="rbFlipYes">
     <property name="geometry">
@@ -395,7 +395,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>Paint ground</string>
+    <string>Paint Ground</string>
    </property>
    <widget class="QRadioButton" name="rbGroundYes">
     <property name="geometry">
@@ -486,6 +486,19 @@
     </property>
     <property name="text">
      <string>AntiClock</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="rbAerial">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>55</y>
+      <width>117</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Aerial</string>
     </property>
    </widget>
   </widget>

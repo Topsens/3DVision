@@ -7,7 +7,7 @@
 class UserPainter
 {
 public:
-    static void Paint(const Topsens::UsersFrame& frame, QPainter& painter, float thickness);
+    static void Paint(const Topsens::UsersFrame& frame, QPainter& painter, float thickness, Topsens::Orientation orient);
 
 private:
     static void PaintJoint(const Topsens::Vector2& joint, QPainter& painter, float thickness);

@@ -1,0 +1,4 @@
+<map id="DepthFrame" name="DepthFrame">
+<area shape="rect" id="node1" title="Depth image frame." alt="" coords="5,95,99,121"/>
+<area shape="rect" id="node2" href="$classcn_1_1topsens_1_1_vector4.html" title="The vector containing 4 float values." alt="" coords="19,5,85,32"/>
+</map>

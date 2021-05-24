@@ -136,7 +136,7 @@ void MainWindow::OnStart()
                 auto err = people.Detect(depth, w, h, (int64_t)frame.get_timestamp(), users);
                 if (Error::Ok == err)
                 {
-                    this->dview->Draw(users);
+                    this->dview->Draw(users, orient);
                     this->Status("");
                 }
                 else
@@ -176,7 +176,7 @@ void MainWindow::OnStatus()
 
 void MainWindow::Arrange(uint32_t w, uint32_t h, Orientation o)
 {
-    if (Orientation::Landscape != o)
+    if (Orientation::Landscape != o && Orientation::Aerial != o)
     {
         w = w ^ h;
         h = w ^ h;

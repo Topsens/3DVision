@@ -9,8 +9,9 @@
 class ColorView : public Window
 {
 public:
-    void Draw(const Topsens::ColorFrame& frame, Topsens::Orientation orientation);
+    void Draw(const Topsens::ColorFrame& frame);
     void Error(const wchar_t* error);
+    void Orientation(Topsens::Orientation orient);
 
 protected:
     virtual void OnPaint() override;
@@ -22,4 +23,6 @@ private:
     int width;
     int height;
     std::vector<uint32_t> pixels;
+
+    Topsens::Orientation orient;
 };

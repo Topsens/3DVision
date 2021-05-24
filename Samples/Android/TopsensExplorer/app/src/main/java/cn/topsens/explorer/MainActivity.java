@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         dres.setAdapter(resolutions);
         dres.setSelection(1);
 
-        ArrayAdapter<String> orientations = new ArrayAdapter<String>(this, R.layout.spinner_item, new String[]{ "Landscape", "Clockwise", "AntiClock" });
+        ArrayAdapter<String> orientations = new ArrayAdapter<String>(this, R.layout.spinner_item, new String[]{ "Landscape", "Clockwise", "AntiClock", "Aerial" });
         ((Spinner)this.findViewById(R.id.orient)).setAdapter(orientations);
 
         ((Button)this.findViewById(R.id.refresh)).setOnClickListener(new View.OnClickListener() {
@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
         Sensor.initialize(this);
 
-        if (enableFake) {
-            Fake.open(Environment.getExternalStorageDirectory().getAbsolutePath() + "/topsens.tsr");
+        if (this.enableFake) {
+            Fake.open(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Topsens/LandscapeVga.tsr");
         }
     }
 
@@ -123,11 +123,11 @@ public class MainActivity extends AppCompatActivity {
         Sensor.uninitialize();
         this.rd.destroy();
         this.rs.destroy();
-        super.onDestroy();
-
-        if (enableFake) {
+        if (this.enableFake) {
             Fake.close();
         }
+
+        super.onDestroy();
     }
 
     private void onRefreshClicked() {
@@ -197,15 +197,15 @@ public class MainActivity extends AppCompatActivity {
         Resolution dres = (Resolution)((Spinner)this.findViewById(R.id.dres)).getSelectedItem();
         final boolean generateUsers = ((Switch)this.findViewById(R.id.users)).isChecked();
 
-        final Orientation orientation = Orientation.fromInt(((Spinner)this.findViewById(R.id.orient)).getSelectedItemPosition());
+        this.orient = Orientation.fromInt(((Spinner)this.findViewById(R.id.orient)).getSelectedItemPosition());
 
-        if (Configuration.ORIENTATION_PORTRAIT == this.getResources().getConfiguration().orientation && Orientation.Landscape == orientation) {
+        if (Configuration.ORIENTATION_PORTRAIT == this.getResources().getConfiguration().orientation && (Orientation.Landscape == this.orient || Orientation.Aerial == this.orient)) {
             ((LinearLayout)this.findViewById(R.id.layout)).setOrientation(LinearLayout.VERTICAL);
         } else {
             ((LinearLayout)this.findViewById(R.id.layout)).setOrientation(LinearLayout.HORIZONTAL);
         }
 
-        Error err = this.sensor.setOrientation(orientation);
+        Error err = this.sensor.setOrientation(this.orient);
         if (Error.Ok != err) {
             Toast.makeText(MainActivity.this, "Failed to set sensor orientation: " + err.toString(), Toast.LENGTH_SHORT).show();
             Log.e("MainActivity", "Failed to set sensor orientation: " + err.toString());
@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
                         synchronized (cbitmap) {
                             paint(cframe, cbitmap);
                         }
-                        update(cbitmap, cview, orientation);
+                        update(cbitmap, cview);
 
                     } else if (Error.Timeout != err) {
                         Log.e("Thread", "Color error: " + err.toString());
@@ -285,9 +285,13 @@ public class MainActivity extends AppCompatActivity {
                                 Log.e("Thread", "Users error: " + err.toString());
                             }
                         }
+                        else {
+                            synchronized (dbitmap) {
+                                paint(dframe, dbitmap);
+                            }
+                        }
 
-                        update(dbitmap, dview, orientation);
-
+                        update(dbitmap, dview);
                     } else if (Error.Timeout != err) {
                         Log.e("Thread", "Depth error: " + err.toString());
                     }
@@ -331,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
         Allocation depth = Allocation.createTyped(this.rs, new Type.Builder(this.rs, Element.I16(this.rs)).setX(frame.Width).setY(frame.Height).create());
         Allocation color = Allocation.createFromBitmap(this.rs, bitmap);
 
-        depth.copy1DRangeFrom(0, frame.Width * frame.Height, frame.Pixels);
+        depth.copy2DRangeFrom(0, 0, frame.Width, frame.Height, frame.Pixels);
         this.rd.forEach_render(depth, color);
 
         color.copyTo(bitmap);
@@ -353,41 +357,47 @@ public class MainActivity extends AppCompatActivity {
             Joint[] joints = frame.Skeletons[i].Joints;
 
             // Paint bones
-            this.paint(frame, canvas, paint, joints[JointIndex.Head],      joints[JointIndex.Neck]);
-            this.paint(frame, canvas, paint, joints[JointIndex.LShoulder], joints[JointIndex.Neck]);
-            this.paint(frame, canvas, paint, joints[JointIndex.RShoulder], joints[JointIndex.Neck]);
             this.paint(frame, canvas, paint, joints[JointIndex.LShoulder], joints[JointIndex.LElbow]);
             this.paint(frame, canvas, paint, joints[JointIndex.RShoulder], joints[JointIndex.RElbow]);
             this.paint(frame, canvas, paint, joints[JointIndex.LShoulder], joints[JointIndex.RWaist]);
             this.paint(frame, canvas, paint, joints[JointIndex.RShoulder], joints[JointIndex.LWaist]);
             this.paint(frame, canvas, paint, joints[JointIndex.LElbow],    joints[JointIndex.LHand]);
             this.paint(frame, canvas, paint, joints[JointIndex.RElbow],    joints[JointIndex.RHand]);
-            this.paint(frame, canvas, paint, joints[JointIndex.LWaist],    joints[JointIndex.LKnee]);
-            this.paint(frame, canvas, paint, joints[JointIndex.RWaist],    joints[JointIndex.RKnee]);
-            this.paint(frame, canvas, paint, joints[JointIndex.LKnee],     joints[JointIndex.LFoot]);
-            this.paint(frame, canvas, paint, joints[JointIndex.RKnee],     joints[JointIndex.RFoot]);
-            this.paint(frame, canvas, paint, joints[JointIndex.LWaist],    joints[JointIndex.RWaist]);
+
+            if (Orientation.Aerial != this.orient) {
+                this.paint(frame, canvas, paint, joints[JointIndex.Head], joints[JointIndex.Neck]);
+                this.paint(frame, canvas, paint, joints[JointIndex.LShoulder], joints[JointIndex.Neck]);
+                this.paint(frame, canvas, paint, joints[JointIndex.RShoulder], joints[JointIndex.Neck]);
+                this.paint(frame, canvas, paint, joints[JointIndex.LWaist], joints[JointIndex.LKnee]);
+                this.paint(frame, canvas, paint, joints[JointIndex.RWaist], joints[JointIndex.RKnee]);
+                this.paint(frame, canvas, paint, joints[JointIndex.LKnee], joints[JointIndex.LFoot]);
+                this.paint(frame, canvas, paint, joints[JointIndex.RKnee], joints[JointIndex.RFoot]);
+                this.paint(frame, canvas, paint, joints[JointIndex.LWaist], joints[JointIndex.RWaist]);
+            }
 
             // Paint joints
             this.paint(frame, canvas, paint, joints[JointIndex.Head]);
-            this.paint(frame, canvas, paint, joints[JointIndex.Neck]);
             this.paint(frame, canvas, paint, joints[JointIndex.LShoulder]);
             this.paint(frame, canvas, paint, joints[JointIndex.RShoulder]);
             this.paint(frame, canvas, paint, joints[JointIndex.LElbow]);
             this.paint(frame, canvas, paint, joints[JointIndex.RElbow]);
             this.paint(frame, canvas, paint, joints[JointIndex.LHand]);
             this.paint(frame, canvas, paint, joints[JointIndex.RHand]);
-            this.paint(frame, canvas, paint, joints[JointIndex.LWaist]);
-            this.paint(frame, canvas, paint, joints[JointIndex.RWaist]);
-            this.paint(frame, canvas, paint, joints[JointIndex.LKnee]);
-            this.paint(frame, canvas, paint, joints[JointIndex.RKnee]);
-            this.paint(frame, canvas, paint, joints[JointIndex.LFoot]);
-            this.paint(frame, canvas, paint, joints[JointIndex.RFoot]);
+
+            if (Orientation.Aerial != this.orient) {
+                this.paint(frame, canvas, paint, joints[JointIndex.Neck]);
+                this.paint(frame, canvas, paint, joints[JointIndex.LWaist]);
+                this.paint(frame, canvas, paint, joints[JointIndex.RWaist]);
+                this.paint(frame, canvas, paint, joints[JointIndex.LKnee]);
+                this.paint(frame, canvas, paint, joints[JointIndex.RKnee]);
+                this.paint(frame, canvas, paint, joints[JointIndex.LFoot]);
+                this.paint(frame, canvas, paint, joints[JointIndex.RFoot]);
+            }
         }
     }
 
     private void paint(UsersFrame frame, Canvas canvas, Paint paint, Joint joint) {
-        Vector2 pos = frame.MapTo2D(joint.Position);
+        Vector2 pos = frame.mapTo2D(joint.Position);
         if (pos.isNaN()) {
             return;
         }
@@ -396,8 +406,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void paint(UsersFrame frame, Canvas canvas, Paint paint, Joint beg, Joint end) {
-        Vector2 beg2d = frame.MapTo2D(beg.Position);
-        Vector2 end2d = frame.MapTo2D(end.Position);
+        Vector2 beg2d = frame.mapTo2D(beg.Position);
+        Vector2 end2d = frame.mapTo2D(end.Position);
 
         if (beg2d.isNaN() || end2d.isNaN()) {
             return;
@@ -406,10 +416,10 @@ public class MainActivity extends AppCompatActivity {
         canvas.drawLine(beg2d.X, beg2d.Y, end2d.X, end2d.Y, paint);
     }
 
-    private void update(Bitmap bitmap, ImageView view, Orientation orientation) {
+    private void update(Bitmap bitmap, ImageView view) {
         final Bitmap b = bitmap;
         final ImageView v = view;
-        final float r = (Orientation.Landscape == orientation ? 0 : (Orientation.PortraitClockwise == orientation ? 90 : -90));
+        final float r = ((Orientation.Landscape == this.orient || Orientation.Aerial == this.orient) ? 0 : (Orientation.PortraitClockwise == this.orient ? 90 : -90));
 
         this.handler.post(new Runnable() {
             @Override
@@ -475,12 +485,15 @@ public class MainActivity extends AppCompatActivity {
         this.findViewById(R.id.refresh).setEnabled(true);
     }
 
-    private Sensor  sensor;
-    private Thread  thread;
-    private Handler handler = new Handler();
+    private Sensor sensor;
+    private Thread thread;
+    private Orientation orient;
     private RenderScript rs;
     private ScriptC_RenderDepth rd;
 
-    // Set true to enable tsr playback. Copy tsr file to storage and pass the file path to Fake.open()
-    private static final boolean enableFake = false;
+    private final Handler handler = new Handler();
+
+    // Sets true to enable tsr playback:
+    // 1. Copies tsr file to storage; 2. Passes the file path to Fake.open(); 3. Opens storage permission in manifests.
+    private final boolean enableFake = false;
 }

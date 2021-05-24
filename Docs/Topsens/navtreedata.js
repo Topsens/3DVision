@@ -62,7 +62,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_topsens_8h.html",
-"globals_type.html"
+"namespace_topsens.html#a2c3e4bb40f36b262a5214e2da2bca9c5a45e2e25cb1478ca8f7cb1cea38b4a7a5"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

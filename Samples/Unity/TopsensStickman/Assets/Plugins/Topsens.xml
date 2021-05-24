@@ -367,6 +367,11 @@
             Portrait direction, rotate 90 degrees anticlockwise to get landscape image.
             </summary>
         </member>
+        <member name="F:Topsens.Orientation.Aerial">
+            <summary>
+            Aerial direction.
+            </summary>
+        </member>
         <member name="T:Topsens.Resolution">
             <summary>
             Image resolution.
@@ -432,6 +437,26 @@
             Joints data. Each element represents the three-dimensional position of a joint on the use's body in the scene.
             </summary>
         </member>
+        <member name="F:Topsens.Skeleton.X">
+            <summary>
+            Pixel abscissa of top left corner in the user mask bounding box.
+            </summary>
+        </member>
+        <member name="F:Topsens.Skeleton.Y">
+            <summary>
+            Pixel ordinate of top left corner in the user mask bounding box.
+            </summary>
+        </member>
+        <member name="F:Topsens.Skeleton.W">
+            <summary>
+            Pixel width of the user mask bounding box.
+            </summary>
+        </member>
+        <member name="F:Topsens.Skeleton.H">
+            <summary>
+            Pixel height of the user mask bounding box.
+            </summary>
+        </member>
         <member name="M:Topsens.Skeleton.CopyTo(Topsens.Skeleton)">
             <summary>
             Copies one skeleton data to another skeleton data object.
@@ -457,9 +482,10 @@
         <member name="F:Topsens.UserMask.Pixels">
             <summary>
             Mask image pixel collection, array length is <see cref="F:Topsens.UserMask.Width"/> * <see cref="F:Topsens.UserMask.Height"/>. 
-            Each pixel values is equal to the user ID to which the corresponding pixel in the depth image belongs.
+            Each pixel values is equal to the index of <see cref="F:Topsens.UsersFrame.Skeletons"/> to which the corresponding pixel in the depth image belongs.
             For example, if the mask pixel value of x=100 and y=100 is 1,
-            the depth pixel corresponding to x=100 and y=100 in depth image belongs to the user body with ID=1.
+            the depth pixel corresponding to x=100 and y=100 in depth image belongs to the user body of Skeleton[1].
+            All possible values: Skeletons index: 0 ~ UserCount-1; Background: 0xFF.
             </summary>
         </member>
         <member name="M:Topsens.UserMask.CopyTo(Topsens.UserMask)">

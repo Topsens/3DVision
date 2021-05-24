@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter<String> orientations = new ArrayAdapter<String>(this, R.layout.spinner_item, new String[]{ "Landscape", "Clockwise", "AntiClock" });
+        ArrayAdapter<String> orientations = new ArrayAdapter<String>(this, R.layout.spinner_item, new String[]{ "Landscape", "Clockwise", "AntiClock", "Aerial" });
         ((Spinner)this.findViewById(R.id.orientation)).setAdapter(orientations);
 
         Button start = (Button)this.findViewById(R.id.start);
@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
         final boolean flip = ((Switch)this.findViewById(R.id.flip)).isChecked();
         final Orientation orient = Orientation.fromInt(((Spinner)this.findViewById(R.id.orientation)).getSelectedItemPosition());
 
-        if (Orientation.Landscape == orient) {
+        if (Orientation.Landscape == orient || Orientation.Aerial == orient) {
             this.rotate = 0;
         } else if (Orientation.PortraitClockwise == orient) {
             this.rotate = 90;
@@ -340,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
                             try (FrameSet frames = pipe.waitForFrames()) {
                                 try (Frame frame = frames.first(StreamType.DEPTH, StreamFormat.Z16)) {
                                     frame.getData(data);
-                                    depth.copy1DRangeFrom(0, data.length, data);
+                                    depth.copy2DRangeFrom(0, 0, w * 2, h, data);
 
                                     if (flip) {
                                         flipDepth(depth, data);
@@ -351,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
                                         Log.e("MainActivity", "Failed to detect: " + err.toString());
                                     }
 
-                                    paint(depth, users);
+                                    paint(depth, users, orient);
                                 }
                             }
                         }
@@ -433,10 +433,10 @@ public class MainActivity extends AppCompatActivity {
         alloc.destroy();
     }
 
-    private void paint(Allocation depth, UsersFrame users) {
+    private void paint(Allocation depth, UsersFrame users, Orientation orient) {
         synchronized (this.bitmap) {
             this.paintDepth(depth);
-            this.paintUsers(users);
+            this.paintUsers(users, orient);
         }
         this.handler.post(new Runnable() {
             @Override
@@ -480,7 +480,7 @@ public class MainActivity extends AppCompatActivity {
         color.destroy();
     }
 
-    private void paintUsers(UsersFrame frame) {
+    private void paintUsers(UsersFrame frame, Orientation orient) {
         if (0 == frame.UserCount) {
             return;
         }
@@ -493,40 +493,46 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < frame.UserCount; i++) {
             Joint[] joints = frame.Skeletons[i].Joints;
 
-            this.paintBone(frame, canvas, paint, joints[JointIndex.Head], joints[JointIndex.Neck]);
-            this.paintBone(frame, canvas, paint, joints[JointIndex.LShoulder], joints[JointIndex.Neck]);
-            this.paintBone(frame, canvas, paint, joints[JointIndex.RShoulder], joints[JointIndex.Neck]);
-            this.paintBone(frame, canvas, paint, joints[JointIndex.LShoulder], joints[JointIndex.LElbow]);
-            this.paintBone(frame, canvas, paint, joints[JointIndex.RShoulder], joints[JointIndex.RElbow]);
-            this.paintBone(frame, canvas, paint, joints[JointIndex.LShoulder], joints[JointIndex.RWaist]);
-            this.paintBone(frame, canvas, paint, joints[JointIndex.RShoulder], joints[JointIndex.LWaist]);
             this.paintBone(frame, canvas, paint, joints[JointIndex.LElbow], joints[JointIndex.LHand]);
             this.paintBone(frame, canvas, paint, joints[JointIndex.RElbow], joints[JointIndex.RHand]);
-            this.paintBone(frame, canvas, paint, joints[JointIndex.LWaist], joints[JointIndex.LKnee]);
-            this.paintBone(frame, canvas, paint, joints[JointIndex.RWaist], joints[JointIndex.RKnee]);
-            this.paintBone(frame, canvas, paint, joints[JointIndex.LKnee], joints[JointIndex.LFoot]);
-            this.paintBone(frame, canvas, paint, joints[JointIndex.RKnee], joints[JointIndex.RFoot]);
-            this.paintBone(frame, canvas, paint, joints[JointIndex.LWaist], joints[JointIndex.RWaist]);
+            this.paintBone(frame, canvas, paint, joints[JointIndex.LShoulder], joints[JointIndex.LElbow]);
+            this.paintBone(frame, canvas, paint, joints[JointIndex.RShoulder], joints[JointIndex.RElbow]);
+
+            if (Orientation.Aerial != orient) {
+                this.paintBone(frame, canvas, paint, joints[JointIndex.Head], joints[JointIndex.Neck]);
+                this.paintBone(frame, canvas, paint, joints[JointIndex.LShoulder], joints[JointIndex.Neck]);
+                this.paintBone(frame, canvas, paint, joints[JointIndex.RShoulder], joints[JointIndex.Neck]);
+                this.paintBone(frame, canvas, paint, joints[JointIndex.LShoulder], joints[JointIndex.RWaist]);
+                this.paintBone(frame, canvas, paint, joints[JointIndex.RShoulder], joints[JointIndex.LWaist]);
+                this.paintBone(frame, canvas, paint, joints[JointIndex.LWaist], joints[JointIndex.LKnee]);
+                this.paintBone(frame, canvas, paint, joints[JointIndex.RWaist], joints[JointIndex.RKnee]);
+                this.paintBone(frame, canvas, paint, joints[JointIndex.LKnee], joints[JointIndex.LFoot]);
+                this.paintBone(frame, canvas, paint, joints[JointIndex.RKnee], joints[JointIndex.RFoot]);
+                this.paintBone(frame, canvas, paint, joints[JointIndex.LWaist], joints[JointIndex.RWaist]);
+            }
 
             this.paintJoint(frame, canvas, paint, joints[JointIndex.Head]);
-            this.paintJoint(frame, canvas, paint, joints[JointIndex.Neck]);
             this.paintJoint(frame, canvas, paint, joints[JointIndex.LShoulder]);
             this.paintJoint(frame, canvas, paint, joints[JointIndex.RShoulder]);
             this.paintJoint(frame, canvas, paint, joints[JointIndex.LElbow]);
             this.paintJoint(frame, canvas, paint, joints[JointIndex.RElbow]);
             this.paintJoint(frame, canvas, paint, joints[JointIndex.LHand]);
             this.paintJoint(frame, canvas, paint, joints[JointIndex.RHand]);
-            this.paintJoint(frame, canvas, paint, joints[JointIndex.LWaist]);
-            this.paintJoint(frame, canvas, paint, joints[JointIndex.RWaist]);
-            this.paintJoint(frame, canvas, paint, joints[JointIndex.LKnee]);
-            this.paintJoint(frame, canvas, paint, joints[JointIndex.RKnee]);
-            this.paintJoint(frame, canvas, paint, joints[JointIndex.LFoot]);
-            this.paintJoint(frame, canvas, paint, joints[JointIndex.RFoot]);
+
+            if (Orientation.Aerial != orient) {
+                this.paintJoint(frame, canvas, paint, joints[JointIndex.Neck]);
+                this.paintJoint(frame, canvas, paint, joints[JointIndex.LWaist]);
+                this.paintJoint(frame, canvas, paint, joints[JointIndex.RWaist]);
+                this.paintJoint(frame, canvas, paint, joints[JointIndex.LKnee]);
+                this.paintJoint(frame, canvas, paint, joints[JointIndex.RKnee]);
+                this.paintJoint(frame, canvas, paint, joints[JointIndex.LFoot]);
+                this.paintJoint(frame, canvas, paint, joints[JointIndex.RFoot]);
+            }
         }
     }
 
     private void paintJoint(UsersFrame frame, Canvas canvas, Paint paint, Joint joint) {
-        Vector2 pos = frame.MapTo2D(joint.Position);
+        Vector2 pos = frame.mapTo2D(joint.Position);
         if (pos.isNaN()) {
             return;
         }
@@ -535,8 +541,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void paintBone(UsersFrame frame, Canvas canvas, Paint paint, Joint beg, Joint end) {
-        Vector2 beg2d = frame.MapTo2D(beg.Position);
-        Vector2 end2d = frame.MapTo2D(end.Position);
+        Vector2 beg2d = frame.mapTo2D(beg.Position);
+        Vector2 end2d = frame.mapTo2D(end.Position);
 
         if (beg2d.isNaN() || end2d.isNaN()) {
             return;

@@ -25,4 +25,6 @@
         </activity>
     </application>
 
+    <!-- Opens this permission if using FakeSensor with tsr file -->
+    <!--<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
 </manifest>

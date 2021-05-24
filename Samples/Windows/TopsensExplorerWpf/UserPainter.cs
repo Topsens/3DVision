@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Topsens;
+using Orientation = Topsens.Orientation;
 
 namespace TopsensExplorerWpf
 {
@@ -29,35 +30,43 @@ namespace TopsensExplorerWpf
             {
                 var joints = frame.Skeletons[i].Joints;
 
-                this.PaintBone(joints[JointIndex.Head],      joints[JointIndex.Neck],   ref bIndex);
-                this.PaintBone(joints[JointIndex.LShoulder], joints[JointIndex.Neck],   ref bIndex);
-                this.PaintBone(joints[JointIndex.RShoulder], joints[JointIndex.Neck],   ref bIndex);
                 this.PaintBone(joints[JointIndex.LShoulder], joints[JointIndex.LElbow], ref bIndex);
                 this.PaintBone(joints[JointIndex.RShoulder], joints[JointIndex.RElbow], ref bIndex);
                 this.PaintBone(joints[JointIndex.LShoulder], joints[JointIndex.RWaist], ref bIndex);
                 this.PaintBone(joints[JointIndex.RShoulder], joints[JointIndex.LWaist], ref bIndex);
                 this.PaintBone(joints[JointIndex.LElbow],    joints[JointIndex.LHand],  ref bIndex);
                 this.PaintBone(joints[JointIndex.RElbow],    joints[JointIndex.RHand],  ref bIndex);
-                this.PaintBone(joints[JointIndex.LWaist],    joints[JointIndex.LKnee],  ref bIndex);
-                this.PaintBone(joints[JointIndex.RWaist],    joints[JointIndex.RKnee],  ref bIndex);
-                this.PaintBone(joints[JointIndex.LKnee],     joints[JointIndex.LFoot],  ref bIndex);
-                this.PaintBone(joints[JointIndex.RKnee],     joints[JointIndex.RFoot],  ref bIndex);
-                this.PaintBone(joints[JointIndex.LWaist],    joints[JointIndex.RWaist], ref bIndex);
+
+                if (Orientation.Aerial != this.Orientation)
+                {
+                    this.PaintBone(joints[JointIndex.Head],      joints[JointIndex.Neck],   ref bIndex);
+                    this.PaintBone(joints[JointIndex.LShoulder], joints[JointIndex.Neck],   ref bIndex);
+                    this.PaintBone(joints[JointIndex.RShoulder], joints[JointIndex.Neck],   ref bIndex);
+                    this.PaintBone(joints[JointIndex.LWaist],    joints[JointIndex.LKnee],  ref bIndex);
+                    this.PaintBone(joints[JointIndex.RWaist],    joints[JointIndex.RKnee],  ref bIndex);
+                    this.PaintBone(joints[JointIndex.LKnee],     joints[JointIndex.LFoot],  ref bIndex);
+                    this.PaintBone(joints[JointIndex.RKnee],     joints[JointIndex.RFoot],  ref bIndex);
+                    this.PaintBone(joints[JointIndex.LWaist],    joints[JointIndex.RWaist], ref bIndex);
+                }
 
                 this.PaintJoint(joints[JointIndex.Head],      ref jIndex);
-                this.PaintJoint(joints[JointIndex.Neck],      ref jIndex);
                 this.PaintJoint(joints[JointIndex.LShoulder], ref jIndex);
                 this.PaintJoint(joints[JointIndex.RShoulder], ref jIndex);
                 this.PaintJoint(joints[JointIndex.LElbow],    ref jIndex);
                 this.PaintJoint(joints[JointIndex.RElbow],    ref jIndex);
                 this.PaintJoint(joints[JointIndex.LHand],     ref jIndex);
                 this.PaintJoint(joints[JointIndex.RHand],     ref jIndex);
-                this.PaintJoint(joints[JointIndex.LWaist],    ref jIndex);
-                this.PaintJoint(joints[JointIndex.RWaist],    ref jIndex);
-                this.PaintJoint(joints[JointIndex.LKnee],     ref jIndex);
-                this.PaintJoint(joints[JointIndex.RKnee],     ref jIndex);
-                this.PaintJoint(joints[JointIndex.LFoot],     ref jIndex);
-                this.PaintJoint(joints[JointIndex.RFoot],     ref jIndex);
+
+                if (Orientation.Aerial != this.Orientation)
+                {
+                    this.PaintJoint(joints[JointIndex.Neck],      ref jIndex);
+                    this.PaintJoint(joints[JointIndex.LWaist],    ref jIndex);
+                    this.PaintJoint(joints[JointIndex.RWaist],    ref jIndex);
+                    this.PaintJoint(joints[JointIndex.LKnee],     ref jIndex);
+                    this.PaintJoint(joints[JointIndex.RKnee],     ref jIndex);
+                    this.PaintJoint(joints[JointIndex.LFoot],     ref jIndex);
+                    this.PaintJoint(joints[JointIndex.RFoot],     ref jIndex);
+                }
             }
 
             while (bIndex < this.bones.Count())
@@ -122,11 +131,13 @@ namespace TopsensExplorerWpf
             var j = this.joints[index++];
             j.Visibility = Visibility.Visible;
 
-            Canvas.SetLeft(j, (pos2d.X - j.Width * 0.5f) * this.Ratio);
-            Canvas.SetTop(j, (pos2d.Y - j.Height * 0.5f) * this.Ratio);
+            Canvas.SetLeft(j, pos2d.X  * this.Ratio - j.Width * 0.5f);
+            Canvas.SetTop(j, pos2d.Y  * this.Ratio - j.Height * 0.5f);
         }
 
         public double Ratio { get; set; }
+
+        public Orientation Orientation { get; set; }
 
         private UsersFrame frame;
 

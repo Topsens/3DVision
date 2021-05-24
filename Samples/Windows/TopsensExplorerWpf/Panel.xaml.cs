@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using Topsens;
+using Orientation = Topsens.Orientation;
 
 namespace TopsensExplorerWpf
 {
@@ -83,49 +84,39 @@ namespace TopsensExplorerWpf
             }
         }
 
-        public bool Flip()
-        {
-            return this.flip.IsChecked ?? false;
-        }
+        public bool Flip { get{ return this.flip.IsChecked ?? false; }}
 
-        public bool Align()
-        {
-            return this.align.IsChecked ?? false;
-        }
+        public bool Align { get{ return this.align.IsChecked ?? false; }}
 
-        public bool Record()
-        {
-            return this.record.IsChecked ?? false;
-        }
+        public bool Record { get { return this.record.IsChecked ?? false; }}
 
-        public bool GenUsers()
-        {
-            return this.users.IsChecked ?? false;
-        }
+        public bool GenUsers { get { return this.users.IsChecked ?? false; }}
 
-        public Resolution ColorRes()
-        {
-            return (Resolution)this.cres.SelectedIndex;
-        }
+        public Resolution ColorRes { get { return (Resolution)this.cres.SelectedIndex; }}
 
-        public Resolution DepthRes()
-        {
-            return (Resolution)this.dres.SelectedIndex;
-        }
+        public Resolution DepthRes { get { return (Resolution)this.dres.SelectedIndex; }}
 
-        public Topsens.Orientation Orientation()
+        public Orientation Orientation
         {
-            if (this.land.IsChecked ?? false)
+            get
             {
-                return Topsens.Orientation.Landscape;
-            }
+                if (this.land.IsChecked ?? false)
+                {
+                    return Orientation.Landscape;
+                }
 
-            if (this.clock.IsChecked ?? false)
-            {
-                return Topsens.Orientation.PortraitClockwise;
-            }
+                if (this.clock.IsChecked ?? false)
+                {
+                    return Orientation.PortraitClockwise;
+                }
 
-            return Topsens.Orientation.PortraitAntiClockwise;
+                if (this.antic.IsChecked ?? false)
+                {
+                    return Orientation.PortraitAntiClockwise;
+                }
+
+                return Orientation.Aerial;
+            }
         }
 
         private void OnUsersNo(object sender, RoutedEventArgs e)

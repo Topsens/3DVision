@@ -132,6 +132,9 @@ void Application::OnStart()
         return;
     }
 
+    this->cview.Orientation(orient);
+    this->dview.Orientation(orient);
+
     err = this->sensor.SetDepthAligned(this->panel.Align());
     if (Error::Ok != err)
     {
@@ -182,7 +185,7 @@ void Application::OnStart()
                 case Error::Ok:
                 {
                     this->cview.Error(nullptr);
-                    this->cview.Draw(cframe, orient);
+                    this->cview.Draw(cframe);
                     this->cview.Invalidate();
                 }
 
@@ -211,7 +214,7 @@ void Application::OnStart()
                         {
                             case Error::Ok:
                             {
-                                this->dview.Draw(uframe, orient);
+                                this->dview.Draw(uframe);
 
                                 if (paintGround)
                                 {
@@ -233,7 +236,7 @@ void Application::OnStart()
                         }
                     }
 
-                    this->dview.Draw(dframe, orient);
+                    this->dview.Draw(dframe);
                     this->dview.Invalidate();
                 }
 
@@ -265,7 +268,7 @@ void Application::OnStop()
 
 void Application::Arrange(Orientation o)
 {
-    if (Orientation::Landscape == o)
+    if (Orientation::Landscape == o || Orientation::Aerial == o)
     {
         this->cview.Resize(640, 480);
         this->dview.Resize(640, 480);
